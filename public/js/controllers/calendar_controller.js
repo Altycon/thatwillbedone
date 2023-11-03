@@ -1,4 +1,5 @@
 import { MONTH_NAMES, isLeapYear } from "../utilities_client.js";
+import { openDayViewWindow, updateDayViewContent } from "./dayview_controller.js";
 
 
 export function revealCalendar(){
@@ -12,8 +13,12 @@ export function hideCalendar(){
 
     const calendar = document.querySelector('.td-calendar');
 
-    if(calendar.classList.contains('appear')) calendar.classList.remove('appear');
-    
+    if(calendar.classList.contains('appear')){
+
+        calendar.removeEventListener('click', handleCalendarControls);
+
+        calendar.classList.remove('appear');
+    }
 };
 
 export function loadCalendarData(year,month,date){
@@ -52,8 +57,6 @@ function createCalendarData(year,month,date){
 
     }
 
-    const lastMonthDays = new Date(year, month , 0).getDate();
-
     const selectedMonthLastDayIndex = (new Date(year, month, daysOfMonth)).getDay();
 
     const amountOflastCellsToFill = weekdayIndexTotal - selectedMonthLastDayIndex;
@@ -68,6 +71,8 @@ function createCalendarData(year,month,date){
         ))
     }
 
+    const lastMonthDays = new Date(year, month , 0).getDate();
+
     const beginingNumberOfDays = htmlCells - days.length
 
     // create past month days objects
@@ -79,6 +84,8 @@ function createCalendarData(year,month,date){
             i
         ))
     }
+
+    days.forEach( (day,index) => day.weekday = index % 7);
 
     let selectedIndex;
 
@@ -98,8 +105,6 @@ function createCalendarData(year,month,date){
 
             selectedIndex = null;
         }
-
-        
     }
 
     return {
@@ -130,8 +135,6 @@ function clearCalendarData(){
 
 function updateCalendarDisplay(month,year,days,todayIndex){
 
-    console.log(month,year,days,todayIndex)
-
     const calendar = document.querySelector('.td-calendar');
 
     calendar.setAttribute('data-month', `${month}`);
@@ -153,6 +156,7 @@ function updateCalendarDisplay(month,year,days,todayIndex){
         
 
         dayItem.setAttribute('data-calendar-day', `${day.day}`);
+        dayItem.setAttribute('data-calendar-weekday', `${day.weekday}`)
 
         dayNumberItem.textContent = `${day.day}`
 
@@ -181,19 +185,11 @@ function handleCalendarControls(clickEvent){
 
             const { year, month } = getCurrentCalendarData();
 
-            
+            const updatedYear = (Number(month) - 1) % 12 === 0 ? Number(year) - 1:Number(year);
 
-            const updatedYear = (Number(month) - 1) % 12 === 0 ? Number(year) - 1:Number(year)
+            const updatedMonth = Number(month) - 1;
 
-            loadCalendarData(
-
-                updatedYear, 
-
-                Number(month) - 1
-
-            );
-
-            console.log(target)
+            loadCalendarData(updatedYear, updatedMonth);
             
         }
         break;
@@ -202,23 +198,25 @@ function handleCalendarControls(clickEvent){
 
             const { year, month } = getCurrentCalendarData();
 
-            loadCalendarData(
+            const updatedYear = (Number(month) + 1) % 12 === 0 ? Number(year) + 1:Number(year);
 
-                (Number(month) + 1) % 12 === 0 ? Number(year) + 1:Number(year), 
+            const updatedMonth = Number(month) + 1;
 
-                Number(month) + 1
-
-            );
-
-            
+            loadCalendarData(updatedYear, updatedMonth);
 
         }
         break;
 
         case 'day':
 
-            console.log(target);
-            console.log(target.dataset.calendarDay);
+            const { year, month } = getCurrentCalendarData();
+
+            const day = target.dataset.calendarDay;
+            const weekday = target.dataset.calendarWeekday;
+
+            updateDayViewContent(year,month,day,weekday);
+
+            openDayViewWindow();
 
         break;
     }
@@ -234,10 +232,3 @@ function getCurrentCalendarData(){
     }
 }
 
-function removeCalendarControls(){
-
-    const calendar = document.querySelector('.td-calendar');
-
-    calendar.removeEventListener('click', handleCalendarControls);
-
-}
