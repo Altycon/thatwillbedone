@@ -1,0 +1,1176 @@
+/* === VARIABLES === */
+:root{
+
+    --ff-primary: sans-serif;
+    --fs-primary: 1.5rem;
+    --lh-primary: 1.5rem;
+
+    --hd-primary-height: 6.6rem;
+
+    --fc-primary: hsl(0 0% 100%);
+    --bc-primary: hsl(0 0% 0%);
+
+    --close-color: hsl(0 100% 50%);
+    --commonality-color: hsl(60 100% 50%);
+    --completed-color: hsl(120 100% 50%);
+    --accomplishby-color: hsl(220 100% 50%);
+    --modified-color: hsl(280 100% 50%);
+    --created-color: hsl(180 100% 50%);
+
+
+    --insertAnimateDelay: 0ms;
+}
+
+
+/* === RESETS === */
+
+*,
+::before,
+::after{margin: 0;padding: 0;box-sizing: border-box;}
+
+/* === SITEWIDE === */
+
+html{
+    font-family: var(--ff-primary);
+    color: var(--fc-primary);
+}
+body{
+    min-height: 100vh;
+    background-color: var(--bc-primary);
+    overflow: hidden;
+
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto auto;
+}
+main{
+    
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: calc(100vh - var(--hd-primary-height)) 100vh 100vh;
+}
+
+/* === UTILITY CLASSES === */
+.btn{
+    cursor: pointer;
+}
+
+
+/* === TYPOGRAPHY === */
+
+.header-primary{
+    
+    margin-bottom: 2rem;
+    height: var(--hd-primary-height);
+
+    display: grid;
+    grid-template-columns: auto auto;
+    grid-template-rows: auto;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.website-title{
+    grid-column: 1;
+    grid-row: 1;
+
+    font-size: 1.5rem;
+    text-transform: uppercase;
+    font-weight: 700;
+}
+.navigation-list{
+    grid-column: 2;
+    grid-row: 1;
+
+    list-style: none;
+    padding: 1rem;
+
+    display: grid;
+    grid-template-columns: repeat(4,auto);
+    grid-template-rows: auto;
+    gap: 3rem;
+}
+.navigation-item{
+    width: fit-content;
+    position: relative;
+    isolation: isolate;  
+}
+.navigation-item::before{
+    content: "";
+    position: absolute;
+    border-right: 80px solid var(--created-color);
+    border-top: 40px solid transparent;
+    z-index: -1;
+    opacity: 0.2;
+}
+.navigation-link{
+    display: inline-block;
+    text-decoration: none;
+    padding: 10px;
+    border-radius: 10px;
+    text-transform: uppercase;
+    font-weight: 700;
+    color: var(--fc-primary);
+    font-size: 1rem;
+}
+
+
+
+
+.todos{
+    overflow: scroll;
+    
+    display: grid;
+    grid-template-columns: auto 1fr;
+    grid-template-rows: auto 1fr;
+}
+
+
+
+/* ==> COMMON ITEM LIST */
+
+.td-common-items{
+    grid-column: 1;
+    grid-row-start: 1;
+    grid-row-end: 3;
+
+    width: 250px;
+    margin-left: 1rem;
+    margin-bottom: 2rem;
+}
+
+.td-common-items > h3{
+    padding: 0 1rem;
+    color: var(--commonality-color);
+}
+.td-common-list{
+    width: 100%;
+    list-style: none;
+    padding: 1rem;
+}
+
+
+.td-common-item{
+    --commonItemAppearAnimationDelay: 0ms;
+
+    text-align: right;
+    margin-bottom: 1rem;
+
+    display: flex;
+    flex-direction: row;
+}
+.td-common-item.appear{
+    animation: commonTodoInsertRight 500ms linear var(--commonItemAppearAnimationDelay) forwards;
+}
+
+
+
+.td-common-description,
+.td-common-remove-btn{
+    font-family: sans-serif;
+    border: none;
+    /* background-color: hsl(0 0% 50% / 0.1); */
+    background: none;
+    color: var(--fc-primary);
+    font-size: .8rem;
+    padding: 5px 10px;
+    font-weight: 700;
+}
+.td-common-description{
+    max-width: 200px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+}
+.td-common-remove-btn:hover{
+    color: var(--close-color);
+}
+
+
+
+/* ==> TODO FORM */
+
+
+.td-form{
+    grid-column: 2;
+    grid-row: 1;
+
+    max-width: 600px;
+    padding: 1rem;
+    text-align: center;
+    margin: 0 auto 2rem auto;
+
+    display: grid;
+    grid-template-columns: 1fr auto;
+    grid-template-rows: auto;
+    gap: 1rem;
+    align-items: flex-start;
+}
+.td-form-description{
+    font-family: var(--ff-primary);
+    font-size: var(--fs-primary);
+    color: var(--fc-primary);
+    padding: 10px;
+    border-bottom-left-radius: 10px;
+    background-color: var(--bc-primary);
+    border: none;
+    border-bottom: 1px solid var(--fc-primary);
+    resize: none;
+    transition: 500ms all ease;
+}
+.td-form-description:focus-visible{
+    /* outline: 1px solid var(--fc-primary); */
+    outline: none;
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0px 50px 100px hsl(0 0% 100% / 0.2),
+    0px 10px 50px hsl(180 100% 50% / 0.1),
+    inset 0px 0px 50px hsl(0 0% 100% / 0.2),
+    inset 0px 0px 10px hsl(180 100% 50% / 0.1);
+}
+.td-form-submit-btn{
+    border: none;
+    outline: 1px solid var(--fc-primary);
+    background: none;
+    color: var(--fc-primary);
+    padding: 10px 15px;
+    font-size: 2rem;
+    border-radius: 13px;
+}
+
+/* ==> TODO LIST */
+
+.td-list{
+    grid-column: 2;
+    grid-row: 2;
+
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.td-item{
+    --todoInsertAnimationDelay: 0ms;
+    width: 100%;
+    padding: 1rem;
+    margin-bottom: 2rem;
+
+    display: grid;
+    grid-template-columns: 1fr auto;
+    grid-template-rows: auto auto;
+    gap: 1rem;
+    
+    /* opacity: 0; */
+}
+.td-item.appear{
+    animation: todoInsertDown 500ms linear var(--todoInsertAnimationDelay) forwards;
+}
+.td-description{
+    grid-column: 1;
+    grid-row: 1;
+
+    font-size: var(--fs-primary);
+    line-height: var(--lh-primary);
+}
+.td-item.completed .td-description{
+    text-decoration: line-through;
+    opacity: 0.5;
+}
+.td-item-controls{
+    grid-column: 2;
+    grid-row: 1;
+
+    display: grid;
+    grid-template-columns: auto auto;
+    grid-template-rows: auto auto;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+}
+.td-remove-btn,
+.td-complete-btn{
+    border: none;
+    background: none;
+    border-radius: 10px;
+}
+.td-remove-btn:active,
+.td-complete-btn:active{
+    scale: .98;
+}
+.td-remove-btn{
+    grid-column: 1;
+    grid-row: 2;
+    align-self: flex-start;
+
+    font-size: 2rem;
+    color: var(--close-color);
+    padding: 0 10px;
+}
+.td-complete-btn{
+    grid-column: 2;
+    grid-row: 1;
+    align-self: flex-end;
+
+    font-size: 3rem;
+    color: var(--fc-primary);
+    padding: 0 10px;
+    scale: 0.5;
+    transition: scale 100ms ease;
+}
+.td-item.completed .td-complete-btn{
+    color: var(--completed-color);
+    scale: 1;
+}
+.td-commonality-control-label{
+    grid-column: 1;
+    grid-row: 1;
+    align-self: flex-end;
+
+    font-size: 1.5rem;
+    display: grid;
+    place-content: center;
+}
+.td-commonality-control-checkbox{
+    /* appearance:none;
+	-webkit-appearance:none;
+	-o-appearance:none */
+    display: none;
+}
+.td-item.common .td-commonality-control-label{
+    color: var(--commonality-color);
+}
+.td-accomplishby-control-label{
+    grid-column: 2;
+    grid-row: 2;
+    align-self: flex-start;
+
+    font-size: 1.5rem;
+    filter: invert(100%);
+
+    display: grid;
+    place-content: center;
+}
+.td-item.completed .td-accomplishby-control-label{
+    opacity: 0.5;
+}
+
+.td-accomplishby-control-datetime{
+   display: none;
+}
+
+
+
+.td-info{
+    grid-column: 1/3;
+    grid-row: 2;
+
+    text-align: left;
+}
+.td-info > span{
+    margin-right: 1rem;
+}
+.td-info > span > span{
+    margin-left: .5rem;
+}
+
+
+.td-created-datetime-label{
+    color: var(--created-color);
+}
+.td-accomplishby-datetime-label{
+    display: none;
+    color: var(--accomplishby-color);
+}
+.td-completed-datetime-label{
+    opacity: 0;
+    color: var(--completed-color);
+    transition: all 200ms ease-in-out;
+}
+.td-item.completed .td-created-datetime-label{
+    opacity: 0.5;
+}
+/* .td-item.completed .td-accomplishby-datetime-label{
+    display: block;
+} */
+
+.td-item.completed .td-completed-datetime-label{
+    opacity: 1; 
+}
+
+.td-created-datetime,
+.td-accomplishby-datetime,
+.td-completed-datetime{
+    color: var(--fc-primary);
+}
+
+
+
+/* ==> TODO MANAGEMENT */
+
+
+.td-management{
+    grid-column: 1;
+    grid-row: 2;
+
+    overflow: scroll;
+}
+.td-management-header{
+    padding: 2rem;
+}
+.td-management-selectall-label{
+    margin-right: 2rem;
+}
+.td-management-selectall-checkbox{
+    margin-right: 1rem;
+}
+.td-management-delete-btn{
+    border: 1px solid var(--fc-primary);
+    background: none;
+    color: var(--fc-primary);
+    font-size: 1rem;
+    text-transform: uppercase;
+    font-weight: 700;
+    padding: 10px;
+    border-radius: 10px;
+}
+.td-management-list{
+    list-style: none;
+    padding: 1rem;
+}
+.td-management-list.appear{
+    animation: fadeIn 600ms linear forwards,
+    slideUp 400ms linear forwards; 
+}
+.td-management-item{
+    padding: 1rem 2rem;
+    border-radius: 10px;
+    margin-bottom: .75rem;
+    background-color: hsl(0 0% 100% / 0.05);
+
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    grid-template-rows: auto auto;
+    gap: 2rem;
+}
+.td-management-item.to-be-deleted{
+    outline: 1px solid var(--close-color);
+}
+.td-management-checkbox{
+    grid-column: 1;
+    grid-row: 1/3;
+}
+.td-management-description{
+    grid-column: 2;
+    grid-row: 1;
+
+    text-align: center;
+    font-size: 1rem;
+}
+.td-management-edit-btn{
+    grid-column: 3;
+    grid-row: 1/3;
+    align-self: center;
+
+    border: 1px solid var(--fc-primary);
+    background: none;
+    color: var(--fc-primary);
+    border-radius: 5px;
+    padding: 10px 8px;
+    font-size: 1rem;
+    text-transform: uppercase;
+    font-weight: 700;
+}
+.td-management-info{
+    grid-column: 2/3;
+    grid-row: 2;
+
+    display: grid;
+    grid-template-columns: auto 1fr;
+    grid-template-rows: auto;
+    gap: 2rem;
+
+}
+.td-management-info > div > p{
+    position: relative;
+    font-size: .8rem;
+    line-height: 1.2rem;
+}
+.td-management-info > div > p::before{
+    content: "";
+    position: absolute;
+    top: 5px; left: -10px;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+}
+.td-management-created-label::before{
+    background-color: var(--created-color);
+}
+.td-management-accomplishby-label::before{
+    background-color: var(--accomplishby-color);
+}
+.td-management-modified-label::before{
+    background-color: var(--modified-color);
+}
+.td-management-completed-label::before{
+    background-color: var(--completed-color);
+}
+.td-management-common-label::before{
+    background-color: var(--commonality-color);
+}
+.td-management-active-label::before{
+    background-color: var(--fc-primary);
+}
+
+.td-management-info > div > p > span{
+    margin-left: 1em;
+}
+
+/* ==> TODO CALENDAR */
+
+.td-calendar{
+    --calendar-height: 100vh;
+    --calendar-header-height: 5rem;
+    --calendar-weekday-list-height: 4rem;
+
+    height: var(--calendar-height);
+    font-size: var(--fs-primary);
+    overflow-y: scroll;
+    opacity: 0;
+
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 5rem 1fr;
+}
+.td-calendar.appear{
+    animation: fadeIn 500ms linear forwards;
+}
+.td-calendar-header{
+    height: var(--calendar-header-height);
+
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto;
+}
+
+.td-calendar-monthyear-display{
+    text-align: center;
+
+    display: grid;
+    grid-template-columns: auto auto;
+    grid-template-rows: auto;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+}
+.td-calendar-month-display,
+.td-calendar-year-display{
+    font-size: 1em;
+    font-weight: 900;
+}
+.td-calendar-month-display{
+   
+    
+}
+.td-calendar-year-display{
+    
+    
+}
+.td-calendar-navigation{
+
+    display: grid;
+    place-content: center;
+}
+.td-calendar-past-month-btn,
+.td-calendar-future-month-btn{
+    border: 1px solid var(--fc-primary);
+    background-color: transparent;
+    color: var(--fc-primary);
+    font-size: 2rem;
+    padding: 5px 20px;
+    border-radius: 10px;
+}
+.td-calendar-past-month-btn{
+    margin-right: 1rem;
+}
+.td-calendar-future-month-btn{
+
+}
+
+
+.td-calendar-days{
+    
+}
+.td-calendar-weekday-list{
+    height: var(--calendar-weekday-list-height);
+    list-style: none;
+    text-align: center;
+
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    grid-template-rows: auto;
+    align-items: center;
+}
+.td-calendar-weekday-item{
+    font-size: .7em;
+}
+
+
+
+.td-calendar-day-list{
+    height: calc(
+        var(--calendar-height) - ( var(--calendar-header-height) + var(--calendar-weekday-list-height) ));
+    list-style: none;
+    background-color: hsl(0 0% 20% / 0.5);
+    padding: 1px 2px 1px 1px;
+
+    display: grid;
+    grid-template-columns: repeat(7,1fr);
+    grid-template-rows: repeat(6,1fr);
+    column-gap: 1px;
+    row-gap: 1px;
+}
+.td-calendar.appear .td-calendar-day-list{
+    animation: fadeIn 600ms linear forwards,
+    slideUp 400ms linear forwards;
+}
+
+.td-calendar-day-item{
+    font-size: .5em;
+    padding: .5rem;
+    background-color: var(--bc-primary);
+}
+.td-calendar-day-item.today{
+    box-shadow: inset 0px 0px 5px var(--created-color);
+}
+.td-calendar-day-number{
+    
+}
+
+
+
+
+
+
+
+
+
+
+/* ==> UPDATE TODO FORM --------------------------*/
+
+.td-update-form-window{
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw;
+    height: 100dvh; height: 100vh;
+    isolation: isolate;
+
+    display: none;
+}
+.td-update-form-overlay{
+    position: absolute;
+    inset: 0;
+    background-color: hsl(0 0% 0% / 0.9);
+    opacity: 0;
+    z-index: -1;
+}
+.td-update-form-content{
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    translate: 0px 50px;
+
+ 
+}
+.td-update-form-window.open{
+    display: block;
+}
+.td-update-form-window.open .td-update-form-overlay{
+    animation: fadeIn 300ms linear forwards;
+}
+.td-update-form-window.open .td-update-form-content{
+    animation: fadeIn 600ms linear forwards,
+    slideUp 400ms linear forwards;
+}
+
+/* ==>> UPDATE FORM */
+
+
+.td-update-form{
+    text-align: center;
+    padding: 2rem;
+
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto auto auto;
+    gap: 2rem;
+}
+
+.td-update-form .form-input-wrapper{
+    
+    display: flex;
+    flex-direction: row;
+}
+.td-update-form .form-input-wrapper > h3{
+    margin-right: 1em;
+}
+
+.td-update-form .form-input-wrapper > label{
+    margin-right: 1.5em;
+}
+.form-radio-false-label{
+    color: var(--close-color);
+}
+.form-radio-true-label{
+    color: var(--completed-color);
+}
+
+.td-update-form-id-label,
+.td-update-form-description-label{
+    font-weight: 700;
+    font-size: 1.2rem;
+}
+.td-update-form-id,
+.td-update-form-description{
+    padding: 10px;
+    font-size: 1.2rem;
+    border: none;
+    background-color: transparent;
+    color: var(--fc-primary);
+    border-bottom: 1px solid var(--fc-primary);
+    border-bottom-right-radius: 10px;
+}
+.td-update-form-id{
+   max-width: 150px;
+}
+.td-update-form-description{
+    font-family: var(--ff-primary);
+    margin-left: .5em;
+    resize: none;
+}
+
+.td-update-form-accomplishby-btn{
+    margin-right: 1rem;
+}
+
+.td-update-form-delete-btn,
+.td-update-form-submit-btn,
+.td-update-form-cancel-btn{
+    border: 1px solid var(--fc-primary);
+    background: none;
+    padding: 8px 10px;
+    border-radius: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+.td-update-form-delete-btn{
+    color: var(--modified-color);
+}
+.td-update-form-submit-btn{
+    color: var(--completed-color);
+    margin: 0 2rem;
+}
+.td-update-form-cancel-btn{
+    color: var(--close-color);
+}
+
+
+/* ==> TODO CONFRIM DIALOG --------------------------*/
+
+.todo-dialog-confirm{
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw;
+    height: 100dvh; height: 100vh;
+    text-align: center;
+    isolation: isolate;
+
+    display: none;
+}
+.todo-dialog-confirm .overlay{
+    position: absolute;
+    inset: 0;
+    background-color: hsl(0 0% 0% / 0.9);
+    opacity: 0;
+    z-index: -1;
+}
+.todo-dialog-confirm .content{
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    translate: 0px 50px;
+
+    display: grid;
+    place-content: center;
+}
+.todo-dialog-confirm.open{
+    display: block;
+}
+.todo-dialog-confirm.open .overlay{
+    animation: fadeIn 300ms linear forwards;
+}
+.todo-dialog-confirm.open .content{
+    animation: fadeIn 600ms linear forwards,
+    slideUp 400ms linear forwards;
+}
+
+.todo-dialog-confirm-box{
+    max-width: 500px;
+    background-color: var(--bc-primary);
+    padding: 2rem;
+    color: var(--fc-primary);
+    border-radius: 10px;
+}
+.todo-dialog-confirm-title{
+    margin-bottom: 1em;
+}
+.todo-dialog-confirm-message{
+    margin-bottom: 1em;
+}
+.todo-dialog-confirm-question{
+    margin-bottom: 1.5rem;
+}
+.todo-dialog-confirm-controls{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto auto;
+    justify-content: center;
+    align-items: center;
+    row-gap: 1rem;
+}
+.todo-dialog-confirm-btn,
+.todo-dialog-cancel-btn{
+    border: none;
+    outline: 1px solid var(--fc-primary);
+    background:none;
+    padding: 10px;
+    text-transform: uppercase;
+    font-weight: 700;
+    transition: all 100ms ease;
+}
+.todo-dialog-confirm-btn{
+    grid-column: 1;
+    grid-row: 1;
+
+    margin-right: 1rem;
+    color: hsl(120 100% 50%);
+}
+
+.todo-dialog-cancel-btn{
+    grid-column: 2;
+    grid-row: 1;
+
+    color: var(--close-color);
+}
+.todo-dialog-confirm-btn:hover,
+.todo-dialog-cancel-btn:hover{
+    background-color: hsl(0 0% 20%);
+}
+.todo-dialog-confirm-btn:active,
+.todo-dialog-cancel-btn:active{
+    scale: .98;
+}
+.todo-dialog-confirm-btn:focus,
+.todo-dialog-cancel-btn:focus{
+    outline: 3px solid blue;
+}
+.todo-dialog-confirm-donotshow-label{
+    grid-column: 1/3;
+    grid-row: 2;
+
+    padding: 1rem;
+    text-align: left;
+}
+.todo-dialog-confirm-donotshow-checkbox{
+    margin-left: .5em;
+}
+
+
+/* ==> SITE NOTIFICATION --------------------------*/
+
+.notification{
+    position: fixed;
+    bottom: 0; left: 50%;
+    width: 100vw;
+    max-width: 900px;
+    min-height: 50px;
+    translate: -50%;
+    isolation: isolate;
+
+    display: none;
+}
+.notification-overlay{
+    
+    position: absolute;
+    inset: 0;
+    /* background-color: var(--bc-primary); */
+    opacity: 0;
+    z-index: -1;
+}
+.notification-content{
+    position: relative;
+    padding: 1rem;
+    opacity: 0;
+    border-radius: 50px;
+    translate: 0px 50px;
+    isolation: isolate;
+
+    display: grid;
+    grid-template-columns: 3fr 1fr;
+    grid-template-rows: auto;
+}
+.notification-content::before{
+    content: "";
+    position: absolute;
+    top: 50%; left: 50%;
+    width: 33vw;
+    height: 33vw;
+    background: radial-gradient(
+        var(--fc-primary),
+        hsl(180 100% 50% / 0.5),
+        transparent,
+        var(--bc-primary)
+    );
+    border-radius: 50%;
+    filter: blur(10px);
+    opacity: 0.2;
+    translate: -50% -50%;
+    z-index: -1;
+}
+.notification.open{
+    display: block;
+}
+.notification.open .notification-overlay{
+    animation: fadeIn 300ms linear forwards;
+}
+.notification.open .notification-content{
+    animation: fadeIn 600ms linear forwards,
+    slideUp 400ms linear forwards;
+}
+
+.notification-message{
+    
+    padding: .5rem;
+    color: var(--fc-primary);
+    font-size: 1.2rem;
+    font-weight: 700;
+    line-height: 1.5rem;
+    text-align: center;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+}
+.notification-close-btn{
+    position: relative;
+    border: none;
+    background: none;
+    font-size: 1.5rem;
+    color: var(--fc-primary);
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+
+
+
+
+/* === DEVICE RESPONSE === */
+
+@media only screen and (max-width: 900px){
+    :root{
+        --fs-primary: 1.2rem;
+    }
+    .header-primary{
+        
+    }
+    .website-title{
+        font-size: 1rem;
+    }
+    .todos{
+        grid-template-columns: 1fr;
+        grid-template-rows: auto auto 1fr;
+        justify-content: flex-start;
+    }
+    .td-common-items{
+        grid-column: 1;
+        grid-row: 1;
+
+        width: 100vw;
+        height: 5rem;
+    }
+    .td-common-items > h3{
+        font-size: 1rem;
+    }
+    .td-common-list{
+        
+        overflow-y: scroll;
+        display: flex;
+        flex-direction: row;
+    }
+    .td-form{
+        grid-column: 1;
+        grid-row: 2;
+    }
+    .td-list{
+        grid-column: 1;
+        grid-row: 3;
+  
+        padding: 0 2rem;
+    }
+    .td-common-item{
+        /* display: inline; */
+    }
+}
+@media only screen and (max-width: 700px){
+    .header-primary{
+    
+        margin-bottom: 2rem;
+        height: var(--hd-primary-height);
+    
+        grid-template-columns: auto;
+        grid-template-rows: auto;
+        align-items:normal;
+        justify-content: normal;
+    }
+    .website-title{
+        text-align: center;
+        grid-column: 1;
+        grid-row: 1;
+
+        padding: 1rem;
+    }
+    .navigation-list{
+        grid-column: 1;
+        grid-row: 2;
+
+        gap: 0;
+        justify-content: space-evenly;
+    }
+
+    .navigation-item::before{
+        content: "";
+        position: absolute;
+        border-right: 80px solid var(--created-color);
+        border-top: 40px solid transparent;
+        z-index: -1;
+        opacity: 0.2;
+    }
+    .navigation-link{
+        display: inline-block;
+        text-decoration: none;
+        padding: 10px;
+        border-radius: 10px;
+        text-transform: uppercase;
+        font-weight: 700;
+        color: var(--fc-primary);
+        
+    }
+}
+@media only screen and (max-width: 630px){
+    /* ==> TODO MANAGEMENT */
+
+
+  
+
+
+    .td-management-item{
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: auto auto auto;
+        gap: 1rem;
+    }
+
+    .td-management-checkbox{
+        grid-column: 1;
+        grid-row: 3;
+        align-self: center;
+        justify-self: center;
+    }
+    .td-management-description{
+        grid-column: 1/3;
+        grid-row: 1;
+
+        text-align: center;
+        font-size: 1rem;
+    }
+    .td-management-edit-btn{
+        grid-column: 2;
+        grid-row: 3;
+        align-self: center;
+        justify-self: center;
+    }
+    .td-management-info{
+        grid-column: 1/3;
+        grid-row: 2;
+
+        display: grid;
+        grid-template-columns: auto 1fr;
+        grid-template-rows: auto;
+    }
+ 
+    .td-management-info > div > p{
+        position: relative;
+        font-size: .8rem;
+        line-height: 1.2rem;
+    }
+}
+@media only screen and (max-width: 530px){
+    /* ==> TODO FORM */
+
+
+
+.td-form-description{
+    width: 300px;
+    padding: 10px;
+    border-bottom-left-radius: 10px;
+  
+}
+
+.td-form-submit-btn{
+   
+    padding: 5px 10px;
+    font-size: 1rem;
+}
+}
+
+/* === ANIMATIONS === */
+
+@keyframes fadeIn {
+    from{
+        opacity: 0;
+    }
+    to{
+        opacity: 1;
+    }
+}
+
+@keyframes slideUp {
+    from{
+        translate: 0px 20px;
+    }
+    to{
+        translate: 0px 0px;
+    }
+}
+
+@keyframes todoInsertDown {
+    from{
+        opacity: 0;
+        translate: 0px -20px;
+    }
+    to{
+        opacity: 1;
+        translate: 0px 0px;
+    }
+}
+
+@keyframes commonTodoInsertRight {
+    from{
+        opacity: 0;
+        translate: -20px 0px;
+    }
+    to{
+        opacity: 1;
+        translate: 0px 0px;
+    }
+}

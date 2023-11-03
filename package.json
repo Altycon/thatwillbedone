@@ -1,0 +1,21 @@
+{
+  "name": "thatwillbedone",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Another To-do application.",
+  "main": "server.js",
+  "scripts": {
+    "dev": "nodemon server.js",
+    "start": "node server.js"
+  },
+  "keywords": [],
+  "author": "Clayton McDaniel",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2",
+    "serve-favicon": "^2.5.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  }
+}

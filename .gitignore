@@ -1,0 +1,9 @@
+node_modules
+
+.env
+
+component-structures.html
+
+create_data.js
+
+year_days_data.js

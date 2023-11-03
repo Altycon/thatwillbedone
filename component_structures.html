@@ -1,0 +1,148 @@
+
+<!-- todo component -->
+
+<li class="td-item" data-todo-id="1234">
+
+    <p class="td-description" data-todo-display="description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas tenetur accusamus aut quis doloribus rerum architecto molestias animi quos nulla!</p>
+
+    <div class="td-item-controls">
+
+        <button type="button" class="btn td-remove-btn" data-todo-control="remove">&#x2717;</button>
+
+        <button type="button" class="btn td-complete-btn" data-todo-control="complete">&#10003;</button>
+
+        <label class="btn td-commonality-control-label">
+
+            <!-- Star layared html entity -->
+            &#10029;&nbsp;
+
+            <input type="checkbox" class="td-commonality-control-checkbox" data-todo-control="commonality" autocomplete="off">
+
+        </label>
+
+        <label class="btn td-accomplishby-control-label">
+
+            &#x1F4C5;&nbsp;
+            <input type="datetime-local" class="td-accomplishby-control-datetime" data-todo-control="accomplishby">
+
+        </label>
+
+    </div>
+
+    <div class="td-info">
+
+        <span class="td-created-datetime-label">
+
+            <!-- checkmark written html entity -->
+            &rdsh;
+
+            <span class="td-created-datetime" data-todo-display="created-datetime">10/10/23 4:23am</span>
+
+        </span>
+
+        <span class="td-accomplishby-datetime-label">
+
+            <!-- pencil lower right html entity (this needs to be a calendar)-->
+            &#9998;
+
+            <span class="td-accomplishby-datetime" data-todo-display="accomplishby-datetime">11/10/23 12:00am</span>
+
+        </span>
+
+        <span class="td-completed-datetime-label">
+
+            <!-- checkmark written html entity -->
+            &#10003;
+
+            <span class="td-completed-datetime" data-todo-display="completed-datetime">10/12/23 10:14pm</span>
+
+        </span>
+
+    </div>
+
+</li>
+
+
+
+<!-- common todo item -->
+
+<li class="td-common-item" data-todo-id="1234" data-common-todo-id="2323">
+
+    <button class="btn td-common-description" data-todo-display="description" data-todo-control="add-todo">Common description1</button>
+
+    <button class="btn td-common-remove-btn" data-todo-control="remove">&#x2717;</button>
+
+</li>
+
+<li class="td-common-item" data-todo-id="2345">
+
+    <button class="btn td-common-description" data-todo-display="description" data-todo-control="add">Common description2</button>
+
+    <button class="btn td-common-remove-btn" data-todo-control="remove">&#x2717;</button>
+
+</li>
+
+
+
+
+
+<!-- todo management component -->
+
+
+
+<li class="td-management-item" data-todo-id="1234">
+
+    <input type="checkbox" class="td-management-checkbox" data-todo-control="delete">
+
+    <p class="td-management-description" data-todo-display="description">Management item description</p>
+
+    <button type="button" class="td-management-edit-btn" data-todo-control="edit">Edit</button>
+
+    <div class="td-management-info">
+
+        <div>
+
+            <p class="td-management-created-label">
+
+                Created:<span class="td-management-created-datetime" data-todo-display="created-time">10/10/23 4:23am</span>
+
+            </p>
+
+            <p class="td-management-accomplishby-label">
+
+                Accomplish by:<span class="td-management-accomplish-by-datetime" data-todo-display="accomplish-by-time">11/10/23 12:00am</span>
+
+            </p>
+
+            <p class="td-management-modified-label">
+
+                Modified:<span class="td-management-modified-datetime" data-todo-display="modified-time">11/10/23 12:00am</span>
+
+            </p>
+
+            <p class="td-management-completed-label">
+
+                Completed:<span class="td-management-completed-datetime" data-todo-display="completed-time">11/10/23 12:00am</span>
+
+            </p>
+        </div>
+
+        <div>
+            
+            <p class="td-management-common-label">
+
+                Common:<span class="td-management-common" data-todo-display="common" data-value="false">false</span>
+
+            </p>
+
+             <p class="td-management-active-label">
+
+                 Active:<span class="td-management-active" data-todo-display="active" data-value="true">True</span>
+
+             </p>
+
+        </div>
+
+    </div>
+
+</li>
