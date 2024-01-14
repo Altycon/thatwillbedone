@@ -1,0 +1,779 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clayton McDaniel</title>
+    <link rel="stylesheet" href="main.css">
+    <script type="module" src="js/index.js"></script>
+</head>
+<body>
+
+    <div class="page-wrapper">
+
+        <header class="header-primary">
+
+            <h1 class="page-title"><a href="/#main" data-nav-link="main">thatwillbedone</a></h1>
+
+            <div class="header-primary-controls">
+
+                <button type="button" class="btn navigation-secondary-btn" data-control="navigation-secondary">&equiv;</button>
+
+            </div>
+
+            <nav class="navigation-secondary" data-connect="navigation-secondary">
+
+                <ul class="navigation-secondary-list">
+
+                    <li class="navigation-secondary-item">
+
+                        <a href="/#profile" class="navigation-secondary-link" data-nav-link="profile">Profile</a>
+                        
+                    </li>
+
+                    <li class="navigation-secondary-item">
+
+                        <a href="/#settings" class="navigation-secondary-link" data-nav-link="settings">Settings</a>
+                        
+                    </li>
+
+                    <li class="navigation-secondary-item">
+
+                        <a href="/#connections" class="navigation-secondary-link" data-nav-link="connections">Connections</a>
+                        
+                    </li>
+
+                </ul>
+            </nav>
+
+            <nav class="navigation-primary">
+
+                <ul class="navigation-primary-list">
+
+                    <li class="navigation-primary-item">
+
+                        <a href="/#todos" class="navigation-primary-link" data-nav-link="todos">To-do</a>
+
+                    </li>
+
+                    <li class="navigation-primary-item">
+
+                        <a href="/#lists" class="navigation-primary-link" data-nav-link="lists">Lists</a>
+                        
+                    </li>
+                    <li class="navigation-primary-item">
+
+                        <a href="/#notes" class="navigation-primary-link" data-nav-link="notes">Notes</a>
+                        
+                    </li>
+                    
+                </ul>
+
+            </nav>
+
+        </header>
+        <main>
+
+            <section id="main" class="page main" data-page="main">
+
+                <div class="page-content">
+
+                    <header class="page-header">
+
+                        <p>Do something</p>
+
+                    </header>
+                    
+                </div>
+            </section>
+
+            <section id="todos" class="page todos" data-page="todos">
+
+                <div class="page-content">
+
+                    <header class="page-header">
+
+                        <h2>Todos</h2>
+    
+                        <div class="page-controls">
+    
+                            <button type="button" class="btn new-todo-form-open-btn" data-href="/?form=todo&active=true#todos" data-control="todo-form">New</button>
+    
+                            <button type="button" class="btn manage-todos-btn">Manage</button>
+    
+                        </div>
+    
+                    </header>
+    
+                    <form action="" class="new-todo-form" data-connect="todo-form">
+    
+                        <div class="new-todo-form-textarea-wrapper">
+    
+                            <textarea name="todo" rows="2" autocomplete="off" required>...todo</textarea>
+    
+                        </div>
+    
+                        <div class="new-todo-form-controls">
+    
+                            <button type="button" class="btn new-todo-form-datetime-open-btn calendar-entity">&#128197;</button>
+    
+                            <button type="submit" class="btn">+</button>
+    
+                        </div>
+    
+                    </form>
+    
+                    <ul class="todo-list">
+
+                        <!-- Todos inserted here via javascript -->
+
+                    </ul>
+
+                </div>
+
+            </section>
+
+            <section id="lists" class="page lists" data-page="lists">
+
+                <div class="page-content">
+
+                    <header class="page-header">
+
+                        <h2>Lists</h2>
+
+                        <div class="page-controls">
+    
+                            <button type="button" class="btn new-list-form-open-btn" data-href="/?form=list&active=true#lists" data-control="list-form">New</button>
+    
+                            <button type="button" class="btn manage-lists-btn">Manage</button>
+    
+                        </div>
+
+                    </header>
+
+                    <form action="" class="new-list-form" data-connect="list-form">
+    
+                        <div class="new-list-form-list-wrapper">
+                            
+                            <label>
+
+                                <input type="text" name="title" placeholder="Title" autocomplete="off" required>
+
+                            </label>
+
+                            <label>
+
+                                <input type="text" name="item" placeholder="Item" autocomplete="off">
+
+                                <button type="button" class="btn new-list-form-additem-btn">+</button>
+
+                            </label>
+    
+                        </div>
+    
+                        <div class="new-list-form-controls">
+    
+                            <button type="button" class="btn new-list-form-datetime-open-btn calendar-entity">&#128197;</button>
+    
+                            <button type="submit" class="btn">+</button>
+    
+                        </div>
+
+                        <ul class="new-list-form-list">
+
+                            <!-- form list items inserted here via javascript -->
+
+                        </ul>
+
+                        <input type="text" name="items" hidden>
+    
+                    </form>
+
+                    <ul class="list-groups">
+
+                        <!-- new lists inserted here via javascript -->
+
+                    </ul>
+
+                </div>
+
+                
+                
+            </section>
+
+            <section id="notes" class="page notes" data-page="notes">
+
+                <div class="page-content">
+
+                    <header class="page-header">
+
+                        <h2>Notes</h2>
+
+                        <div class="page-controls">
+    
+                            <button type="button" class="btn new-note-form-open-btn" data-href="/?form=note&active=true#notes" data-control="note-form">New</button>
+    
+                            <button type="button" class="btn manage-notes-btn">Manage</button>
+    
+                        </div>
+
+                    </header>
+
+                    <form action="" class="new-note-form" data-connect="note-form">
+    
+                        <div class="new-note-form-textarea-wrapper">
+    
+                            <textarea name="note" id="" rows="2" autocomplete="off" required>...Note</textarea>
+    
+                        </div>
+    
+                        <div class="new-note-form-controls">
+    
+                            <button type="submit" class="btn">+</button>
+    
+                        </div>
+    
+                    </form>
+
+                    <ul class="note-list">
+
+                        <!-- new notes inserted here via javascript -->
+
+                        
+                    </ul>
+
+                </div>
+
+                
+                
+            </section>
+
+            <section id="profile" class="page" data-page="profile">
+
+                <div class="page-content">
+
+                    <header class="page-header">
+
+                        <h2>Profile</h2>
+
+                    </header>
+
+                    <form class="profile-form">
+
+                        <label id="ProfileNameInput">Name:
+
+                            <input type="text" name="name" autocomplete="off">
+
+                        </label>
+                            
+                        <div class="profile-form-controls">
+
+                            <button type="submit">Save</button>
+
+                        </div>
+
+                    </form>
+
+                </div>
+                
+            </section>
+
+            <section id="settings" class="page" data-page="settings">
+
+                <div class="page-content">
+
+                    <header class="page-header">
+
+                        <h2>Settings</h2>
+
+                    </header>
+
+                    <form action="" class="settings-form">
+
+                        <label for="SettingsThemeInput">Dark/Light Mode:
+
+                            <input type="checkbox" name="theme" id="SettingsThemeInput" autocomplete="off">
+
+                        </label>
+
+                        <label for="SettingsTextColorInput">Text Color:
+
+                            <input type="color" name="textcolor" id="SettingsTextColorInput" value="#000" autocomplete="off">
+
+                        </label>
+
+                        <label for="SettingsTextSizeInput">Text Size:
+
+                            <input type="number" name="textsize" id="SettingsTextSizeInput" autocomplete="off">
+
+                        </label>
+
+                        <label for="SettingsBackgroundColorInput">Background Color:
+
+                            <input type="color" name="backgroundcolor" id="SettingsBackgroundColorInput" value="#ffffff" autocomplete="off">
+
+                        </label>
+
+                        <div class="settings-form-controls">
+
+                            <button type="submit" class="btn">Save</button>
+                        </div>
+
+                    </form>
+                    
+                </div>
+                
+            </section>
+
+            <section id="calculator" class="page" data-page="calculator">
+
+                <div class="page-content">
+
+                    <div class="calculator-display">
+
+                        <div class="calculator-output-display">
+
+                            <p class="calculator-operation-output"></p>
+
+                            <p class="calculator-output">2.5+5.2-7.7=0</p>
+
+                        </div>
+
+                        <div class="calculator-keys">
+
+                            <button type="button" class="btn calculator-key" value="clear">C</button>
+
+                            <button type="button" class="btn calculator-key" value="moveleft">&#8676;</button>
+                            <button type="button" class="btn calculator-key" value="moveright">&#8677;</button>
+                            <button type="button" class="btn calculator-key" value="/">&#8725;</button>
+                            <button type="button" class="btn calculator-key" value="7">7</button>
+                            <button type="button" class="btn calculator-key" value="8">8</button>
+                            <button type="button" class="btn calculator-key" value="9">9</button>
+                            <button type="button" class="btn calculator-key" value="*">&#215;</button>
+                            <button type="button" class="btn calculator-key" value="4">4</button>
+                            <button type="button" class="btn calculator-key" value="5">5</button>
+                            <button type="button" class="btn calculator-key" value="6">6</button>
+                            <button type="button" class="btn calculator-key" value="-">&#8722;</button>
+                            <button type="button" class="btn calculator-key" value="1">1</button>
+                            <button type="button" class="btn calculator-key" value="2">2</button>
+                            <button type="button" class="btn calculator-key" value="3">3</button>
+                            <button type="button" class="btn calculator-key" value="+">&#43;</button>
+                            <button type="button" class="btn calculator-key" value="0">0</button>
+                            <button type="button" class="btn calculator-key" value=".">.</button>
+                            <button type="button" class="btn calculator-key" value="=">&#61;</button>
+                            <button type="button" class="btn calculator-key" value="a">&#593;</button>
+                        </div>
+                    </div>
+                    
+                </div>
+                
+            </section>
+
+            <section id="connections" class="page" data-page="connections">
+
+                <div class="page-content">
+
+                    <header class="page-header">
+
+                        <h2>Connections</h2>
+
+                    </header>
+
+                    <div class="connections-none">
+
+                        <h2>You have no connections</h2>
+
+                        <p><a href="/" class="connections-none-link">Don't do it</a></p>
+
+                    </div>
+                    
+                </div>
+                
+            </section>
+
+            <section id="calendar" class="page td-calendar" data-page="calendar">
+
+                <div class="page-content">
+
+                    <header class="td-calendar-header">
+
+                        <p class="td-calendar-monthyear-display">
+                            <span class="td-calendar-month-display" data-calendar-display="month">Jan</span>
+                            <span class="td-calendar-year-display" data-calendar-display="year">2023</span>
+                        </p>
+        
+                        <nav class="td-calendar-navigation">
+        
+                            <div class="td-calendar-navigation-controls">
+        
+                                <button type="button" class="btn td-calendar-past-month-btn" data-calendar-control="past-month">&lt;</button>
+                                <button type="button" class="btn td-calendar-future-month-btn" data-calendar-control="future-month">&gt;</button>
+        
+                            </div>
+                            
+                        </nav>
+        
+                    </header>
+        
+                    <div class="td-calendar-days">
+                        <ul class="td-calendar-weekday-list">
+                            <li class="td-calendar-weekday-item">Sun</li>
+                            <li class="td-calendar-weekday-item">Mon</li>
+                            <li class="td-calendar-weekday-item">Tue</li>
+                            <li class="td-calendar-weekday-item">Wed</li>
+                            <li class="td-calendar-weekday-item">Thu</li>
+                            <li class="td-calendar-weekday-item">Fri</li>
+                            <li class="td-calendar-weekday-item">Sat</li>
+                        </ul>
+                        <ul class="td-calendar-day-list">
+                            <li class="td-calendar-day-item" data-calendar-control="day">
+                                <p class="td-calendar-day-number">1</p>
+                            </li>
+                            <li class="td-calendar-day-item" data-calendar-control="day">
+                                <p class="td-calendar-day-number">2</p>
+                            </li>
+                            <li class="td-calendar-day-item" data-calendar-control="day">
+                                <p class="td-calendar-day-number">3</p>
+                            </li>
+                            <li class="td-calendar-day-item" data-calendar-control="day">
+                                <p class="td-calendar-day-number">4</p>
+                            </li>
+                            <li class="td-calendar-day-item" data-calendar-control="day">
+                                <p class="td-calendar-day-number">5</p>
+                            </li>
+                            <li class="td-calendar-day-item" data-calendar-control="day">
+                                <p class="td-calendar-day-number">6</p>
+                            </li>
+                            <li class="td-calendar-day-item" data-calendar-control="day">
+                                <p class="td-calendar-day-number">7</p>
+                            </li>
+                            <li class="td-calendar-day-item" data-calendar-control="day">
+                                <p class="td-calendar-day-number">8</p>
+                            </li>
+                            <li class="td-calendar-day-item" data-calendar-control="day">
+                                <p class="td-calendar-day-number">9</p>
+                            </li>
+                            <li class="td-calendar-day-item" data-calendar-control="day">
+                                <p class="td-calendar-day-number">10</p>
+                            </li>
+                            <li class="td-calendar-day-item" data-calendar-control="day">
+                                <p class="td-calendar-day-number">11</p>
+                            </li>
+                            <li class="td-calendar-day-item" data-calendar-control="day">
+                                <p class="td-calendar-day-number">12</p>
+                            </li>
+                            <li class="td-calendar-day-item" data-calendar-control="day">
+                                <p class="td-calendar-day-number">13</p>
+                            </li>
+                            <li class="td-calendar-day-item" data-calendar-control="day">
+                                <p class="td-calendar-day-number">14</p>
+                            </li>
+                            <li class="td-calendar-day-item" data-calendar-control="day">
+                                <p class="td-calendar-day-number">15</p>
+                            </li>
+                            <li class="td-calendar-day-item" data-calendar-control="day">
+                                <p class="td-calendar-day-number">16</p>
+                            </li>
+                            <li class="td-calendar-day-item" data-calendar-control="day">
+                                <p class="td-calendar-day-number">17</p>
+                            </li>
+                            <li class="td-calendar-day-item" data-calendar-control="day">
+                                <p class="td-calendar-day-number">18</p>
+                            </li>
+                            <li class="td-calendar-day-item" data-calendar-control="day">
+                                <p class="td-calendar-day-number">19</p>
+                            </li>
+                            <li class="td-calendar-day-item" data-calendar-control="day">
+                                <p class="td-calendar-day-number">20</p>
+                            </li>
+                            <li class="td-calendar-day-item" data-calendar-control="day">
+                                <p class="td-calendar-day-number">21</p>
+                            </li>
+                            <li class="td-calendar-day-item" data-calendar-control="day">
+                                <p class="td-calendar-day-number">22</p>
+                            </li>
+                            <li class="td-calendar-day-item" data-calendar-control="day">
+                                <p class="td-calendar-day-number">23</p>
+                            </li>
+                            <li class="td-calendar-day-item" data-calendar-control="day">
+                                <p class="td-calendar-day-number">24</p>
+                            </li>
+                            <li class="td-calendar-day-item" data-calendar-control="day">
+                                <p class="td-calendar-day-number">25</p>
+                            </li>
+                            <li class="td-calendar-day-item" data-calendar-control="day">
+                                <p class="td-calendar-day-number">26</p>
+                            </li>
+                            <li class="td-calendar-day-item" data-calendar-control="day">
+                                <p class="td-calendar-day-number">27</p>
+                            </li>
+                            <li class="td-calendar-day-item" data-calendar-control="day">
+                                <p class="td-calendar-day-number">28</p>
+                            </li>
+                            <li class="td-calendar-day-item" data-calendar-control="day">
+                                <p class="td-calendar-day-number">29</p>
+                            </li>
+                            <li class="td-calendar-day-item" data-calendar-control="day">
+                                <p class="td-calendar-day-number">30</p>
+                            </li>
+                            <li class="td-calendar-day-item" data-calendar-control="day">
+                                <p class="td-calendar-day-number">31</p>
+                            </li>
+                            <li class="td-calendar-day-item" data-calendar-control="day">
+                                <p class="td-calendar-day-number">32</p>
+                            </li>
+                            <li class="td-calendar-day-item" data-calendar-control="day">
+                                <p class="td-calendar-day-number">33</p>
+                            </li>
+                            <li class="td-calendar-day-item" data-calendar-control="day">
+                                <p class="td-calendar-day-number">34</p>
+                            </li>
+                            <li class="td-calendar-day-item" data-calendar-control="day">
+                                <p class="td-calendar-day-number">35</p>
+                            </li>
+                            <li class="td-calendar-day-item" data-calendar-control="day">
+                                <p class="td-calendar-day-number">36</p>
+                            </li>
+                            <li class="td-calendar-day-item" data-calendar-control="day">
+                                <p class="td-calendar-day-number">37</p>
+                            </li>
+                            <li class="td-calendar-day-item" data-calendar-control="day">
+                                <p class="td-calendar-day-number">38</p>
+                            </li>
+                            <li class="td-calendar-day-item" data-calendar-control="day">
+                                <p class="td-calendar-day-number">39</p>
+                            </li>
+                            <li class="td-calendar-day-item" data-calendar-control="day">
+                                <p class="td-calendar-day-number">40</p>
+                            </li>
+                            <li class="td-calendar-day-item" data-calendar-control="day">
+                                <p class="td-calendar-day-number">41</p>
+                            </li>
+                            <li class="td-calendar-day-item" data-calendar-control="day">
+                                <p class="td-calendar-day-number">42</p>
+                            </li>
+                        </ul>
+                    </div>
+        
+                    <!-- <div class="td-calendar-dayview-window">
+                        <div class="td-calendar-dayview-overlay"></div>
+        
+                        <div class="td-calendar-dayview-content">
+        
+                            <header class="td-calendar-dayview-header">
+        
+                                <div>
+                                    <span class="td-calendar-dayview-weekday" data-calendar-day-display="weekday">Thursday</span>
+        
+                                    <span class="td-calendar-dayview-month" data-calendar-day-display="month">Oct</span>
+        
+                                    <span class="td-calendar-dayview-date" data-calendar-day-display="date">05</span>
+        
+                                    <span class="td-calendar-dayview-year" data-calendar-day-display="year">2023</span>
+                                </div>
+        
+                                <button type="button" class="btn td-calendar-dayview-close-btn" data-calendar-day-control="close">&#x2717;</button>
+        
+                            </header>
+        
+                            <div class="td-calendar-dayview">
+        
+                                <h2>that will be done this day</h2>
+        
+                                <ul class="td-calendar-dayview-todo-list">
+        
+                                    <li class="td-calendar-dayview-todo-item"><span>-</span>This is one todo.</li>
+        
+                                    <li class="td-calendar-dayview-todo-item"><span>-</span>This is another todo. Lorem ipsum dolor sit amet consectetur adipisicing elit. Est esse deserunt natus fugiat iusto doloribus beatae totam expedita molestias officia.</li>
+        
+                                </ul>
+        
+                            </div>
+                        </div>
+                    </div> -->
+                    
+                </div>
+                
+            </section>
+
+            <section id="stopwatch" class="page" data-page="stopwatch">
+
+                <div class="page-content">
+
+                    <header class="page-header">
+
+                        <h2>Stopwatch</h2>
+
+                    </header>
+
+                    <div class="stopwatch-display js-stopwatch-display" data-state="ready">
+
+                        <section class="stopwatch-notification js-stopwatch-notification">
+
+                            <p class="stopwatch-notification-message js-stopwatch-notification-message">message</p>
+
+                        </section>
+                        
+                        <section class="stopwatch-time">
+
+                            <span class="stopwatch-time-output js-stopwatch-time-output">00:00:00:00</span>
+
+                        </section>
+
+                        <section class="stopwatch-data">
+
+                            <span class="js-stopwatch-total-milliseconds-output">0</span>
+
+                        </section>
+
+                        <section class="stopwatch-lights">
+
+                            <span class="stopwatch-started-light"></span>
+
+                            <span class="stopwatch-paused-light"></span>
+
+                            <span class="stopwatch-error-light"></span>
+
+                        </section>
+
+                        <section class="stopwatch-controls">
+
+                            <button type="button" class="stopwatch-start-btn js-stopwatch-start-btn">START</button>
+
+                            <button type="button" class="stopwatch-lap-btn js-stopwatch-lap-btn">LAP</button>
+
+                            <button type="button" class="stopwatch-pause-btn js-stopwatch-pause-btn">PAUSE</button>
+
+                            <button type="button" class="stopwatch-reset-btn js-stopwatch-reset-btn">RESET</button>
+
+                        </section>
+
+                        <section class="stopwatch-laps">
+
+                            <table class="stopwatch-table">
+
+                                <thead class="js-stopwatch-table-head">
+                                    
+                                </thead>
+
+                                <tbody class="js-stopwatch-table-body">
+                                    
+                                </tbody>
+
+                            </table>
+
+                        </section>
+
+                    </div>
+                    
+                </div>
+                
+            </section>
+
+            <section id="timer" class="page" data-page="timer">
+
+                <div class="page-content">
+
+                    <header class="page-header">
+
+                        <h2>Timer</h2>
+
+                    </header>
+
+                    <div class="timer-display js-timer-display" data-state="">
+                        <section class="timer-notification js-timer-notification">
+                            <p class="timer-notification-message js-timer-notification-message">message</p>
+                        </section>
+                        <section class="timer-select js-timer-select">
+                            <div>
+                                <input type="number" min="0" max="5" value="0" name="hourtens" class="hour-tens-input" autocomplete="off">
+                                <input type="number" min="0" max="9" value="0" name="hourones" class="hour-ones-input" autocomplete="off">
+                            </div>
+                            <p>:</p>
+                            <div>
+                                <input type="number" min="0" max="5" value="0" name="minutetens" class="minute-tens-input" autocomplete="off">
+                                <input type="number" min="0" max="9" value="0" name="minuteones" class="minute-ones-input" autocomplete="off">
+                            </div>
+                            <p>:</p>
+                            <div>
+                                <input type="number" min="0" max="5" value="0" name="secondtens" class="second-tens-input" autocomplete="off">
+                                <input type="number" min="0" max="9" value="0" name="secondones" class="second-ones-input" autocomplete="off">
+                            </div>
+                        </section>
+                        <section class="timer-output-display">
+                            <p class="timer-output js-timer-output">00:00:00</p>
+                        </section>
+                        <section class="timer-lights">
+                            <span class="timer-started-light"></span>
+                            <span class="timer-paused-light"></span>
+                            <span class="timer-error-light"></span>
+                        </section>
+                        <section class="timer-controls">
+                            <button type="button" class="timer-start-btn js-timer-start-btn">START</button>
+                            <button type="button" class="timer-pause-btn js-timer-pause-btn" hidden>PAUSE</button>
+                            <button type="button" class="timer-resume-btn js-timer-resume-btn" hidden>RESUME</button>
+                            <button type="button" class="timer-reset-btn js-timer-reset-btn" hidden>RESET</button>
+                        </section>
+                    </div>
+                    
+                </div>
+                
+            </section>
+
+        </main>
+
+        <footer class="footer-primary">
+            <nav class="navigation-tertiary" data-connect="tertiary">
+
+                <ul class="navigation-tertiary-list">
+
+                    <li class="navigation-tertiary-item">
+
+                        <a href="/#calculator" class="navigation-tertiary-link" data-nav-link="calculator">C</a>
+
+                    </li>
+
+                    <li class="navigation-tertiary-item">
+
+                        <a href="?date=today#calendar" class="navigation-tertiary-link" data-nav-link="calendar">D</a>
+                        
+                    </li>
+
+                    <li class="navigation-tertiary-item">
+
+                        <a href="/#stopwatch" class="navigation-tertiary-link" data-nav-link="stopwatch">S</a>
+                        
+                    </li>
+
+                    <li class="navigation-tertiary-item">
+
+                        <a href="/#timer" class="navigation-tertiary-link" data-nav-link="timer">T</a>
+                        
+                    </li>
+
+                </ul>
+
+            </nav>
+
+            <button type="button" class="btn navigation-tertiary-btn" data-control="tertiary">&#8712;</button>
+
+        </footer>
+    </div>
+
+    <div class="notification">
+
+        <div class="notification-content">
+
+            <p class="notification-title">Notifcation Title</p>
+
+            <p class="notification-message">Message and Lorem ipsum dolor sit amet.</p>
+
+            <p class="notification-instructions">instructions here and here.</p>
+
+            <button type="button" class="btn notification-close-btn">&#x2717;</button>
+
+        </div>
+
+    </div>
+</body>
+</html>

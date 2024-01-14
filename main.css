@@ -1,0 +1,2409 @@
+/*
+----------------------------------------------------
+
+        VARIABLES
+
+----------------------------------------------------
+*/
+
+:root{
+
+    --ff-primary: system-ui;
+
+    --fc-primary: hsl(0 0% 0%);
+
+    --bc-primary: hsl(0 0% 100%);
+
+    --c-danger: hsl(0 100% 50%);
+
+    --stopwatch-color-ready: turquoise;
+    --stopwatch-color-started: limegreen;
+    --stopwatch-color-paused: yellow;
+    --stopwatch-color-reset: red;
+}
+
+/*
+----------------------------------------------------
+
+        RESETS
+
+----------------------------------------------------
+*/
+*,::before,::after{margin: 0;padding: 0;box-sizing: border-box;}
+
+/*
+----------------------------------------------------
+
+        UTILITY CLASSES
+
+----------------------------------------------------
+*/
+.btn{
+    cursor: pointer;
+}
+.entity{
+    filter: grayscale(100);
+}
+/*
+----------------------------------------------------
+
+        SITEWIDE
+
+----------------------------------------------------
+*/
+html{
+    font-family: var(--ff-primary);
+    color: var(--fc-primary);
+}
+body{
+    height: 100dvh; height: 100vh;
+    background-color: var(--bc-primary);
+}
+
+.page-wrapper{
+    height: 100vh; height: 100dvh;
+    max-height: 100dvh; max-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 1fr auto;
+    
+}
+.header-primary{
+    --header-primary-spacing: 1rem;
+    position: relative;
+    padding: var(--header-primary-spacing);
+    box-shadow: 0px 5px 10px hsl(0 0% 33% / 0.5);
+    margin-bottom: 1rem;
+
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto;
+    gap: var(--header-primary-spacing);
+}
+.page-title{
+    grid-column: 1;
+    grid-row: 1;
+
+    text-align: center;
+    font-size: 1.5rem;
+}
+.page-title > a{
+    text-decoration: none;
+    color: var(--fc-primary);
+}
+.header-primary-controls{
+    grid-column: 2;
+    grid-row: 1;
+    text-align: right;
+}
+.navigation-secondary{
+    position: absolute;
+    top: 100%; right: 0;
+    z-index: 1;
+    pointer-events: none;
+}
+.navigation-secondary.open{
+    display: block;
+    pointer-events: all;
+}
+.navigation-secondary-btn{
+    border: none;
+    background-color: transparent;
+    font-size: 2rem;
+    margin-right: 2rem;
+}
+.navigation-secondary-list{
+    /* border: 1px solid black; */
+    background-color: var(--bc-primary);
+    box-shadow: -2px 8px 10px hsl(0 0% 33% / 0.5);
+    list-style: none;
+    padding: 2rem;
+
+    opacity: 0;
+    transition: opacity 100ms ease;
+}
+
+.navigation-secondary.appear .navigation-secondary-list{
+    opacity: 1;
+}
+.navigation-secondary-item{
+    border: 1px solid black;
+    padding: 5px;
+    opacity: 0;
+    translate: 20px;
+    transition: translate 100ms ease-in, opacity 200ms ease-in;
+}
+.navigation-secondary.appear .navigation-secondary-item{
+    opacity: 1;
+    translate: 0px;
+}
+.navigation-secondary .navigation-secondary-item:not(:last-child){
+    margin-bottom: 5px;
+}
+.navigation-secondary-link{
+    text-decoration: none;
+    color: var(--fc-primary);
+    font-weight: 700;
+}
+.navigation-primary{
+    grid-column: 1/3;
+    grid-row: 2;
+}
+.navigation-primary-list{
+    --nav-list-spacing: 1em;
+    list-style: none;
+    padding: 0em var(--nav-list-spacing);
+
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    grid-template-rows: auto;
+    gap: var(--nav-list-spacing);
+}
+.navigation-primary-item{
+    outline: 1px solid grey;
+    text-align: center;
+    line-height: 2.5em;
+}
+.navigation-primary-item.active{
+    outline: 3px solid var(--fc-primary);
+}
+.navigation-primary-link{
+    display: inline-block;
+    width: 100%;
+    height: 100%;
+    text-decoration: none;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--fc-primary);
+}
+
+main{
+    position: relative;
+    /* overflow: hidden; */
+    overflow-y: scroll;
+}
+
+.footer-primary{
+    position: relative;
+}
+.navigation-tertiary{
+    --navigation-tertiary-spacing: 1rem;
+    position: absolute;
+    bottom: 100%; left: 0;
+    width: 100%;
+
+    display: none;
+}
+.navigation-tertiary.open{
+    display: block;
+}
+.navigation-tertiary-list{
+    list-style: none;
+    padding: var(--navigation-tertiary-spacing);
+
+    display: grid;
+    grid-template-columns: repeat(4,auto);
+    grid-template-rows: auto;
+    gap: var(--navigation-tertiary-spacing);
+    justify-content: flex-end;
+    opacity: 0;
+    transition: opacity 200ms ease-in-out;
+}
+.navigation-tertiary.appear .navigation-tertiary-list{
+    opacity: 1;
+}
+.navigation-tertiary-link{
+    text-decoration: none;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: none;
+    outline: 2px solid var(--fc-primary);
+    color: var(--fc-primary);
+    font-weight: 700;
+    background-color: var(--bc-primary);
+
+    display: grid;
+    place-content: center;
+}
+.navigation-tertiary-btn{
+    border: none;
+    outline: 1px solid var(--fc-primary);
+    background-color: var(--bc-primary);
+    color: var(--fc-primary);
+    width: 100%;
+    font-size: 2rem;
+    font-weight: 700;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+    box-shadow: 0px -5px 10px hsl(0 0% 33%);
+}
+/*
+----------------------------------------------------
+
+        PAGES
+
+----------------------------------------------------
+*/
+
+.page{
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%;
+    min-height: 100%;
+    height: 100%;
+    /* overflow-y: scroll; */
+
+    display: none;
+}
+.page.active{
+    display: block;
+}
+.page-content{
+    opacity: 0;
+    translate: -50px;
+    transition: all 200ms ease-in-out;
+}
+.page.appear .page-content{
+    opacity: 1;
+    translate: 0px;
+}
+
+.page-header{
+    padding-top: 1rem;
+    padding-left: 2rem;
+    padding-right: 2rem;
+    padding-bottom: 1rem;
+}
+
+/*
+=============================
+
+    MAIN
+
+=============================
+*/
+.main .page-header{
+    height: 50vh;
+
+    display: grid;
+    place-content: center;
+}
+.main .page-header > p{
+    color: var(--fc-primary);
+    text-align: center;
+    font-size: 2rem;
+    text-transform: uppercase;
+    font-weight: 900;
+}
+/*
+=============================
+
+    TODOS
+
+=============================
+*/
+.todos{
+    
+}
+.todos .page-header{
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+    grid-template-rows: auto;
+}
+
+.todos .page-controls{
+
+    display: grid;
+    grid-template-columns: auto auto;
+    grid-template-rows: auto;
+    justify-content: space-around;
+}
+.todos .page-header > h2{
+    text-align: center;
+}
+.new-todo-form-open-btn,
+.manage-todos-btn{
+    border: none;
+    background-color: transparent;
+    padding: 3px 10px;
+    font-size: 1.2rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    border-radius: 10px;
+}
+.new-todo-form-open-btn{
+    position: relative;
+    outline: 1px solid var(--fc-primary);
+}
+
+.new-todo-form-open-btn::before{
+    content: "X";
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%;
+    height: 100%;
+    color: var(--c-danger);
+    border-radius: inherit;
+    background-color: var(--bc-primary);
+    outline: 1px solid var(--fc-primary);
+    display: grid;
+    place-content: center;
+    opacity: 0;
+    transition: all 300ms ease-in-out;
+}
+.new-todo-form-open-btn.active::before{
+    opacity: 1;
+}
+.manage-todos-btn{
+    outline: 1px solid var(--fc-primary);
+}
+
+/* || New Todo Form ==== */
+
+.new-todo-form{
+    --todo-form-spacing: 1rem;
+    height: 0px;
+    opacity: 0;
+    
+
+    display: none;
+    grid-template-columns: 3fr 1fr;
+    grid-template-rows: auto;
+    gap: var(--todo-form-spacing);
+    transition: all 300ms ease-in-out;
+}
+.new-todo-form.open{
+    display: grid;
+}
+
+.new-todo-form.appear{
+    padding: 1rem 6rem;
+    opacity: 1;
+    height: 120px;
+}
+.new-todo-form-textarea-wrapper{
+    grid-column: 1;
+    grid-row: 1;
+}
+.new-todo-form textarea[name=todo]{
+    width: 100%;
+    display: block;
+    padding: 1rem;
+    font-family: var(--ff-primary);
+    color: var(--fc-primary);
+    background-color: hsl(0 0% 90%);
+    border: none;
+    border-radius: 10px;
+    resize: none;
+    font-size: 1.5rem;
+    line-height: 1.2em;
+}
+.new-todo-form textarea[name=todo]:focus-visible{
+    outline: none;
+    box-shadow: 0px 0px 20px hsl(0 0% 0%);
+}
+.new-todo-form-controls{
+    grid-column: 2;
+    grid-row: 1;
+
+    display: grid;
+    grid-template-columns: auto auto;
+    grid-template-rows: auto;
+    align-items: center;
+    justify-content: space-evenly;
+    gap: var(--todo-form-spacing);
+}
+.new-todo-form-datetime-open-btn{
+    border: none;
+    background-color: transparent;
+    border-radius: 10px;
+    font-size: 2rem;
+    font-weight: 700;
+    padding: 5px;
+}
+.new-todo-form button[type=submit]{
+    border: none;
+    background-color: transparent;
+    border-radius: 10px;
+    width: 50px;
+    height: 50px;
+    font-size: 3rem;
+    font-weight: 700;
+    
+    display: grid;
+    place-content: center;
+}
+/* || New Todo List ==== */
+
+.todo-list{
+    padding-top: 2rem;
+    
+    width: 100vw;
+    max-width: 800px;
+    margin: 0 auto;
+}
+.todo-item{
+    padding: 2rem;
+    margin-bottom: 4rem;
+   
+    display: grid;
+    grid-template-columns: 3fr 1fr;
+    grid-template-rows: auto auto;
+    column-gap: 2rem;
+    row-gap: 2rem;
+}
+/* .todo-item > *{
+    border: 1px solid black;
+} */
+.todo-item-description{
+    grid-column: 1;
+    grid-row: 1;
+
+    font-size: 1.5rem;
+    line-height: 1.5em;
+    color: var(--fc-primary);
+    padding: .5rem;
+}
+.todo-item.completed .todo-item-description{
+    text-decoration: line-through;
+    opacity: .5;
+}
+.todo-item-controls{
+    grid-column: 2;
+    grid-row: 1;
+
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    grid-template-rows: auto auto;
+    place-content: flex-start;
+    gap: 1em;
+}
+.todo-item-delete-btn,
+.todo-item-edit-btn,
+.todo-item-completed-btn,
+.todo-item-save-btn,
+.todo-item-datetime-btn,
+.todo-item-cancel-btn{
+    border: none;
+    background-color: transparent;
+    font-size: 2rem;
+    padding: 3px 10px;   
+}
+
+.todo-item-delete-btn,
+.todo-item-save-btn,
+.todo-item-datetime-btn,
+.todo-item-cancel-btn{
+    opacity: 0;
+    transition: opacity 300ms ease-in-out;
+}
+.todo-item-completed-btn{
+    transform: scale(2);
+
+    transition: transform 100ms ease-in-out;
+}
+.todo-item.completed .todo-item-completed-btn{
+    transform: scale(1);
+}
+.todo-item.edit .todo-item-delete-btn,
+.todo-item.edit .todo-item-save-btn,
+.todo-item.edit .todo-item-datetime-btn,
+.todo-item.edit .todo-item-cancel-btn{
+    opacity: 1;
+}
+
+.todo-item-datetime{
+    grid-column: 1/3;
+    grid-row: 2;
+
+    display: grid;
+    grid-template-columns: auto auto auto;
+    grid-template-rows: auto;
+    justify-content: space-evenly;
+    gap: 2rem;
+}
+.todo-created-datetime,
+.todo-goal-datetime,
+.todo-completed-datetime{
+    font-size: 1rem;
+    line-height: 1.5em;
+    font-weight: 700;
+    text-transform: uppercase;
+    text-align: center;
+    white-space: nowrap;
+}
+.todo-item.completed .todo-created-datetime,
+.todo-item.completed .todo-goal-datetime{
+    opacity: 0.5;
+}
+.todo-created-datetime > span,
+.todo-goal-datetime > span,
+.todo-completed-datetime > span{
+    font-weight: normal;
+    font-size: .9rem;
+    margin-left: .5em;
+}
+/*
+=============================
+
+    LISTS
+
+=============================
+*/
+.lists{
+    
+}
+.lists .page-header{
+
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+    grid-template-rows: auto;
+}
+.lists .page-header > h2{
+    text-align: center;
+}
+.lists .page-controls{
+
+    display: grid;
+    grid-template-columns: auto auto;
+    grid-template-rows: auto;
+    justify-content: space-around;
+}
+
+.new-list-form-open-btn,
+.manage-lists-btn{
+    border: none;
+    background-color: transparent;
+    padding: 3px 10px;
+    font-size: 1.2rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    border-radius: 10px;
+}
+.new-list-form-open-btn{
+    position: relative;
+    outline: 1px solid var(--fc-primary);
+}
+
+.new-list-form-open-btn::before{
+    content: "X";
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%;
+    height: 100%;
+    color: var(--c-danger);
+    border-radius: inherit;
+    background-color: var(--bc-primary);
+    outline: 1px solid var(--fc-primary);
+    display: grid;
+    place-content: center;
+    opacity: 0;
+    transition: all 300ms ease-in-out;
+}
+.new-list-form-open-btn.active::before{
+    opacity: 1;
+}
+.manage-lists-btn{
+    outline: 1px solid var(--fc-primary);
+}
+
+/* || New List Form ==== */
+
+.new-list-form{
+    --list-form-spacing: 1rem;
+    height: 0px;
+    opacity: 0;
+
+    display: none;
+    grid-template-columns: 3fr 1fr;
+    grid-template-rows: auto auto;
+
+    transition: all 300ms ease-in-out;
+}
+.new-list-form.open{
+    display: grid;
+}
+.new-list-form.appear{
+    padding-left: 2rem;
+    padding-right: 2rem;
+    height: 100px; /* adjust this */
+    opacity: 1;
+}
+.new-list-form-list-wrapper{
+    grid-column: 1;
+    grid-row: 1;
+    height: fit-content;
+
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto;
+    gap: 1rem;
+}
+
+.new-list-form-list-wrapper label{
+    text-transform: uppercase;
+    font-weight: 500;
+}
+.new-list-form-list-wrapper label:last-of-type{
+    position: relative;
+}
+.new-list-form-additem-btn{
+    position: absolute;
+    top: 0; right: 0;
+    font-size: 1.2rem;
+    font-weight: 700;
+    width: 30px;
+    height: 100%;
+    border: none;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+    background-color: hsl(0 0% 50%);
+}
+.new-list-form-controls{
+    grid-column: 2;
+    grid-row: 1;
+
+    display: grid;
+    grid-template-columns: auto auto;
+    grid-template-rows: auto;
+    align-items: center;
+    justify-content: flex-end;
+    gap: var(--list-form-spacing);
+}
+.new-list-form input{
+    border: none;
+    text-align: center;
+    background-color: hsl(0 0% 90%);
+    border-radius: 10px;
+    width: 100%;
+    font-family: var(--ff-primary);
+    font-size: 1.2rem;
+    padding: 10px;
+}
+.new-list-form-datetime-open-btn{
+    border: none;
+    background-color: transparent;
+    border-radius: 10px;
+    font-size: 2rem;
+    font-weight: 700;
+    padding: 3px 10px;
+}
+.new-list-form button[type=submit]{
+    border: none;
+    background-color: transparent;
+    border-radius: 10px;
+    width: 50px;
+    height: 50px;
+    padding: 3px 10px;
+    font-size: 3rem;
+    font-weight: 700;
+    
+    display: grid;
+    place-content: center;
+}
+.new-list-form-list{
+    grid-column: 1/3;
+    grid-row: 2;
+
+    background-color: hsl(0 0% 90%);
+    overflow-x: scroll;
+    list-style: none;
+    padding: .5rem;
+
+    display: flex;
+    align-items: center;
+    gap: 2em;
+}
+.new-list-form-item{
+    color: var(--fc-primary);
+    white-space: nowrap;
+}
+.new-list-form-item > span{
+    font-size: 1rem;
+    margin-right: .5em;
+}   
+.new-list-form-item > button{
+    border: none;
+    background-color: transparent;
+    font-size: 1.2rem;
+}
+
+
+
+
+
+.list-groups{
+    --list-group-spacing: 2rem;
+    list-style: none;
+    padding: var(--list-group-spacing);
+
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-auto-rows: auto;
+    gap: var(--list-group-spacing);
+}
+.list{
+    border: 1px solid black;
+    padding: 2rem;
+    height: fit-content;
+}
+.list button{
+    align-self: center;
+    justify-self: center;
+
+    border: none;
+    background-color: transparent;
+    color: var(--fc-primary);
+    font-size: 1.2rem;
+    padding: 3px 5px;
+}
+.list > header{
+    margin-bottom: 1em;
+    border-bottom: 1px solid grey;
+
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto;
+}
+.list > header > h2{
+    grid-column: 1;
+    grid-row: 2;
+    padding-bottom: .5em;
+}
+.list-item-controls{
+    grid-column: 1;
+    grid-row: 1;
+    text-align: right;
+}
+.list-item-controls > button:not(:last-child){
+    margin-right: 1rem;
+}
+.list-items{
+    list-style: none;
+    padding-left: 1rem;
+    margin-bottom: 1.5rem;
+}
+.list-item-title{
+    font-size: 1.5rem;
+    line-height: 2em;
+    font-weight: 700;
+}
+
+.list-item{
+    position: relative;
+    padding-left: 1.5rem;
+    padding-bottom: 5px;
+    margin-bottom: .5em;
+    border-bottom: 1px solid grey;
+
+    display: grid;
+    grid-template-columns: 3fr 1fr;
+    grid-template-rows: auto;
+}
+.list-item > p{
+    font-size: 1.2rem;
+    line-height: 1.2em;
+}
+.list-item::before{
+    content: "";
+    position: absolute;
+    top: 50%; left: 0;
+    width: 10px;
+    height: 10px;
+    background-color: var(--fc-primary);
+    border-radius: 50%;
+    transform: translateY(-50%);
+}
+
+.list-item-cancel-btn,
+.list-item-save-btn,
+.list-item-delete-btn,
+.list-item-remove-btn,
+.list-item-additem-btn{
+    opacity: 0;
+    transition: opacity 300ms ease-in-out;
+}
+.list.edit .list-item-cancel-btn,
+.list.edit .list-item-save-btn,
+.list.edit .list-item-delete-btn,
+.list.edit .list-item-remove-btn,
+.list.edit .list-item-additem-btn{
+    opacity: 1;
+}
+.list.edit .list-item-edit-btn{
+    opacity: 0;
+}
+.list-footer{
+
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: auto;
+}
+.list-created-datetime,
+.list-modified-datetime,
+.list-goal-datetime{
+    font-size: .8rem;
+    font-weight: 700;
+    line-height: 1.5em;
+    text-transform: uppercase;
+    text-align: center;
+    white-space: nowrap;
+    color: var(--fc-primary);
+}
+.list-created-datetime > span,
+.list-modified-datetime > span,
+.list-goal-datetime > span{
+    font-size: .7rem;
+    font-weight: normal;
+    margin-left: 1em;
+}
+
+/*
+=============================
+
+    NOTES
+
+=============================
+*/
+
+.notes .page-header{
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+    grid-template-rows: auto;
+}
+.notes .page-header > h2{
+    text-align: center;
+}
+.notes .page-controls{
+
+    display: grid;
+    grid-template-columns: auto auto;
+    grid-template-rows: auto;
+    justify-content: space-around;
+}
+
+.new-note-form-open-btn,
+.manage-notes-btn{
+    border: none;
+    background-color: transparent;
+    padding: 3px 10px;
+    font-size: 1.2rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    border-radius: 10px;
+}
+.new-note-form-open-btn{
+    position: relative;
+    outline: 1px solid var(--fc-primary);
+}
+.new-note-form-open-btn::before{
+    content: "X";
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%;
+    height: 100%;
+    color: var(--c-danger);
+    border-radius: inherit;
+    background-color: var(--bc-primary);
+    outline: 1px solid var(--fc-primary);
+    display: grid;
+    place-content: center;
+    opacity: 0;
+    transition: all 300ms ease-in-out;
+}
+.new-note-form-open-btn.active::before{
+    opacity: 1;
+}
+.manage-notes-btn{
+    outline: 1px solid var(--fc-primary);
+}
+
+.new-note-form{
+    --note-form-spacing: 1rem;
+    height: 0px;
+    opacity: 0;
+
+    display: none;
+    grid-template-columns: 3fr 1fr;
+    grid-template-rows: auto;
+    gap: var(--note-form-spacing);
+    transition: all 300ms ease-in-out;
+}
+.new-note-form.open{
+    display: grid;
+}
+.new-note-form.appear{
+    padding: var(--note-form-spacing) calc(var(--note-form-spacing) * 2);
+    height: 150px;
+    opacity: 1;
+}
+
+.new-note-form-textarea-wrapper{
+    grid-column: 1;
+    grid-row: 1;
+}
+.new-note-form textarea[name=note]{
+    width: 100%;
+    display: block;
+    padding: 1em;
+    font-family: var(--ff-primary);
+    color: var(--fc-primary);
+    background-color: hsl(0 0% 90%);
+    border: none;
+    border-radius: 10px;
+    resize: none;
+    font-size: 1.2rem;
+    line-height: 1.5em;
+}
+.new-note-form textarea[name=note]:focus-visible{
+    outline: none;
+    box-shadow: 0px 0px 20px hsl(0 0% 0%);
+}
+.new-note-form-controls{
+    grid-column: 2;
+    grid-row: 1;
+
+    display: grid;
+    grid-template-columns: auto;
+    grid-template-rows: auto;
+    place-content: center;
+}
+.new-note-form button[type=submit]{
+    border: none;
+    background-color: transparent;
+    border-radius: 10px;
+    width: 50px;
+    height: 50px;
+    font-size: 3rem;
+    font-weight: 700;
+    
+    display: grid;
+    place-content: center;
+}
+
+/* || Note Item ==== */
+
+.note-list{
+    padding-top: 2rem;
+    
+    width: 100vw;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+.note-item{
+    --note-spacing: 2rem;
+    padding: var(--note-spacing) calc(var(--note-spacing) * 2);
+
+    display: grid;
+    grid-template-columns: 4fr 1fr;
+    grid-template-rows: auto auto;
+    gap: var(--note-spacing);
+}
+
+.note-item-description{
+    grid-column: 1;
+    grid-row: 1;
+
+    font-size: 1.2rem;
+    line-height: 1.5em;
+    padding: .5em;
+}
+.note-item-controls{
+    grid-column: 2;
+    grid-row: 1/3;
+
+    display: grid;
+    grid-template-columns: auto;
+    grid-template-rows: auto auto auto auto;
+    align-items: flex-start;
+    justify-content: center;
+}
+.note-item-edit-btn,
+.note-item-delete-btn,
+.note-item-cancel-btn,
+.note-item-save-btn{
+    border: none;
+    padding: 3px 10px;
+    background-color: transparent;
+    font-size: 2rem;
+    color: var(--fc-primary);
+
+    display: grid;
+    place-content: center;
+    transition: opacity 300ms ease-in-out;
+}
+.note-item-cancel-btn,
+.note-item-save-btn{
+    opacity: 0;
+    pointer-events: none;
+}
+.note-item.edit .note-item-cancel-btn,
+.note-item.edit .note-item-save-btn{
+    opacity: 1;
+    pointer-events: all;
+}
+.note-item-datetime{
+    grid-column: 1;
+    grid-row: 2;
+
+    display: grid;
+    grid-template-columns: auto auto;
+    grid-template-rows: auto;
+    align-items: center;
+    justify-content: space-evenly;
+}
+.note-created-datetime,
+.note-modified-datetime{
+    font-size: 1rem;
+    line-height: 1.2em;
+    color: var(--fc-primary);
+    font-weight: 700;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+.note-created-datetime > span,
+.note-modified-datetime > span{
+    font-size: 1rem;
+    line-height: 1.2em;
+    color: var(--fc-primary);
+    font-weight: normal;
+    margin-left: 1em;
+}
+/*
+=============================
+
+    PROFILE
+
+=============================
+*/
+
+.profile-form{
+   --profile-form-spacing: 2rem;
+   
+   padding: var(--profile-form-spacing);
+}
+.profile-form > label{
+    text-transform: uppercase;
+    font-weight: 700;
+    font-size: 1rem;
+}
+.profile-form input[name=name]{
+    font-family: var(--ff-primary);
+    color: var(--fc-primary);
+    font-size: 1.2rem;
+    padding: 5px;
+    width: 200px;
+    margin-left: 1rem;
+}
+.profile-form-controls{
+    text-align: center;
+    padding: 2rem;
+}
+.profile-form  button[type=submit]{
+    padding: 5px 10px;
+    border: none;
+    outline: 1px solid var(--fc-primary);
+    border-radius: 10px;
+    background-color: transparent;
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+/*
+=============================
+
+    SETTINGS
+
+=============================
+*/
+.settings-form{
+    padding: 2rem 2rem;
+
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(5,auto);
+}
+.settings-form > label{
+    font-size: 1.2rem;
+    line-height: 1.5em;
+    font-weight: 700;
+    color: var(--fc-primary);
+    margin-bottom: 2rem;
+}
+.settings-form > label > input{
+    margin-left: 2rem;
+}
+
+.settings-form input[type=text],
+.settings-form input[type=number]{
+    font-family: var(--ff-primary);
+    font-size: 1.2rem;
+    padding: 5px;
+    color: var(--fc-primary);
+}
+.settings-form input[type=color]{
+    width: 25px;
+    height: 25px;
+}
+.settings-form input[type=number]{
+    width: 100px;
+}
+.settings-form-controls{
+    text-align: center;
+}
+.settings-form  button[type=submit]{
+    padding: 5px 10px;
+    border: none;
+    outline: 1px solid var(--fc-primary);
+    border-radius: 10px;
+    background-color: transparent;
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+/*
+=============================
+
+    CONNECTIONS
+
+=============================
+*/
+
+.connections-none{
+    text-align: center;
+}
+.connections-none > h2{
+    text-transform: uppercase;
+    color: var(--fc-primary);
+    font-size: 2rem;
+    margin-bottom: 1em;
+}
+.connections-none > p{
+    color: var(--fc-primary);
+    font-size: 1.2rem;
+    line-height: 2em;
+}
+
+.connections-none > p > span{
+    font-weight: 700;
+}
+
+.connections-none-link{
+    text-decoration: none;
+    color: var(--fc-primary);
+    font-weight: 700;
+    text-transform: uppercase;
+    border-radius: 50px;
+    outline: 2px solid var(--fc-primary);
+    padding: 5px 10px;
+}
+/*
+=============================
+
+    CALCULATOR
+
+=============================
+*/
+
+.calculator-display{
+    --calculator-spacing: 2rem;
+
+    height: 50vh;
+    max-height: 400px;
+    padding-top: 2rem;
+    padding-left: var(--calculator-spacing);
+    padding-right: var(--calculator-spacing);
+
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto;
+    justify-content: space-evenly;
+    gap: var(--calculator-spacing);
+}
+.calculator-output-display{
+    grid-column: 1;
+    grid-row: 1;
+
+    height: fit-content;
+    padding: 1rem;
+
+    background-color: hsl(0 0% 90%);
+    border-radius: 10px;
+}
+.calculator-operation-output{
+    text-align: right;
+    margin-bottom: .5rem;
+    font-size: 1rem;
+    line-height: 1em;
+    letter-spacing: 2px;
+    overflow-y: scroll;
+}
+.calculator-output{
+    text-align: right;
+    font-weight: 700;
+    font-size: 2rem;
+    line-height: 1.5em;
+}
+.calculator-keys{
+    grid-column: 2;
+    grid-row: 1;
+
+    
+    display: grid;
+    grid-template-columns: repeat(4,1fr);
+    grid-template-rows: repeat(5,1fr);
+    gap: .5rem;
+}
+.calculator-key{
+    padding: 5px 10px;
+    font-weight: 600;
+    font-size: 2rem;
+}
+/*
+=============================
+
+    CALENDAR
+
+=============================
+*/
+
+
+/* ==> TODO CALENDAR */
+
+.td-calendar{
+    --calendar-height: 70vh;
+    --calendar-header-height: 4rem;
+    --calendar-weekday-list-height: 2rem;
+
+    height: var(--calendar-height);
+    
+    font-size: var(--fs-primary);
+    overflow-y: scroll;
+    opacity: 1;
+}
+.td-calendar .page-content{
+    padding: 0rem 8rem;
+}
+/* .td-calendar.appear{
+    animation: fadeIn 500ms linear forwards;
+} */
+.td-calendar-header{
+    height: var(--calendar-header-height);
+
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto;
+}
+
+.td-calendar-monthyear-display{
+    text-align: center;
+
+    display: grid;
+    grid-template-columns: auto auto;
+    grid-template-rows: auto;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+}
+.td-calendar-month-display,
+.td-calendar-year-display{
+    font-size: 1rem;
+    font-weight: 900;
+}
+.td-calendar-month-display{
+   
+    
+}
+.td-calendar-year-display{
+    
+    
+}
+.td-calendar-navigation{
+
+    display: grid;
+    place-content: center;
+}
+.td-calendar-past-month-btn,
+.td-calendar-future-month-btn{
+    border: 1px solid var(--fc-primary);
+    background-color: transparent;
+    color: var(--fc-primary);
+    font-size: 1.5rem;
+    padding: 3px 10px;
+    border-radius: 10px;
+}
+.td-calendar-past-month-btn{
+    margin-right: 1rem;
+}
+.td-calendar-future-month-btn{
+
+}
+
+
+.td-calendar-days{
+    
+}
+.td-calendar-weekday-list{
+    height: var(--calendar-weekday-list-height);
+    list-style: none;
+    text-align: center;
+
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    grid-template-rows: auto;
+    align-items: center;
+}
+.td-calendar-weekday-item{
+    font-size: .7em;
+    text-transform: uppercase;
+    font-weight: 500;
+}
+
+
+
+.td-calendar-day-list{
+    height: calc(
+        var(--calendar-height) - ( var(--calendar-header-height) + var(--calendar-weekday-list-height) ));
+    list-style: none;
+    background-color: hsl(0 0% 20% / 0.5);
+    padding-top: 1px;
+    padding-left: 1px;
+    padding-right: 1px;
+    padding-bottom: 1px;
+
+    display: grid;
+    grid-template-columns: repeat(7,1fr);
+    grid-template-rows: repeat(6,1fr);
+    column-gap: 1px;
+    row-gap: 1px;
+}
+/* .td-calendar.appear .td-calendar-day-list{
+    animation: fadeIn 600ms linear forwards,
+    slideUp 400ms linear forwards;
+} */
+
+.td-calendar-day-item{
+    font-size: .8em;
+    padding: .5rem;
+    font-weight: 500;
+    background-color: var(--bc-primary);
+}
+.td-calendar-day-item.today{
+    box-shadow: inset 0px 0px 5px var(--created-color);
+}
+.td-calendar-day-number{
+    
+}
+
+
+/*
+=============================
+
+    STOPWATCH
+
+=============================
+*/
+
+.stopwatch-display{
+    position: relative;
+    width: max-content;
+    margin: 0 auto;
+    padding: 2rem 1rem;
+    background-color: var(--bc-primary);
+    overflow: hidden;
+    border: 1px solid white;
+    text-align: center;
+}
+
+.stopwatch-notification{
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%;
+    padding-top: 5px;
+
+    display: none;
+}
+.stopwatch-notification-message{
+    text-transform: uppercase;
+    text-shadow: 1px 1px 2px black;
+}
+.stopwatch-display[data-state="ready"] .stopwatch-notification-message{
+    
+
+    color: var(--stopwatch-color-ready);
+}
+.stopwatch-display[data-state="started"] .stopwatch-notification-message{
+    color: var(--stopwatch-color-started);
+}
+.stopwatch-display[data-state="paused"] .stopwatch-notification-message{
+    color: var(--stopwatch-color-paused);
+}
+.stopwatch-display[data-state="reset"] .stopwatch-notification-message{
+    color: var(--stopwatch-color-reset);
+}
+
+.stopwatch-notification.open{
+    display: block;
+}
+.stopwatch-notification.open .stopwatch-notification-message{
+    animation: timeNotificationMoveDown 100ms linear forwards;
+}
+
+
+
+.stopwatch-time{
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.stopwatch-time > span{
+    display: inline-block;
+    font-size: 6rem;
+    margin-left: 3px;
+    margin-right: 3px;
+}
+
+.stopwatch-data{
+    margin-bottom: .5rem;
+}
+
+
+.stopwatch-lights{
+    margin-bottom: 1rem;
+}
+.stopwatch-lights > span{
+    position: relative;
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    margin-left: 5px;
+    margin-right: 5px;
+    border-radius: 50%;
+    outline: 1px solid grey;
+    box-shadow: 0px 0px 10px black;
+    isolation: isolate;
+}
+
+.stopwatch-display[data-state="ready"] .stopwatch-paused-light,
+.stopwatch-display[data-state="ready"] .stopwatch-started-light,
+.stopwatch-display[data-state="ready"] .stopwatch-error-light{
+    background-color: var(--stopwatch-color-ready);
+}
+.stopwatch-display[data-state="started"] .stopwatch-started-light{
+    background-color: var(--stopwatch-color-started);
+    animation: fadeBackgroundColor 1s infinite;
+}
+.stopwatch-display[data-state="paused"] .stopwatch-paused-light{
+    background-color: var(--stopwatch-color-paused);
+    animation: fadeBackgroundColor 2s infinite;
+}
+.stopwatch-display[data-state="reset"] .stopwatch-paused-light,
+.stopwatch-display[data-state="reset"] .stopwatch-started-light,
+.stopwatch-display[data-state="reset"] .stopwatch-error-light{
+    background-color: var(--stopwatch-color-ready);
+}
+.stopwatch-display[data-state="error"] .stopwatch-reset-light{
+    background-color: var(--stopwatch-color-reset);
+}
+
+
+.stopwatch-controls{
+    margin-bottom: 1rem;
+}
+.stopwatch-controls > button{
+    min-width: 50px;
+    min-height: 25px;
+    margin-left: 5px;
+    margin-right: 5px;
+    border: none;
+    background: none;
+    outline: 1px solid var(--fc-primary);
+    color: var(--fc-primary);
+    font-size: 1.5rem;
+    padding: 3px 10px;
+    font-weight: 700;
+    transition: all 100ms ease-in-out;
+}
+
+.stopwatch-controls > button:hover{
+    background-color: hsl(180 100% 15%);
+    color: var(--bc-primary);
+}
+.stopwatch-controls > button:active{
+    scale: .98;
+}
+
+
+.stopwatch-lap-table{
+    position: relative;
+    table-layout: fixed;
+    margin: 0 auto;
+    border-collapse: collapse;
+}
+
+.stopwatch-table > thead > tr{
+    border-bottom: 1px solid var(--fc-primary);
+}
+.stopwatch-table > thead > tr > th{
+    padding: 3px 10px;
+}
+
+.stopwatch-table > tbody > tr > td{
+    padding: 10px 10px 0px 10px;
+}
+
+/*
+=============================
+
+    TIMER
+
+=============================
+*/
+
+/* === TIMER === */
+
+.timer-display{
+    position: relative;
+    width: max-content;
+    margin: 0 auto;
+    padding: 2rem 1rem;
+    background-color: var(--bc-primary);
+    overflow: hidden;
+    border: 1px solid white;
+    text-align: center;
+}
+
+.timer-notification{
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%;
+    padding-top: 5px;
+
+    display: none;
+}
+
+.timer-notification-message{
+    text-transform: uppercase;
+}
+.timer-display[data-state="ready"] .timer-notification-message{
+    color: turquoise;
+}
+.timer-display[data-state="started"] .timer-notification-message{
+    color: limegreen;
+}
+.timer-display[data-state="paused"] .timer-notification-message{
+    color: yellow;
+}
+.timer-display[data-state="reset"] .timer-notification-message{
+    color: red;
+}
+.timer-notification.open{
+    display: block;
+}
+.timer-notification.open .timer-notification-message{
+    animation: timeNotificationMoveDown 100ms linear forwards;
+}
+
+.timer-display > header{
+    margin: .5rem;
+}
+
+.timer-select{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: .25rem;
+    margin-bottom: 1rem;
+}
+.timer-select > p{
+    font-size: 6rem;
+}
+.timer-select > div{
+    display: flex;
+    /* gap: 10px; */
+}
+.timer-select > div > input{
+    -moz-appearance: textfield;
+    width: 60px;
+    color: var(--fc-primary);
+    text-align: center;
+    font-size: 6rem;
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0px 0px 2px white;
+    background-color: var(--bc-primary);
+}
+.timer-select > div > input::-webkit-inner-spin-button,
+.timer-select > div > input::-webkit-outer-spin-button{
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+
+.timer-lights{
+    margin-bottom: 1rem;
+}
+
+.timer-lights > span{
+    position: relative;
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    margin-left: 5px;
+    margin-right: 5px;
+    border-radius: 50%;
+    outline: 1px solid grey;
+    isolation: isolate;
+}
+
+.timer-display[data-state="ready"] .timer-paused-light,
+.timer-display[data-state="ready"] .timer-started-light,
+.timer-display[data-state="ready"] .timer-error-light{
+    background-color: turquoise;
+}
+.timer-display[data-state="started"] .timer-started-light{
+    background-color: limegreen;
+    animation: fadeBackgroundColor 1s infinite;
+}
+.timer-display[data-state="paused"] .timer-paused-light{
+    background-color: yellow;
+    animation: fadeBackgroundColor 2s infinite;
+}
+.timer-display[data-state="reset"] .timer-paused-light,
+.timer-display[data-state="reset"] .timer-started-light,
+.timer-display[data-state="reset"] .timer-error-light{
+    background-color: turquoise;
+}
+.timer-display[data-state="finished"] .timer-paused-light{
+    background-color: blue;
+    animation: fadeBackgroundColor 1s infinite;
+}
+.timer-display[data-state="finished"] .timer-started-light{
+    background-color: blue;
+    animation: fadeBackgroundColor 1s infinite 300ms;
+}
+.timer-display[data-state="finished"] .timer-error-light{
+    background-color: blue;
+    animation: fadeBackgroundColor 1s infinite 600ms;
+}
+.timer-display[data-state="error"] .timer-reset-light{
+    background-color: red;
+}
+
+.timer-controls > button{
+    min-width: 50px;
+    min-height: 25px;
+    margin-left: 5px;
+    margin-right: 5px;
+    border: none;
+    background: none;
+    outline: 1px solid var(--fc-primary);
+    color: var(--fc-primary);
+    font-size: 1.5rem;
+    padding: 3px 10px;
+    font-weight: 700;
+}
+.timer-controls > button:hover{
+    background-color: hsl(180 100% 15%);
+    color: var(--bc-primary);
+}
+.timer-controls > button:active{
+    scale: .98;
+}
+
+.timer-output{
+    font-size: 6rem;
+
+    display: none;
+}
+
+
+/*
+----------------------------------------------------
+
+        NOTIFICATION
+
+----------------------------------------------------
+*/
+
+.notification{
+    position: fixed;
+    bottom: 0; left: 0;
+    width: 100vw;
+    padding: 1rem;
+
+    display:none;
+}
+.notification.open{
+    display: block;
+}
+.notification-content{
+    padding: .5rem 1rem;
+    background-color: black;
+    border-radius: 50px;
+    opacity: 0;
+    translate: 50px;
+    transition: translate 300ms ease-in-out,
+    opacity 300ms ease-in-out;
+
+    display: grid;
+    grid-template-columns: 1fr auto;
+    grid-template-rows: repeat(3,auto);
+}
+.notification.appear .notification-content{
+    opacity: 1;
+    translate: 0px;
+}
+
+.notification-content > p{
+    text-align: center;
+    color: white;
+}
+.notification-title{
+    grid-column: 1;
+    grid-row: 1;
+
+    font-size: 1rem;
+    line-height: 2em;
+    font-weight: 700;
+}
+.notification-message{
+    grid-column: 1;
+    grid-row: 2;
+
+    font-size: 1rem;
+    line-height: 1.5em;
+}
+.notification-instructions{
+    grid-column: 1;
+    grid-row: 3;
+
+    font-size: .8rem;
+    line-height: 2em;
+}
+.notification-close-btn{
+    grid-column: 2;
+    grid-row: 1/4;
+
+    border: none;
+    background-color: transparent;
+    font-size: 2rem;
+    color: red;
+    padding: 10px;
+}
+/*
+----------------------------------------------------
+
+        ANIMATIONS
+
+----------------------------------------------------
+*/
+
+@keyframes fadeBackgroundColor {
+    0%{
+        opacity: 0;
+    }
+    50%{
+        opacity: 1;
+    }
+    100%{
+        opacity: 0;
+    }
+}
+
+@keyframes timeNotificationMoveDown{
+    from{
+        translate: 0px -15px;
+    }
+    to{
+        translate: 0px 0px;
+    }
+}
+
+/*
+----------------------------------------------------
+
+        DEVICE RESPONSE
+
+----------------------------------------------------
+*/
+
+@media only screen and (max-width: 1350px){
+
+
+
+    /* List */
+    .list-footer{
+        grid-template-columns: 1fr;
+        grid-template-rows: auto auto auto;
+    }
+    .list-created-datetime,
+    .list-modified-datetime,
+    .list-goal-datetime{
+        text-align: left;
+    }
+}
+
+@media only screen and (max-width: 1000px){
+    .list-item-title{
+        font-size: 1.2rem;
+    }
+    .list-item > p{
+        font-size: 1.2rem;
+    }
+}
+
+
+@media only screen and (max-width: 900px){
+
+    /* Todo */
+
+    .new-todo-form.appear{
+        padding: 1rem 4rem;
+        opacity: 1;
+        height: 120px;
+    }
+
+        /* Todo */
+
+    .todo-item{
+        padding: 2rem;
+        margin-bottom: 2rem;
+ 
+        grid-template-columns: 1fr;
+        grid-template-rows: auto auto auto;
+        column-gap: 2rem;
+        row-gap: 2rem;
+    }
+    .todo-item-description{
+        grid-column: 1;
+        grid-row: 1;
+
+        font-size: 1.2rem;
+    }
+    .todo-item-controls{
+        grid-column: 1;
+        grid-row: 2;
+    
+        grid-template-columns: repeat(6,1fr);
+        grid-template-rows: auto;
+        place-content: flex-start;
+        gap: 1em;
+    }
+    .todo-item-delete-btn,
+    .todo-item-edit-btn,
+    .todo-item-completed-btn,
+    .todo-item-save-btn,
+    .todo-item-datetime-btn,
+    .todo-item-cancel-btn{
+        border: none;
+        background-color: transparent;
+        font-size: 2rem;
+        padding: 3px 10px;
+    }
+    .todo-item-delete-btn{
+        grid-column: 4;
+        grid-row: 1;
+    }
+    .todo-item-edit-btn{
+        grid-column: 5;
+        grid-row: 1;
+    }
+    .todo-item-completed-btn{
+        grid-column: 6;
+        grid-row: 1;
+    }
+    .todo-item-save-btn{
+        grid-column: 2;
+        grid-row: 1;
+    }
+    .todo-item-datetime-btn{
+        grid-column: 3;
+        grid-row: 1;
+    }
+    .todo-item-cancel-btn{
+        grid-column: 1;
+        grid-row: 1;
+    }
+
+
+
+    .todo-item-datetime{
+        grid-column: 1;
+        grid-row: 3;
+    
+        display: grid;
+        grid-template-columns: auto auto;
+        grid-template-rows: auto auto;
+        align-items: center;
+        justify-content: flex-start;
+        row-gap: .5em;
+        column-gap: 2em;
+    }
+    .todo-created-datetime,
+    .todo-goal-datetime,
+    .todo-completed-datetime{
+        
+        text-align: left;
+        
+    }
+
+
+
+
+    /* List */
+    .new-list-form{
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: auto auto;
+        
+    }
+    .new-list-form.appear{
+        height: 120px;
+    }
+    .new-list-form-list-wrapper{
+        grid-column: 1/3;
+        grid-row: 1;
+    }
+    .new-list-form-controls{
+        grid-column: 2;
+        grid-row: 2;
+    }
+    .new-list-form-list{
+        grid-column: 1;
+        grid-row: 2;
+    }
+   
+}
+
+
+@media only screen and (max-width: 800px){
+
+    /* Todo */
+
+    .new-todo-form.appear{
+        padding: 1rem 2rem;
+        opacity: 1;
+        height: 120px;
+    }
+
+
+    /* Connections */
+
+    .connections-none > h2{
+        font-size: 1rem;
+        padding: 4rem 2rem;
+    }
+
+    /* Note Item */
+
+    .note-item{
+       --note-spacing: 1rem;
+    
+       
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: auto auto;
+        gap: 1rem;
+    }
+    .note-item-description{
+        grid-column: 1/3;
+        grid-row: 1;
+    
+        /* font-size: 1.2rem;
+        line-height: 1.5em; */
+    }
+    .note-item-controls{
+        grid-column: 2;
+        grid-row: 2;
+        
+        grid-template-columns: repeat(4,auto);
+        grid-template-rows: auto;
+        align-items: center;
+        justify-content: flex-end;
+        gap: 1rem;
+    }
+
+    .note-item-datetime{
+        grid-column: 1;
+        grid-row: 2;
+    
+        grid-template-columns: 1fr;
+        grid-template-rows: auto auto;
+        align-items: center;
+        justify-content: flex-start;
+        gap: .5em;
+    }
+   
+}
+
+@media only screen and (max-width: 700px){
+
+    /* Todo Form */
+
+    .new-todo-form{
+        --todo-form-spacing: 1rem;
+        
+    
+        display: none;
+        grid-template-columns: 1fr;
+        grid-template-rows: auto auto;
+        gap: var(--todo-form-spacing);
+    }
+    .new-todo-form.appear{
+        height: 150px;
+    }
+    .new-todo-form textarea[name=todo]{
+        /* font-size: 1.2rem;
+        line-height: 1.2em; */
+    }
+    .new-todo-form textarea[name=todo]:focus-visible{
+        /* outline: none;
+        box-shadow: 0px 0px 20px hsl(0 0% 0%); */
+    }
+    .new-todo-form-controls{
+        grid-column: 1;
+        grid-row: 2;
+    }
+
+    /* Todo Item */
+
+    .todo-item{
+        padding: 2rem;
+        margin-bottom: 4rem;
+       
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-template-rows: auto auto auto;
+        column-gap: 2rem;
+        row-gap: 2rem;
+    }
+    .todo-item-description{
+        grid-column: 1;
+        grid-row: 1;
+    
+        /* font-size: var(--todo-item-fs);
+        line-height: 1.5em; */
+    }
+    .todo-item-controls{
+        grid-column: 1;
+        grid-row: 2;
+    }
+    .todo-item-datetime{
+        grid-column: 1;
+        grid-row: 3;
+    
+
+        grid-template-columns: 1fr;
+        grid-template-rows: repeat(3,auto);
+    }
+    .todo-created-datetime,
+    .todo-goal-datetime,
+    .todo-completed-datetime{
+        line-height: 1.5em;
+    }
+
+
+
+    /* New List Form */
+
+     /* List */
+    
+
+     .new-list-form{
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: auto auto;
+        row-gap: .5em;
+    }
+    .new-list-form.appear{
+        height: 180px;
+    }
+    .new-list-form-list-wrapper{
+        grid-column: 1/3;
+        grid-row: 1;
+
+        grid-template-columns: 1fr;
+        grid-template-rows: auto auto;
+    }
+    .new-list-form-controls{
+        grid-column: 2;
+        grid-row: 2;
+    }
+    .new-list-form-list{
+        grid-column: 1;
+        grid-row: 2;
+    }
+
+    .list-groups{
+        grid-template-columns: 1fr;
+    }
+    .list{
+        border: transparent;
+        padding: 0rem;
+        height: fit-content;
+        margin-bottom: 2rem;
+    }
+    .list-item > p{
+        font-size: 1rem;
+        line-height: 2em;
+    }
+
+}
+
+@media only screen and (max-width: 650px){
+    /* Note Item */
+
+    .note-item{
+    
+        grid-template-columns: 1fr;
+        grid-template-rows: auto auto auto;
+        gap: 1rem;
+    }
+    .note-item-description{
+        grid-column: 1;
+        grid-row: 1;
+    
+        /* font-size: 1.2rem;
+        line-height: 1.5em; */
+    }
+    .note-item-controls{
+        grid-column: 1;
+        grid-row: 2;
+        
+        grid-template-columns: repeat(4,auto);
+        grid-template-rows: auto;
+        align-items: center;
+        justify-content: flex-start;
+        gap: 1rem;
+    }
+
+    .note-item-datetime{
+        grid-column: 1;
+        grid-row: 3;
+    
+        grid-template-columns: 1fr;
+        grid-template-rows: auto auto;
+        align-items: center;
+        justify-content: flex-start;
+        gap: .5em;
+    }
+
+}
+
+@media only screen and (max-width: 600px){
+    .new-note-form{
+        grid-template-columns: 1fr;
+        grid-template-rows: auto auto;
+    }
+ 
+    .new-note-form.appear{
+        height: 180px;
+    }
+    .new-note-form-textarea-wrapper{
+        grid-column: 1;
+        grid-row: 1;
+    }
+    .new-note-form-controls{
+        grid-column: 1;
+        grid-row: 2;
+    
+        display: grid;
+        grid-template-columns: auto;
+        grid-template-rows: auto;
+        place-content: center;
+    }
+
+
+    /* Calculator */
+
+    .calculator-display{
+        --calculator-spacing: 1rem;
+        padding-top: 1rem;
+
+        grid-template-columns: 1fr;
+        grid-template-rows: auto auto;
+    }
+    .calculator-output-display{
+        grid-column: 1;
+        grid-row: 1;
+    }
+ 
+    .calculator-keys{
+        grid-column: 1;
+        grid-row: 2;
+    }
+    .calculator-key{
+        padding: 5px 10px;
+        font-weight: 600;
+        font-size: 2rem;
+    }
+
+    /* Calendar */
+
+    .td-calendar .page-content{
+        padding: 0rem 1rem;
+    }
+
+    /* Stopwatch */
+
+    .stopwatch-time > span{
+        display: inline-block;
+        font-size: 5rem;
+        margin-left: 3px;
+        margin-right: 3px;
+    }
+}
+
+@media only screen and (max-width: 500px) {
+
+    /* Todo */
+
+    .new-todo-form.appear{
+        padding: 1rem 1rem;
+        opacity: 1;
+        height: 120px;
+    }
+    .todo-list{
+        padding-top: 2rem;
+        padding-left: 0rem;
+        padding-right: 0rem;
+    }
+     /* Stopwatch */
+
+     .stopwatch-time > span{
+        display: inline-block;
+        font-size: 4rem;
+        margin-left: 3px;
+        margin-right: 3px;
+    }
+
+    .stopwatch-controls > button{
+        min-width: 50px;
+        min-height: 25px;
+        margin-left: 5px;
+        margin-right: 5px;
+        font-size: 1rem;
+        padding: 5px 10px;
+    }
+
+    /* Timer */
+
+    .timer-select > p{
+        font-size: 5rem;
+    }
+    .timer-select > div > input{
+        -moz-appearance: textfield;
+        width: 50px;
+        color: var(--fc-primary);
+        text-align: center;
+        font-size: 5rem;
+    }
+
+    .timer-output{
+        font-size: 5rem;
+    }
+}
+
+@media only screen and (max-width: 450px){
+
+    .todo-item-controls{
+
+        grid-template-columns: auto auto auto;
+        grid-template-rows: auto auto;
+        justify-content: space-evenly;
+    }
+    .todo-item-delete-btn{
+        grid-column: 3;
+        grid-row: 2;
+    }
+    .todo-item-edit-btn{
+        grid-column: 2;
+        grid-row: 1;
+    }
+    .todo-item-completed-btn{
+        grid-column: 3;
+        grid-row: 1;
+    }
+    .todo-item-save-btn{
+        grid-column: 1;
+        grid-row: 2;
+    }
+    .todo-item-datetime-btn{
+        grid-column: 2;
+        grid-row: 2;
+    }
+    .todo-item-cancel-btn{
+        grid-column: 1;
+        grid-row: 1;
+    }
+}
+
+@media only screen and (max-width: 400px){
+
+
+    /* Calculator */
+
+    .calculator-operation-output{
+        text-align: right;
+        margin-bottom: .5rem;
+        font-size: 1rem;
+        line-height: 1em;
+        letter-spacing: 2px;
+        overflow-y: scroll;
+    }
+    .calculator-output{
+        text-align: right;
+        font-weight: 700;
+        font-size: 1.5rem;
+        line-height: 1.5em;
+    }
+    .calculator-keys{
+       
+        
+        display: grid;
+        grid-template-columns: repeat(4,1fr);
+        grid-template-rows: repeat(5,1fr);
+        gap: .5rem;
+}
+    .calculator-key{
+      
+        padding: 10px 10px;
+        font-weight: 600;
+        font-size: 1rem;
+    }
+
+
+    /* Stopwatch */
+
+    .stopwatch-time > span{
+        display: inline-block;
+        font-size: 3rem;
+        margin-left: 3px;
+        margin-right: 3px;
+    }
+
+    .stopwatch-controls > button{
+        min-width: 50px;
+        min-height: 25px;
+        margin-left: 5px;
+        margin-right: 5px;
+        font-size: .8rem;
+        padding: 5px 10px;
+    }
+
+
+    /* Timer */
+
+    .timer-select > p{
+        font-size: 4rem;
+    }
+    .timer-select > div > input{
+        -moz-appearance: textfield;
+        width: 40px;
+        color: var(--fc-primary);
+        text-align: center;
+        font-size: 4rem;
+    }
+
+    .timer-output{
+        font-size: 4rem;
+    }
+}
