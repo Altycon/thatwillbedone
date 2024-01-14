@@ -23,15 +23,13 @@ export function handleNavigationRouting(){
 
 export function navigateToPage(hash){
 
-    const baseUrl = window.location.origin + window.location.pathname;
+    // const baseUrl = '127.0.0.1:5500'; //'https://altycon.github.io/thatwillbedone/';
 
-    const url = baseUrl + (hash.startsWith('/') ? hash.substring(1): hash);
+    // const url = baseUrl + (hash.startsWith('/') ? hash.substring(1): hash);
 
-    console.log('baseUrl',baseUrl)
+    const newUrl = new URL(`https://altycon.github.io/thatwillbedone`).hash = hash;
 
-    console.log('url',url)
-
-    history.pushState(null,null,url);
+    history.pushState(null,null,newUrl);
 
     handleNavigationRouting();
 };
