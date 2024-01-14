@@ -81,27 +81,27 @@ export function handleUrlState(hash, url){
 
         // break;
 
-        case 'notes':
+        //case 'notes':
 
-            const form = url.searchParams.get('form');
+            // const form = url.searchParams.get('form');
             
-            if(form){
+            // if(form){
                 
-                const active = url.searchParams.get('active');
+            //     const active = url.searchParams.get('active');
 
-                if(active){
+            //     if(active){
                     
-                    document.querySelector(`[data-control="${form}-form"]`).classList.add('active');
+            //         document.querySelector(`[data-control="${form}-form"]`).classList.add('active');
 
-                    openControlConnection(document.querySelector(`[data-connect="${form}-form"]`));
+            //         openControlConnection(document.querySelector(`[data-connect="${form}-form"]`));
 
-                    listenToNoteForm();
+            //         listenToNoteForm();
 
-                }
+            //     }
                 
-            }
+            // }
 
-        break;
+        //break;
 
         // case 'profile':
 

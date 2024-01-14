@@ -23,7 +23,15 @@ export function handleNavigationRouting(){
 
 export function navigateToPage(hash){
 
-    history.pushState(null,null,hash);
+    const baseUrl = window.location.origin + window.location.pathname;
+
+    const url = baseUrl + (hash.startsWith('/') ? hash.substring(1): hash);
+
+    console.log('baseUrl',baseUrl)
+
+    console.log('url',url)
+
+    history.pushState(null,null,url);
 
     handleNavigationRouting();
 };
