@@ -1,7 +1,7 @@
 import { createNoteComponent } from "../components/note_component.js";
 import { notify } from "../controller/notification_controller.js";
 import { AltyIDB } from "../databases/local_index_database.js";
-import { createTWBDId } from "../utilities.js";
+import { clearChildElements, createTWBDId } from "../utilities.js";
 
 
 export function listenToNoteForm(){
@@ -45,6 +45,11 @@ export function listenToNoteForm(){
             );
     
             const noteList = document.querySelector('.note-list');
+
+            if(noteList.querySelector('.no-content')){
+
+                clearChildElements(noteList);
+            }
     
             noteList.insertBefore(component,noteList.firstChild);
     

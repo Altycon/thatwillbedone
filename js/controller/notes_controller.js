@@ -1,3 +1,4 @@
+import { createNoContentComponent } from "../components/no_content_component.js";
 import { createNoteComponent } from "../components/note_component.js";
 import { AltyIDB } from "../databases/local_index_database.js";
 import { parseTimestamp } from "../utilities.js";
@@ -99,6 +100,11 @@ function deleteNote(li,notesList){
         AltyIDB.deleteData('note', li.getAttribute('data-key'), (data)=>{
 
             notesList.removeChild(li);
+
+            if(notesList.children.length < 1){
+
+                notesList.appendChild(createNoContentComponent());
+            }
 
         })
     }

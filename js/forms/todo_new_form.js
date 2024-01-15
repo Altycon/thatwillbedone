@@ -1,6 +1,7 @@
 import { createTodoComponent } from "../components/todo_component.js";
+import { notify } from "../controller/notification_controller.js";
 import { AltyIDB } from "../databases/local_index_database.js";
-import { createTWBDId } from "../utilities.js";
+import { clearChildElements, createTWBDId } from "../utilities.js";
 
 
 export function listenToTodoForm(){
@@ -51,6 +52,13 @@ export function listenToTodoForm(){
             );
     
             const todoList = document.querySelector('.todo-list');
+
+            if(todoList.querySelector('.no-content')){
+
+                console.log('hello')
+
+                clearChildElements(todoList);
+            }
     
             todoList.insertBefore(component,todoList.firstChild);
     

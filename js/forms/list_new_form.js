@@ -1,7 +1,7 @@
 import { createListComponent } from "../components/list_component.js";
 import { notify } from "../controller/notification_controller.js";
 import { AltyIDB } from "../databases/local_index_database.js";
-import { createTWBDId } from "../utilities.js";
+import { clearChildElements, createTWBDId } from "../utilities.js";
 
 export function listenToListForm(){
 
@@ -135,6 +135,11 @@ function handleListFormSubmit(event){
         );
 
         const listGroups = document.querySelector('.list-groups');
+
+        if(listGroups.querySelector('.no-content')){
+
+            clearChildElements(listGroups);
+        }
 
         listGroups.insertBefore(component,listGroups.firstChild);
 

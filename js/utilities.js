@@ -17,6 +17,17 @@ export function createTWBDId(stringlette){
     return (new Date().getTime().toString(16)) + Math.floor(Math.random() * 1000).toString(16);
 };
 
+export function clearChildElements(htmlElement){
+
+    if(!(htmlElement instanceof HTMLElement)) return;
+
+    while(htmlElement.lastChild){
+
+        htmlElement.removeChild(htmlElement.lastChild);
+    }
+
+}
+
 export function restrictNumberInputLength(inputElement,maxLength){
 
     inputElement.addEventListener('input', (event)=>{

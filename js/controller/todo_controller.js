@@ -1,6 +1,7 @@
+import { createNoContentComponent } from "../components/no_content_component.js";
 import { createTodoComponent } from "../components/todo_component.js";
 import { AltyIDB } from "../databases/local_index_database.js";
-import { parseTimestamp } from "../utilities.js";
+import { clearChildElements, parseTimestamp } from "../utilities.js";
 
 
 export function todosController(){
@@ -185,6 +186,11 @@ function deleteTodo(li,todoList){
 
             todoList.removeChild(li);
 
+            if(todoList.children.length < 1){
+
+                todoList.appendChild(createNoContentComponent())
+            }
+
         })
     }
 };
@@ -195,10 +201,12 @@ export function buildTodoList(data){
 
     const todoList = document.querySelector('.todo-list');
 
-    while(todoList.lastChild){
+    // while(todoList.lastChild){
 
-        todoList.removeChild(todoList.lastChild);
-    }
+    //     todoList.removeChild(todoList.lastChild);
+    // }
+
+    clearChildElements(todoList);
 
     const df = new DocumentFragment();
 

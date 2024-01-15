@@ -1,4 +1,5 @@
 import { buildListItem, createListComponent } from "../components/list_component.js";
+import { createNoContentComponent } from "../components/no_content_component.js";
 import { AltyIDB } from "../databases/local_index_database.js";
 import { notify } from "./notification_controller.js";
 import { addToSiteState, deleteFromSiteState, getSiteState } from "./state_controller.js";
@@ -178,6 +179,11 @@ function deleteList(li,listGroups){
         AltyIDB.deleteData('list', li.getAttribute('data-key'), (data)=>{
 
             listGroups.removeChild(li);
+
+            if(listGroups.children.length < 1){
+
+                listGroups.appendChild(createNoContentComponent());
+            }
 
         })
     }
