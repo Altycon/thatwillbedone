@@ -50,6 +50,8 @@ export function listenToNoteForm(){
     
             resetNoteForm(ev.target);
 
+            notify('Successfully added note.')
+
         });
     
     };

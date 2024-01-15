@@ -27,7 +27,7 @@ export function navigateToPage(hash){
 
     // const url = baseUrl + (hash.startsWith('/') ? hash.substring(1): hash);
 
-    const newUrl = new URL(`https://altycon.github.io/thatwillbedone`).hash = hash;
+    const newUrl = new URL(`https://127.0.0.1:5500`).hash = hash; //new URL(`https://altycon.github.io/thatwillbedone`).hash = hash;
 
     history.pushState(null,null,newUrl);
 

@@ -107,7 +107,7 @@ function handleListFormSubmit(event){
 
     if(formItemList === ''){
 
-        notify('Hold up', 'You need to add items to the list before anything will be saved','Add a few items to the list');
+        notify('Please add items to list.');
 
         return;
     }

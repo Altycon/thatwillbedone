@@ -56,6 +56,8 @@ export function listenToTodoForm(){
     
             resetNoteForm(ev.target);
 
+            notify('Successfully added to-do');
+
         });
     
     };

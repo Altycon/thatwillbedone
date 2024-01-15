@@ -152,7 +152,7 @@ function updateList(li){
 
         AltyIDB.update('list', updatedList, ()=>{
 
-            notify('List updated','Good job','Good to go');
+            notify('List has been updated.');
 
         });
 

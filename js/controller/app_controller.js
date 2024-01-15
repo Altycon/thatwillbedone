@@ -2,6 +2,7 @@ import { AltyIDB } from "../databases/local_index_database.js";
 import { listenToConnectionControls } from "./connection_controller.js";
 import { buildListGroups } from "./list_controller.js";
 import { buildNoteList } from "./notes_controller.js";
+import { notify } from "./notification_controller.js";
 import { buildTodoList } from "./todo_controller.js";
 
 
@@ -19,6 +20,7 @@ export function checkAndLoadAppData(){
 
         AltyIDB.initialize('TWBD',1, { keyPath: 'id' },['todo','note','list']);
 
+        notify('Loading data...')
 
         AltyIDB.getAll('todo', (todoData)=> {
 
@@ -31,8 +33,8 @@ export function checkAndLoadAppData(){
                 AltyIDB.getAll('list', (listData)=> {
                 
                     buildListGroups(listData);
-        
-                });
+
+                }, ()=> notify('Data loaded.'));
     
             });
         });

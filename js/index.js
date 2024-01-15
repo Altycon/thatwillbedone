@@ -20,7 +20,7 @@ function initializeSite(){
 
     window.addEventListener('error', (ev)=>{
 
-        notify('WindowError', ev.message, 'Wait...');
+        notify(ev.message);
 
     });
 

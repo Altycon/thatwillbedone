@@ -1,6 +1,6 @@
 
 
-export function notify(title,message,instructions,type){
+export function notify(message,type){
 
     const notification = document.querySelector('.notification');
 
@@ -8,11 +8,8 @@ export function notify(title,message,instructions,type){
 
     if(type) notification.classList.add(type);
 
-    notification.querySelector('.notification-title').textContent = title;
 
     notification.querySelector('.notification-message').textContent = message;
-
-    notification.querySelector('.notification-instructions').textContent = instructions;
 
     notification.querySelector('.notification-close-btn').addEventListener('click', closeNotification);
 
@@ -29,6 +26,7 @@ export function notify(title,message,instructions,type){
     },3000);
 
 };
+
 
 function openNotification(notification){
 
@@ -55,6 +53,8 @@ function closeNotification(notification){
     setTimeout( ()=>{
 
         notification.classList.remove('open');
+
+        notification.querySelector('.notification-message').textContent = '';
 
     },500);
 
