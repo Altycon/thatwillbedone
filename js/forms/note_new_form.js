@@ -78,6 +78,8 @@ function handleNoteFormSubmit(event){
             note.modifiedTimestamp
         );
 
+        component.classList.add('hiding');
+
         const noteList = document.querySelector('.note-list');
 
         if(noteList.querySelector('.no-content')){
@@ -86,6 +88,20 @@ function handleNoteFormSubmit(event){
         }
 
         noteList.insertBefore(component,noteList.firstChild);
+
+        const noteFormControl = document.querySelector(`[data-control="note-form"]`);
+
+        noteFormControl.addEventListener('click', function unhideNote(event){
+
+            setTimeout(() => {
+
+                component.classList.remove('hiding');
+                
+            },300);
+
+            event.target.removeEventListener('click', unhideNote);
+        });
+        noteFormControl.click();
 
         resetNoteForm(event.target);
 

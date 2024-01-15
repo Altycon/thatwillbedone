@@ -70,19 +70,19 @@ function handleConnectionControls(event){
 
             button.classList.remove('active');
 
-            if(button.dataset.href){
+            // if(button.dataset.href){
 
-                clearSiteState(button.dataset.href);
+            //     clearSiteState(button.dataset.href);
 
-            }
+            // }
 
         }else{
 
-            if(button.dataset.href){
+            // if(button.dataset.href){
 
-                setSiteState(button.dataset.href);
+            //     setSiteState(button.dataset.href);
 
-            }
+            // }
 
             openControlConnection(connection);
 

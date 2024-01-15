@@ -72,6 +72,8 @@ function handleTodoFormSubmit(event){
             todo.goalTimestamp
         );
 
+        component.classList.add('hiding');
+
         const todoList = document.querySelector('.todo-list');
 
         if(todoList.querySelector('.no-content')){
@@ -80,6 +82,20 @@ function handleTodoFormSubmit(event){
         }
 
         todoList.insertBefore(component,todoList.firstChild);
+
+        const todoFormControl = document.querySelector(`[data-control="todo-form"]`);
+
+        todoFormControl.addEventListener('click', function unhideTodo(event){
+
+            setTimeout(() => {
+
+                component.classList.remove('hiding');
+                
+            },300);
+
+            event.target.removeEventListener('click',unhideTodo);
+        });
+        todoFormControl.click();
 
         resetNoteForm(event.target);
 

@@ -134,6 +134,8 @@ function handleListFormSubmit(event){
             list.goalTimestamp
         );
 
+       component.classList.add('hiding');
+
         const listGroups = document.querySelector('.list-groups');
 
         if(listGroups.querySelector('.no-content')){
@@ -143,7 +145,24 @@ function handleListFormSubmit(event){
 
         listGroups.insertBefore(component,listGroups.firstChild);
 
+        const listFormControl = document.querySelector(`[data-control="list-form"]`);
+
+        listFormControl.addEventListener('click', function unhideList(event){
+
+            setTimeout( ()=> {
+
+                component.classList.remove('hiding');
+    
+            },300);
+
+            event.target.removeEventListener('click', unhideList)
+
+        })
+        listFormControl.click();
+
         resetListForm(formElement);
+
+        notify('Successfully added new list');
 
     });
 

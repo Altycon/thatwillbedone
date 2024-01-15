@@ -201,11 +201,6 @@ export function buildTodoList(data){
 
     const todoList = document.querySelector('.todo-list');
 
-    // while(todoList.lastChild){
-
-    //     todoList.removeChild(todoList.lastChild);
-    // }
-
     clearChildElements(todoList);
 
     const df = new DocumentFragment();

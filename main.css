@@ -458,6 +458,12 @@ main{
 .todo-item{
     padding: 2rem;
     margin-bottom: 4rem;
+    opacity: 1;
+    transform-origin: center;
+    transform: translateY(0px);
+    
+    transition: opacity 100ms ease-in,
+                transform 200ms ease-in;
    
     display: grid;
     grid-template-columns: 3fr 1fr;
@@ -465,9 +471,10 @@ main{
     column-gap: 2rem;
     row-gap: 2rem;
 }
-/* .todo-item > *{
-    border: 1px solid black;
-} */
+.todo-item.hiding{
+    opacity: 0;
+    transform: translateY(-50px);
+}
 .todo-item-description{
     grid-column: 1;
     grid-row: 1;
@@ -734,7 +741,7 @@ main{
 
 
 .list-groups{
-    --list-group-spacing: 2rem;
+    --list-group-spacing: 4rem;
     list-style: none;
     padding: var(--list-group-spacing);
 
@@ -747,6 +754,17 @@ main{
     border: 1px solid black;
     padding: 2rem;
     height: fit-content;
+    opacity: 1;
+    transform-origin: center;
+    transform: translateY(0px);
+    
+    transition: opacity 100ms ease-in,
+                transform 200ms ease-in;
+    
+}
+.list.hiding{
+    opacity: 0;
+    transform: translateY(-50px);
 }
 .list button{
     align-self: center;
@@ -985,12 +1003,22 @@ main{
     --note-spacing: 2rem;
     padding: var(--note-spacing) calc(var(--note-spacing) * 2);
 
+    opacity: 1;
+    transform-origin: center;
+    transform: translateY(0px);
+    
+    transition: opacity 100ms ease-in,
+                transform 200ms ease-in;
+
     display: grid;
     grid-template-columns: 4fr 1fr;
     grid-template-rows: auto auto;
     gap: var(--note-spacing);
 }
-
+.note-item.hiding{
+    opacity: 0;
+    transform: translateY(-50px);
+}
 .note-item-description{
     grid-column: 1;
     grid-row: 1;

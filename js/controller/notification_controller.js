@@ -8,6 +8,13 @@ export function notify(message,type){
 
     if(type) notification.classList.add(type);
 
+    if(notification.classList.contains('open')){
+
+        notification.classList.remove('open');
+
+        notification.classList.remove('appear');
+    }
+
 
     notification.querySelector('.notification-message').textContent = message;
 
