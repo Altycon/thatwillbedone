@@ -196,6 +196,11 @@ main{
 .footer-primary{
     position: relative;
 }
+.footer-primary.hide{
+    display: none;
+}
+
+
 .navigation-tertiary{
     --navigation-tertiary-spacing: 1rem;
     position: absolute;
@@ -1756,6 +1761,7 @@ main{
 .notification.open{
     display: block;
 }
+
 .notification-content{
     padding-left: .5rem;
     padding-right: .5rem;
@@ -1769,6 +1775,9 @@ main{
     display: grid;
     grid-template-columns: 1fr auto;
     grid-template-rows: repeat(3,auto);
+}
+.notification.error .notification-content{
+    outline: 2px solid red;
 }
 .notification.appear .notification-content{
     opacity: 1;
