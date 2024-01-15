@@ -384,7 +384,6 @@ main{
     --todo-form-spacing: 1rem;
     height: 0px;
     opacity: 0;
-    
 
     display: none;
     grid-template-columns: 3fr 1fr;
@@ -460,6 +459,9 @@ main{
     width: 100vw;
     max-width: 800px;
     margin: 0 auto;
+}
+.todo-list .no-content{
+    padding-top: 3rem;
 }
 .todo-item{
     padding: 2rem;
@@ -1807,6 +1809,87 @@ main{
     color: red;
     padding: 10px;
 }
+
+/*
+----------------------------------------------------
+
+        CONFIRMATION MODAL
+
+----------------------------------------------------
+*/
+
+.confirmation-modal{
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw;
+    height: 100vh;
+    isolation: isolate;
+
+    display: none;
+    place-content: center;
+}
+.confirmation-modal.open{
+    display: grid;
+}
+.confirmation-overlay{
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: hsl(0 0% 0% / 0.8);
+    z-index: -1;
+    opacity: 0;
+    transition: opacity 100ms ease-in-out;
+}
+.confirmation-modal.appear .confirmation-overlay{
+    opacity: 1;
+}
+.confirmation-content{
+    width: 80vw;
+    max-width: 400px;
+    background-color: var(--bc-primary);
+    text-align: center;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 200ms ease-in-out,
+    transform 300ms ease-in-out;
+}
+.confirmation-modal.appear .confirmation-content{
+    opacity: 1;
+    transform: translateY(0px);
+}
+.confirmation-content > h3{
+    line-height: 2em;
+}
+.confirmation-message{
+    color: var(--fc-primary);
+    font-size: 1.2rem;
+    line-height: 2em;
+}
+.confirmation-controls{
+    padding: 1rem;
+
+    display: grid;
+    grid-template-columns: auto auto;
+    grid-template-rows: auto;
+    gap: 1rem;
+}
+.confirmation-controls > button{
+    border: 1px solid black;
+    background-color: transparent;
+    box-shadow: 2px 2px 10px hsl(0 0% 0% / 0.5);
+    border-radius: 10px;
+    color: var(--fc-primary);
+    padding: 10px;
+    font-size: 1.2rem;
+    font-weight: 700;
+}
+.confirmation-controls > button:hover{
+    background-color: hsl(0 0% 90%);
+}
+.confirmation-controls > button:focus-visible{
+    outline: 3px solid limegreen;
+}
 /*
 ----------------------------------------------------
 
@@ -2065,7 +2148,7 @@ main{
         gap: var(--todo-form-spacing);
     }
     .new-todo-form.appear{
-        height: 150px;
+        height: 200px;
     }
     .new-todo-form textarea[name=todo]{
         /* font-size: 1.2rem;
@@ -2176,9 +2259,6 @@ main{
     .note-item-description{
         grid-column: 1;
         grid-row: 1;
-    
-        /* font-size: 1.2rem;
-        line-height: 1.5em; */
     }
     .note-item-controls{
         grid-column: 1;
@@ -2211,7 +2291,7 @@ main{
     }
  
     .new-note-form.appear{
-        height: 180px;
+        height: 220px;
     }
     .new-note-form-textarea-wrapper{
         grid-column: 1;

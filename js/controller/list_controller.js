@@ -1,6 +1,7 @@
 import { buildListItem, createListComponent } from "../components/list_component.js";
 import { createNoContentComponent } from "../components/no_content_component.js";
 import { AltyIDB } from "../databases/local_index_database.js";
+import { confirmSelection } from "./confirm_selection_controller.js";
 import { notify } from "./notification_controller.js";
 import { addToSiteState, deleteFromSiteState, getSiteState } from "./state_controller.js";
 
@@ -58,16 +59,24 @@ function handleListButtons(target,listGroups){
 
         case 'save':
 
+        confirmSelection('Positive you want to update?', ()=>{
+
             updateList(li);
 
             cancelEditingList(li);
+
+        });
 
         break;
 
         case 'delete':
 
-            deleteList(li,listGroups)            
-        
+            confirmSelection('Delete this list?', ()=>{
+
+                deleteList(li,listGroups)  
+
+            });
+
         break;
     }
 };
@@ -174,20 +183,16 @@ function addNewItemToList(li){
 
 function deleteList(li,listGroups){
 
-    if(confirm('Are you sure you want to delete this list?')){
+    AltyIDB.deleteData('list', li.getAttribute('data-key'), (data)=>{
 
-        AltyIDB.deleteData('list', li.getAttribute('data-key'), (data)=>{
+        listGroups.removeChild(li);
 
-            listGroups.removeChild(li);
+        if(listGroups.children.length < 1){
 
-            if(listGroups.children.length < 1){
+            listGroups.appendChild(createNoContentComponent());
+        }
 
-                listGroups.appendChild(createNoContentComponent());
-            }
-
-        })
-    }
-
+    })
 };
 
 function removeListItem(li,listGroups){

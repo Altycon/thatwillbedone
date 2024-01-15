@@ -2,6 +2,7 @@ import { createNoContentComponent } from "../components/no_content_component.js"
 import { createTodoComponent } from "../components/todo_component.js";
 import { AltyIDB } from "../databases/local_index_database.js";
 import { clearChildElements, parseTimestamp } from "../utilities.js";
+import { confirmSelection } from "./confirm_selection_controller.js";
 
 
 export function todosController(){
@@ -52,15 +53,23 @@ function handleTodoButtons(target,todoList){
 
         case 'save':
 
+        confirmSelection('Are you sure you want to update?', ()=>{
+
             updateTodo(li);
 
             cancelEditingTodo(li);
+
+        });
 
         break;
 
         case 'delete':
 
-            deleteTodo(li,todoList)            
+        confirmSelection('Delete todo?', ()=>{
+
+            deleteTodo(li,todoList);
+
+        });            
         
         break;
     }
@@ -74,9 +83,13 @@ function handleTodoDescriptionKeydown(event){
 
         const li = event.target.closest('li');
 
-        updateTodo(li);
+        confirmSelection('Are you sure you want to update?', ()=>{
 
-        cancelEditingTodo(li);
+            updateTodo(li);
+
+            cancelEditingTodo(li);
+
+        });
     }
 };
 
@@ -180,19 +193,16 @@ function updateTodo(li){
 
 function deleteTodo(li,todoList){
 
-    if(confirm('Are you sure you want to delete this todo?')){
+    AltyIDB.deleteData('todo', li.getAttribute('data-key'), (data)=>{
 
-        AltyIDB.deleteData('todo', li.getAttribute('data-key'), (data)=>{
+    todoList.removeChild(li);
 
-            todoList.removeChild(li);
+        if(todoList.children.length < 1){
 
-            if(todoList.children.length < 1){
+            todoList.appendChild(createNoContentComponent())
+        }
 
-                todoList.appendChild(createNoContentComponent())
-            }
-
-        })
-    }
+    });
 };
 
 export function buildTodoList(data){

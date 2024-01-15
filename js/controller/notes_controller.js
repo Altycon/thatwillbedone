@@ -2,6 +2,7 @@ import { createNoContentComponent } from "../components/no_content_component.js"
 import { createNoteComponent } from "../components/note_component.js";
 import { AltyIDB } from "../databases/local_index_database.js";
 import { parseTimestamp } from "../utilities.js";
+import { confirmSelection } from "./confirm_selection_controller.js";
 import { addToSiteState, deleteFromSiteState } from "./state_controller.js";
 
 
@@ -13,9 +14,13 @@ function handleNoteDescriptionKeydown(event){
 
         const li = event.target.closest('li');
 
-        updateNote(li);
+        confirmSelection('Delete this note?', ()=>{
 
-        stopEditingNote(li);
+            updateNote(li);
+
+            stopEditingNote(li);
+            
+        });
     }
 };
 
@@ -95,19 +100,16 @@ function stopEditingNote(li){
 
 function deleteNote(li,notesList){
 
-    if(confirm('Are you sure you want to delete this note?')){
+    AltyIDB.deleteData('note', li.getAttribute('data-key'), (data)=>{
 
-        AltyIDB.deleteData('note', li.getAttribute('data-key'), (data)=>{
+        notesList.removeChild(li);
 
-            notesList.removeChild(li);
+        if(notesList.children.length < 1){
 
-            if(notesList.children.length < 1){
+            notesList.appendChild(createNoContentComponent());
+        }
 
-                notesList.appendChild(createNoContentComponent());
-            }
-
-        })
-    }
+    })
 };
 
 
@@ -134,16 +136,24 @@ function handleNoteButtons(target,notesList){
 
         case 'save':
 
-            updateNote(li);
+            confirmSelection('Delete this note?', ()=>{
 
-            stopEditingNote(li);
-        
+                updateNote(li);
+
+                stopEditingNote(li);
+                
+            });
+
         break;
 
         case 'delete':
 
-            deleteNote(li,notesList)
-        
+            confirmSelection('Delete this note?', ()=>{
+
+                deleteNote(li,notesList);
+
+            });
+            
         break;
     }
 };
