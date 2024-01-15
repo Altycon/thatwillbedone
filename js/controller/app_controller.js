@@ -20,7 +20,6 @@ export function checkAndLoadAppData(){
 
         AltyIDB.initialize('TWBD',1, { keyPath: 'id' },['todo','note','list']);
 
-        notify('Loading data...')
 
         AltyIDB.getAll('todo', (todoData)=> {
 

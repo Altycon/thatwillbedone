@@ -169,7 +169,7 @@ function INDEXDB(){
 
                     if(callback) callback(result);
 
-                    notify(`Successfully added data to ${storeName}s`);
+                    notify(`Successfully updated ${storeName}s`);
 
                     //console.log('Successfully added data to store.');
 
@@ -199,7 +199,7 @@ function INDEXDB(){
 
                 if(callback) callback(event.target.result);
 
-                notify(`Successfully added data to ${storeName}s`);
+                notify(`Successfully retrieved ${storeName}`);
 
                 //console.log('Successfully added data to store.');
 
@@ -211,7 +211,7 @@ function INDEXDB(){
 
     }
 
-    function getAll(storeName, callback,fallbackCallback){
+    function getAll(storeName, callback){
 
         open(storeName, ()=>{
 
@@ -227,8 +227,6 @@ function INDEXDB(){
 
                 if(!event.target.result || event.target.result.length < 1){
 
-                    if(fallbackCallback) fallbackCallback();
-
                     console.log(`Nothing in "${storeName}"s to retrieve. Thank you for trying.`);
 
                     database.close();
@@ -238,7 +236,7 @@ function INDEXDB(){
 
                 if(callback) callback(event.target.result);
 
-                console.log(`Successfully got all data from "${storeName}s`);
+                console.log(`Successfully got "${storeName}s"`);
 
                 database.close();
 
@@ -261,9 +259,9 @@ function INDEXDB(){
 
                 if(callback) callback(event.target.result);
 
-                notify(`Successfully deleted data from ${storeName}s`);
+                notify(`Successfully deleted ${storeName}`);
 
-                console.log('Successfully deleted data to store.');
+                console.log(`Successfully deleted ${storeName}`);
 
                 database.close();
 
