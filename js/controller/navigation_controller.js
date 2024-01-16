@@ -7,7 +7,9 @@ export function handleNavigationRouting(){
 
     const url = new URL(window.location.href);
 
-    const hash = url.hash.substring(1); 
+    const hash = url.hash.substring(1)
+
+    console.log(hash)
 
 
     resetNavigationLinks();
@@ -23,9 +25,13 @@ export function handleNavigationRouting(){
 
 export function navigateToPage(hash){
 
-    const hostURl =  `https://altycon.github.io/thatwillbedone`; // `https://127.0.0.1:5500`;
+    const hostURl =  `https://altycon.github.io/thatwillbedone`; //`http://127.0.0.1:5500`;
 
-    const newUrl =  new URL(hostURl).hash = hash;  //new URL().hash = hash;
+    const newUrl =  new URL(hostURl);
+    
+    newUrl.hash = hash.substring(1);
+
+    console.log(newUrl)
 
     history.pushState(null,null,newUrl);
 

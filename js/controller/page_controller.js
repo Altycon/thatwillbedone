@@ -1,4 +1,5 @@
 
+import { calculatorController } from "./calculator_controller.js";
 import { listenToConnectionControls, stopListenToConnectionControls } from "./connection_controller.js";
 import { listsController } from "./list_controller.js";
 import { notesController } from "./notes_controller.js";
@@ -69,6 +70,12 @@ export function pageRouter(hash){
         case 'notes':
 
             notesController();
+
+        break;
+
+        case 'calculator':
+
+            calculatorController();
 
         break;
 
