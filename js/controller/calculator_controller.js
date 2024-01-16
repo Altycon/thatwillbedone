@@ -1,20 +1,75 @@
 
+
+function checkCalculatorState(display,state){
+
+    return display.classList.contains(state);
+
+};
+
+function setCalculatorState(display,state){
+
+    if(!display.classList.contains(state)) display.classList.add(state);
+
+};
+
+function removeCalculatorState(display,state){
+
+    if(display.classList.contains(state)) display.classList.remove(state);
+
+};
+
+function seperateOperationsInOperationsOutput(display){
+
+    const operationOutput = display.querySelector('.calculator-operation-output');
+
+    operationOutput.textContent += ',';
+}
+
+
+function removeLastCharacterFromCalculatorOutput(display){
+
+    const output = display.querySelector('.calculator-output');
+
+    if(output.textContent === '0') return;
+
+    if(output.textContent.length === 1){
+
+        output.textContent = '0';
+
+        //operationOutput.textContent = output.textContent;
+
+    }else{
+
+        output.textContent = output.textContent.slice(0,-1);
+
+        //operationOutput.textContent = operationOutput.textContent.slice(0,-1);
+    }
+};
+
+function removeLastCharacterFromCalculatorOperationOutput(display){
+
+    const operationOutput = display.querySelector('.calculator-operation-output');
+
+    operationOutput.textContent = operationOutput.textContent.slice(0,-1);
+
+};
+
 function clearCalculatorOutput(display){
 
     const output = display.querySelector('.calculator-output');
 
-    if(output.innerText === '0') return;
+    if(output.textContent === '0') return;
     
-    output.innerText = '0';
+    output.textContent = '0';
 };
 
 function clearToCalculatorOperationOutput(display){
 
     const operationsOutput = display.querySelector('.calculator-operation-output');
 
-    if(operationsOutput.innerText === '0') return;
+    if(operationsOutput.textContent === '0') return;
 
-    operationOutput.innerText = '0';
+    operationsOutput.textContent = '0';
 };
 
 
@@ -22,13 +77,9 @@ function addToCalculatorOutput(display,value){
 
     const output = display.querySelector('.calculator-output');
 
-    if(value !== '.'){
+    if(output.textContent === '0') output.textContent = '';
 
-        if(output.textContent === '0') output.innerText = '';
-
-    }
-
-    output.innerText += value;
+    output.textContent += value;
 
     
 };
@@ -37,36 +88,205 @@ function addToCalculatorOperationOutput(display,value){
 
     const operationOutput = display.querySelector('.calculator-operation-output');
 
-    if(value !== '.'){
+    if(operationOutput.textContent === '0') operationOutput.textContent = '';
 
-        if(operationOutput.textContent === '0') operationOutput.innerText = '';
-
-    }
-
-    operationOutput.innerText += value;
+    operationOutput.textContent += value;
 
 };
 
+function isCalculatorOperator(character){
 
-function handleCalculatorOperations(display,operation){
+    return ['+','-','*','/'].includes(character);
+};
 
-    switch(operation){
+function hasCalculatorOperator(string){
 
-        case '+':
+    const operators = ['+','-','*','/'];
 
-        break;
+    const characters = string.split(',');
 
-        case '-':
+    let hasOperator = false;
 
-        break;
+    for(let i = 0; i < operators.length; i++){
 
-        case 'x':
+        const operator = operators[i];
+
+        for(let j = 0; j < characters.length; j++){
+
+            const char = characters[j];
+
+            if(char === operator){
+
+                hasOperator = true;
+
+                break;
+            }
+        }
+
+        if(hasOperator) return hasOperator;
     }
 
+    return hasOperator;
+};
 
-    addToCalculatorOutput(display,operation);
+function calculateOperations(operationsArray){
 
-    addToCalculatorOperationOutput(display, operation);
+    const operations = operationsArray.map( a => a);
+
+    let total = 0;
+
+    operations.forEach( operation => {
+
+        if(hasCalculatorOperator(operation)){
+
+            const parts = operation.split(',');
+
+            if(isNaN(parts[0])){
+
+                const oper = parts[0];
+
+                const other = +parts[1];
+
+                switch(oper){
+
+                    case '+': total += other; break;
+    
+                    case '-': total -= other; break;
+    
+                    case '*': total *= other; break;
+    
+                    case '/': 
+                    
+                       // handle divide by zero
+                    
+                    total /= other; 
+                    
+                    
+                    break;
+                }
+
+            }else{
+
+                const a = +parts[0];
+
+                const operator = parts[1];
+
+                const b = +parts[2];
+
+                let sum = 0;
+
+                switch(operator){
+
+                    case '+': sum = a + b; break;
+
+                    case '-': sum = a - b; break;
+
+                    case '*': sum = a * b; break;
+
+                    case '/': sum = a / b; break;
+                }
+
+                total = sum;
+
+            }
+
+        }
+    });
+
+    return total;
+
+}
+
+function handleCalculatorEquals(display,output){
+
+    const outputArray = output.textContent.split('');
+
+    let operationString = ''
+
+    let operatorFound = false;
+
+    const operationArray = [];
+
+    for(let i = 0; i < outputArray.length; i++){
+
+        const inputValue = outputArray[i];
+
+        if(isCalculatorOperator(inputValue)){
+
+            if(operatorFound){
+
+                operationArray.push(operationString);
+
+                operationString = `${inputValue},`;
+
+                operatorFound = false;
+
+                continue;
+            }
+
+            operationString += `,${inputValue},`;
+
+            operatorFound = true;
+
+        }else{
+            
+            operationString += inputValue;
+        }
+    }
+
+    operationArray.push(operationString);
+
+    const result = calculateOperations(operationArray);
+
+    clearCalculatorOutput(display);
+
+    addToCalculatorOutput(display, result);
+
+    addToCalculatorOperationOutput(display,result)
+
+}
+
+
+function handleCalculatorOperations(display,operator){
+
+    const output = display.querySelector('.calculator-output');
+
+    if(output.textContent === '0') return;
+
+
+    if(isNaN(output.textContent[output.textContent.length - 1])){
+
+        removeLastCharacterFromCalculatorOutput(display);
+
+        removeLastCharacterFromCalculatorOperationOutput(display);
+    }
+
+    switch(operator){
+
+        case '+':
+        case '-':
+        case '*':
+        case '/':
+
+            addToCalculatorOutput(display,operator);
+
+            addToCalculatorOperationOutput(display, operator);
+
+            removeCalculatorState(display,'equaled');
+
+        break;
+
+        case '=':
+
+            addToCalculatorOperationOutput(display,operator);
+
+            handleCalculatorEquals(display,output);
+
+            setCalculatorState(display,'equaled');
+
+        break;
+    }
+    
 };
 
 function handleCalculatorActions(display,action){
@@ -75,20 +295,17 @@ function handleCalculatorActions(display,action){
 
         case 'backspace':
 
-            const output = display.querySelector('.calculator-output');
-
-            if(output.innerText === '0') return;
-
-            if(output.innerText.length === 1)  output.innerText = '0';
-
-            else  output.innerText = output.innerText.slice(0,-1);
-
+            removeLastCharacterFromCalculatorOutput(display);
 
         break;
 
         case 'clear':
 
             clearCalculatorOutput(display);
+
+            clearToCalculatorOperationOutput(display);
+
+            removeCalculatorState(display,'equaled');
 
         break;
 
@@ -103,10 +320,25 @@ function handleCalculatorActions(display,action){
 
             clearToCalculatorOperationOutput(display);
 
+            removeCalculatorState(display,'equaled');
+
         break;
     }
 
 };
+
+function handleCalculatorDecimalPoint(display,point){
+
+    const output = display.querySelector('.calculator-output');
+
+    const operationOutput = display.querySelector('.calculator-operation-output');
+
+    if(output.textContent.includes('.')) return;
+
+    output.textContent += point;
+
+    operationOutput.textContent += point;
+}
 
 
 function handleCalculatorKeys(event){
@@ -121,6 +353,13 @@ function handleCalculatorKeys(event){
         switch(button.dataset.keyType){
 
             case 'number':
+
+                if(checkCalculatorState(display,'equaled')){
+
+                    clearCalculatorOutput(display);
+
+                    seperateOperationsInOperationsOutput(display);
+                }
 
                 addToCalculatorOutput(display,button.value);
 
@@ -142,9 +381,7 @@ function handleCalculatorKeys(event){
 
             case 'point':
 
-                addToCalculatorOutput(display,button.value);
-
-                addToCalculatorOperationOutput(display,button.value);
+                handleCalculatorDecimalPoint(display,button.value);
 
             break;
 
@@ -164,5 +401,7 @@ export function calculatorController(){
     calculatorDisplay.addEventListener('keydown', handleCalculatorKeys);
 
     clearCalculatorOutput(calculatorDisplay);
+
+    clearToCalculatorOperationOutput(calculatorDisplay);
 
 };
