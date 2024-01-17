@@ -33,6 +33,10 @@ export function navigateToPage(hash){
     
     newUrl.hash = hash.substring(1);
 
+    console.log('newUrl', newUrl);
+
+    console.log('href', newUrl.href)
+
     history.pushState(null,null,newUrl.href);
 
     handleNavigationRouting();
@@ -40,13 +44,23 @@ export function navigateToPage(hash){
 
 export function listenToNavigationLinks(){
 
-    [...document.querySelectorAll('[data-nav-link]')].forEach( navLink => {
+    [...document.querySelectorAll('[data-nav-link]')].forEach( (navLink,i,navLinks) => {
 
          navLink.addEventListener('click', (event)=> {
 
+            event.preventDefault();
+
             if(navLink.classList.contains('active')) return;
 
-            event.preventDefault();
+            navLinks.forEach( link => {
+
+                if(link.parentElement.classList.contains('active')){
+
+                    link.parentElement.classList.remove('active');
+
+                    link.classList.remove('active');
+                }
+            })
 
             navLink.classList.add('active');
 

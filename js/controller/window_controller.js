@@ -4,7 +4,12 @@ import { notify } from "./notification_controller.js";
 
 export function windowController(window){
 
-    window.addEventListener('popstate', handleNavigationRouting);
+    window.addEventListener('popstate', (event)=>{
+
+        event.preventDefault();
+
+        handleNavigationRouting();
+    });
 
     window.addEventListener('error', (ev)=>{
 
