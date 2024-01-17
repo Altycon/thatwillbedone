@@ -33,10 +33,6 @@ export function navigateToPage(hash){
     
     newUrl.hash = hash.substring(1);
 
-    console.log('newUrl', newUrl);
-
-    console.log('href', newUrl.href)
-
     history.pushState(null,null,newUrl.href);
 
     handleNavigationRouting();
