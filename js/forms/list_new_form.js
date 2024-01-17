@@ -36,6 +36,8 @@ function stopListeningToListForm(event){
 
     const form = document.querySelector(`.new-list-form`);
 
+    clearChildElements(form.querySelector('.new-list-form-list'));
+
     form.removeEventListener('submit', handleListFormSubmit);
 
     form.querySelector('input[name="title"]').removeEventListener('keydown', handleTitleKeydown);
@@ -191,17 +193,12 @@ function resetListForm(form){
 
     const formList = form.querySelector('.new-list-form-list');
 
-    while(formList.lastChild){
-
-        formList.removeChild(formList.lastChild);
-    }
+    clearChildElements(formList);
 
     if(document.activeElement === titleInput) return;
     
     else titleInput.focus();
 };
-
-
 
 function createNewListItemComponent(item){
 

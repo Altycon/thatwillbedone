@@ -91,6 +91,10 @@
 
                         <p style="font-size: 16px; padding: 16px;">time is irrelevant</p>
 
+                        <p style="font-size: 16px; padding: 16px;">unless you late</p>
+
+                        <p style="font-size: 16px; padding: 16px;">then, it's cake</p>
+
                     </header>
                     
                 </div>
@@ -299,15 +303,25 @@
 
                         </label>
 
-                        <label for="SettingsTextColorInput">Text Color:
+                        <label for="SettingsTextTypeSelect">Text Type:
 
-                            <input type="color" name="textcolor" id="SettingsTextColorInput" value="#000" autocomplete="off">
+                            <select name="texttype" id="SettingsTextTypeSelect">
+
+                                <option value="sans-serif">Sans Serif</option>
+
+                                <option value="cursive">Cursive</option>
+
+                                <option value="helvetica">Helvetica</option>
+
+                                <option value="monospace">Monospace</option>
+
+                            </select>
 
                         </label>
 
-                        <label for="SettingsTextSizeInput">Text Size:
+                        <label for="SettingsTextColorInput">Text Color:
 
-                            <input type="number" name="textsize" id="SettingsTextSizeInput" autocomplete="off">
+                            <input type="color" name="textcolor" id="SettingsTextColorInput" value="#000" autocomplete="off">
 
                         </label>
 
@@ -738,7 +752,7 @@
 
                     <li class="navigation-tertiary-item">
 
-                        <a href="?date=today#calendar" class="navigation-tertiary-link" data-nav-link="calendar">D</a>
+                        <a href="/#calendar" class="navigation-tertiary-link" data-nav-link="calendar">D</a>
                         
                     </li>
 
