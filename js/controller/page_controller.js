@@ -12,15 +12,11 @@ export function resetPages(){
 
         if(page.classList.contains('active')) {
 
+            page.classList.remove('active');
+
             page.classList.remove('appear');
 
-            setTimeout( ()=> {
-
-                stopListenToConnectionControls(page);
-
-                page.classList.remove('active');
-
-            },500);
+            stopListenToConnectionControls(page);
 
         };
     });

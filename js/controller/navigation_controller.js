@@ -23,13 +23,17 @@ export function handleNavigationRouting(){
 
 export function navigateToPage(hash){
 
-    const hostURl = `https://altycon.github.io/thatwillbedone`; //`http://127.0.0.1:5500`;
+    const hostURl = `https://altycon.github.io`;
+
+    //const hostURl = `http://127.0.0.1:5500`;
 
     const newUrl =  new URL(hostURl);
+
+    newUrl.pathname = '/thatwillbedone';
     
     newUrl.hash = hash.substring(1);
 
-    history.pushState(null,null,newUrl);
+    history.pushState(null,null,newUrl.href);
 
     handleNavigationRouting();
 };
@@ -47,6 +51,7 @@ export function listenToNavigationLinks(){
             navLink.classList.add('active');
 
             navigateToPage(event.target.getAttribute('href'));
+
 
 
             [...document.querySelectorAll('[data-control]')].forEach( button => {
