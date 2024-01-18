@@ -22,8 +22,6 @@ function handleProfileInformationSave(event){
 
     const profileName = formData.get('name');
 
-    console.log(profileName)
-
     if(!profileName || profileName === '' || profileName === ' ') return;
 
     AltyLocalStorage.updateItem('profile','name', profileName);
