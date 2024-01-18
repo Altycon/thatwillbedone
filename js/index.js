@@ -4,7 +4,6 @@ import { listenToNavigationLinks, navigateToPage } from "./controller/navigation
 import { windowController } from "./controller/window_controller.js";
 
 
-
 function initializeSite(){
 
     checkAndLoadAppData();

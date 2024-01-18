@@ -1,7 +1,7 @@
 
 function timeToString(hour,minute){
 
-    if(+hour >= 12) return `${hour % 12}:${minute}pm`;
+    if(+hour >= 12) return `${hour % 12 === 0 ? 12:hour % 12}:${minute}pm`;
 
     return `${hour}:${minute}am`;
 };

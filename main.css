@@ -122,7 +122,7 @@ body{
     background-color: var(--bc-primary);
     box-shadow: -2px 8px 10px hsl(0 0% 33% / 0.5);
     list-style: none;
-    padding: 2rem;
+    padding:  2rem 0rem;
 
     opacity: 0;
     transition: opacity 100ms ease;
@@ -132,11 +132,13 @@ body{
     opacity: 1;
 }
 .navigation-secondary-item{
-    border: 1px solid black;
-    padding: 5px;
+    padding: 1rem;
     opacity: 0;
     translate: 20px;
     transition: translate 100ms ease-in, opacity 200ms ease-in;
+}
+.navigation-secondary-item:hover{
+    background-color: var(--bc-accent1);
 }
 .navigation-secondary-item:active{
     scale: .98;
@@ -1111,10 +1113,25 @@ main{
 =============================
 */
 
+.profile-information{
+    border: 1px solid black;
+    padding: 2rem;
+}
+.profile-information > p{
+    font-weight: 700;
+}
+.profile-information > p > span{
+    font-weight: normal;
+    margin-left: 1rem;
+}
 .profile-form{
    --profile-form-spacing: 2rem;
    
    padding: var(--profile-form-spacing);
+}
+.profile-form > h3{
+    text-align: center;
+    padding-bottom: 3rem;
 }
 .profile-form > label{
     text-transform: uppercase;
@@ -1122,6 +1139,7 @@ main{
     font-size: 1rem;
 }
 .profile-form input[name=name]{
+    border: none;
     font-family: var(--ff-primary);
     color: var(--fc-primary);
     background-color: var(--bc-accent1);
