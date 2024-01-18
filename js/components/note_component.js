@@ -15,12 +15,13 @@ export function createNoteComponent(id,description,createdTimestamp,modifiedTime
 
     noteDescription.textContent = description;
 
+    component.append(
+        
+        noteDescription,
+        buldNoteControls(),
+        buildNoteDatetimeDisplay(createdTimestamp,modifiedTimestamp)
 
-    const noteControls = buldNoteControls();
-
-    const dateTime = buildNoteDatetime(createdTimestamp,modifiedTimestamp);
-
-    component.append(noteDescription,noteControls,dateTime);
+    );
 
     return component;
 
@@ -44,35 +45,19 @@ function buldNoteControls(){
     return div;
 };
 
-function buildNoteDatetime(createdTimestamp,modifiedTimestamp){
-     
+
+function buildNoteDatetimeDisplay(createdTimestamp,modifiedTimestamp){
+
     const div = document.createElement('div');
 
     div.classList.add('note-item-datetime');
 
+    div.append(
 
-    const createdTimestampDisplay = document.createElement('p');
+        buildNoteDatetime('created',createdTimestamp,'Not created'),
+        buildNoteDatetime('modified',modifiedTimestamp,'Not modified')
 
-    createdTimestampDisplay.classList.add('note-created-datetime');
-
-    createdTimestampDisplay.innerHTML = `Created:&nbsp;<span>${parseTimestamp(createdTimestamp,'timedate')}</span>`;
-
-
-    div.appendChild(createdTimestampDisplay);
-
-
-   
-    const modifiedTimestampDisplay = document.createElement('p');
-
-    modifiedTimestampDisplay.classList.add('note-modified-datetime');
-
-    modifiedTimestampDisplay.innerHTML = `Modified:&nbsp;
-
-        <span>${+modifiedTimestamp === +createdTimestamp ? 'Not modified':parseTimestamp(modifiedTimestamp,'timedate')}</span>`;
-    
-    div.appendChild(modifiedTimestampDisplay);
-
-    
+    );
 
     return div;
 };
@@ -90,4 +75,22 @@ function buildNoteButton(name,type,innerhtml){
     button.innerHTML = innerhtml;
 
     return button;
+};
+
+function buildNoteDatetime(name,timestamp,fallback){
+
+    let label = name;
+
+    const p = document.createElement('p');
+
+    if(name === 'created') label = 'Made';
+
+    if(name === 'modified') label = 'Changed';
+
+    p.classList.add(`note-${name}-datetime`);
+
+    p.innerHTML = `${label}:&nbsp;<span>${timestamp ? parseTimestamp(timestamp,'timedate'):fallback}</span>`;
+
+    return p;
+
 };

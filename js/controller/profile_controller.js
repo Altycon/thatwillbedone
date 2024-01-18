@@ -12,6 +12,8 @@ export function profileController(){
 
 export function addProfileDataToSite(name,createdTimestamp){
 
+    console.log(createdTimestamp);
+
     [...document.querySelectorAll('.profile-name')].forEach( element =>{
 
         if(element.nodeName === 'H2'){

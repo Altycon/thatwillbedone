@@ -785,8 +785,9 @@ main{
     gap: var(--list-group-spacing);
 }
 .list{
-    border: 1px solid black;
-    padding: 2rem;
+    /* border: 1px solid black; */
+    padding-top: 2rem;
+    padding-bottom: 2rem;
     height: fit-content;
     opacity: 1;
     transform-origin: center;
@@ -800,19 +801,12 @@ main{
     opacity: 0;
     transform: translateY(-50px);
 }
-.list button{
-    align-self: center;
-    justify-self: center;
 
-    border: none;
-    background-color: transparent;
-    color: var(--fc-primary);
-    font-size: 1.2rem;
-    padding: 3px 5px;
-}
 .list > header{
     margin-bottom: 1em;
     border-bottom: 1px solid grey;
+    padding-left: 2rem;
+    padding-right: 2rem;
 
     display: grid;
     grid-template-columns: 1fr;
@@ -822,6 +816,9 @@ main{
     grid-column: 1;
     grid-row: 2;
     padding-bottom: .5em;
+    padding-top: 1rem;
+    padding-left: 2rem;
+    padding-right: 2rem;
 }
 .list-item-controls{
     grid-column: 1;
@@ -833,7 +830,8 @@ main{
 }
 .list-items{
     list-style: none;
-    padding-left: 1rem;
+    padding-left: 2rem;
+    padding-right: 2rem;
     margin-bottom: 1.5rem;
 }
 .list-item-title{
@@ -855,17 +853,40 @@ main{
 }
 .list-item > p{
     font-size: 1.2rem;
-    line-height: 1.2em;
+    line-height: 2em;
 }
 .list-item::before{
     content: "";
     position: absolute;
     top: 50%; left: 0;
-    width: 10px;
-    height: 10px;
+    width: .5em;
+    height: .5em;
     background-color: var(--fc-primary);
     border-radius: 50%;
-    transform: translateY(-50%);
+    transform: translateY(-80%);
+}
+
+.list-item-edit-btn,
+.list-item-cancel-btn,
+.list-item-save-btn,
+.list-item-delete-btn,
+.list-item-remove-btn,
+.list-item-additem-btn{
+    align-self: center;
+    justify-self: center;
+
+    border: none;
+    background-color: transparent;
+    box-shadow: 1px 1px 5px var(--fc-primary);
+    border-radius: 10px;
+    color: var(--fc-primary);
+    font-size: 1.5rem;
+    padding: 3px 5px;
+
+}
+.list-item-additem-btn{
+    font-size: 2rem;
+    font-weight: 700;
 }
 
 .list-item-cancel-btn,
@@ -873,6 +894,7 @@ main{
 .list-item-delete-btn,
 .list-item-remove-btn,
 .list-item-additem-btn{
+    
     opacity: 0;
     pointer-events: none;
     transition: opacity 300ms ease-in-out;
@@ -911,7 +933,7 @@ main{
 .list-goal-datetime > span{
     font-size: .7rem;
     font-weight: normal;
-    margin-left: 1em;
+    margin-left: .5em;
 }
 
 /*

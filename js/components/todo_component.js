@@ -85,11 +85,17 @@ function buildTodoButton(name,type,innerhtml){
 
 function buildTodoDatetime(name,timestamp,fallback){
 
+    let label = name;
+
     const p = document.createElement('p');
 
     p.classList.add(`todo-${name}-datetime`);
 
-    p.innerHTML = `${name}:&nbsp;<span>${timestamp ? parseTimestamp(timestamp,'timedate'):fallback}</span>`;
+    if(name === 'created') label = 'Made';
+
+    if(name === 'modified') label = 'Changed';
+
+    p.innerHTML = `${label}:&nbsp;<span>${timestamp ? parseTimestamp(timestamp,'timedate'):fallback}</span>`;
 
     return p;
 

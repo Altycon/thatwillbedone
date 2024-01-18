@@ -65,7 +65,7 @@ export function parseTimestamp(timestamp,type){
 
     const monthNames = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
 
-    const period = new Date(+timestamp);
+    const period = new Date(Number(timestamp));
 
     const year = period.getFullYear();
 

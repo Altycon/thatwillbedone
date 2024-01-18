@@ -27,24 +27,24 @@ export function checkAndLoadAppData(){
 
     if(window.localStorage){
 
-        if(!AltyLocalStorage.initialize()){
+        AltyLocalStorage.initialize()
 
-            const profileData = AltyLocalStorage.getCategory('profile');
+        const profileData = AltyLocalStorage.getCategory('profile');
 
-            addProfileDataToSite(
-                profileData.name,
-                profileData.createdTimestamp
-            );
+        console.log(profileData)
 
-            const settingsData = AltyLocalStorage.getCategory('settings');
+        addProfileDataToSite(
+            profileData.name,
+            profileData.createdTimestamp
+        );
 
-            applySettingsDataToSite(
-                settingsData.theme,
-                settingsData.textType
-            );
+        const settingsData = AltyLocalStorage.getCategory('settings');
 
-
-        }
+        applySettingsDataToSite(
+            settingsData.theme,
+            settingsData.textType
+        );
+        
     }
 
     if(window.indexedDB){
