@@ -23,7 +23,7 @@ export function handleNavigationRouting(){
 
 export function navigateToPage(hash){
 
-   const hostURl = `https://altycon.github.io`;
+    const hostURl = `https://altycon.github.io`;
 
     //const hostURl = `http://127.0.0.1:5500`;
 
