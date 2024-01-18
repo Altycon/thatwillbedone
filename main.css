@@ -22,6 +22,19 @@
     --stopwatch-color-started: limegreen;
     --stopwatch-color-paused: yellow;
     --stopwatch-color-reset: red;
+
+}
+
+@media (prefers-color-scheme: dark){
+    :root{
+
+        --fc-primary: hsl(0 0% 100%);
+
+        --bc-primary: hsl(0 0% 0%);
+
+        --bc-accent1: hsl(0 0% 10%);
+
+    }
 }
 
 /*
@@ -64,6 +77,7 @@ html{
 body{
     height: 100dvh; height: 100vh;
     background-color: var(--bc-primary);
+    transition: background-color 300ms ease-in-out;
 }
 
 .page-wrapper{
@@ -1116,9 +1130,13 @@ main{
 .profile-information{
     border: 1px solid black;
     padding: 2rem;
+
 }
 .profile-information > p{
     font-weight: 700;
+}
+.profile-information > p:first-of-type{
+    margin-bottom: 2rem;
 }
 .profile-information > p > span{
     font-weight: normal;
@@ -1158,6 +1176,7 @@ main{
     outline: 1px solid var(--fc-primary);
     border-radius: 10px;
     background-color: transparent;
+    color: var(--fc-primary);
     font-size: 1.5rem;
     font-weight: 700;
 }

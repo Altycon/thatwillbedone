@@ -1,14 +1,21 @@
 import { AltyIDB } from "../databases/local_index_database.js";
 import { AltyLocalStorage } from "../databases/local_storage_database.js";
+import { addProfileDataToSite } from "../controller/profile_controller.js";
+
 import { listenToConnectionControls } from "./connection_controller.js";
 import { buildListGroups } from "./list_controller.js";
 import { buildNoteList } from "./notes_controller.js";
-import { notify } from "./notification_controller.js";
-import { addDataToProfilePage } from "./profile_controller.js";
+
 import { buildTodoList } from "./todo_controller.js";
+import { applySettingsDataToSite } from "./settings_controller.js";
 
 
-export function listenToAppControls(){
+export function appController(){
+
+    listenToAppControls();
+}
+
+function listenToAppControls(){
 
     listenToConnectionControls(document.querySelector('.header-primary'));
 
@@ -22,12 +29,20 @@ export function checkAndLoadAppData(){
 
         if(!AltyLocalStorage.initialize()){
 
-            const profileName = AltyLocalStorage.getItem('profile','name');
+            const profileData = AltyLocalStorage.getCategory('profile');
 
-            addDataToProfilePage(profileName);
+            addProfileDataToSite(
+                profileData.name,
+                profileData.createdTimestamp
+            );
 
-            // get categories instead of items
-            
+            const settingsData = AltyLocalStorage.getCategory('settings');
+
+            applySettingsDataToSite(
+                settingsData.theme,
+                settingsData.textType
+            );
+
 
         }
     }

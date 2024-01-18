@@ -79,6 +79,7 @@ export function listenToNavigationLinks(){
 
 };
 
+
 function hasQueryParameters(url){
 
     return url.search.indexOf('?') !== -1;

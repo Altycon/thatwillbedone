@@ -91,11 +91,9 @@
 
                         <p>Do Something</p>
 
-                        <p style="font-size: 16px; padding: 16px;">time is irrelevant</p>
+                        <p style="font-size: 16px; padding: 16px;">Emosewa is awesome...backwards.</p>
 
-                        <p style="font-size: 16px; padding: 16px;">unless you late</p>
-
-                        <p style="font-size: 16px; padding: 16px;">then, it's cake</p>
+                        <p style="font-size: 16px; padding: 16px;">That's all.</p>
 
                     </header>
                     
@@ -271,6 +269,8 @@
 
                         <p>Name:&nbsp;<span class="profile-name">Guest</span></p>
 
+                        <p>Created:&nbsp;<span class="profile-created"></span></p>
+
                     </div>
 
                     <form class="profile-form">
@@ -285,11 +285,15 @@
                             
                         <div class="profile-form-controls">
 
+                            <button type="reset">Clear</button>
+
                             <button type="submit">Save</button>
 
                         </div>
 
                     </form>
+
+                    <button type="button" class="btn">Delete Profile Information</button>
 
                 </div>
                 
@@ -315,9 +319,9 @@
 
                         <label for="SettingsTextTypeSelect">Text Type:
 
-                            <select name="texttype" id="SettingsTextTypeSelect">
+                            <select name="texttype" id="SettingsTextTypeSelect" autocomplete="off">
 
-                                <option value="system-ui">Normal</option>
+                                <option value="system-ui" selected>Normal</option>
 
                                 <option value="sans-serif">Sans Serif</option>
 
@@ -331,25 +335,15 @@
 
                         </label>
 
-                        <label for="SettingsTextColorInput">Text Color:
-
-                            <input type="color" name="textcolor" id="SettingsTextColorInput" value="#000" autocomplete="off">
-
-                        </label>
-
-                        <label for="SettingsBackgroundColorInput">Background Color:
-
-                            <input type="color" name="backgroundcolor" id="SettingsBackgroundColorInput" value="#ffffff" autocomplete="off">
-
-                        </label>
-
                         <div class="settings-form-controls">
 
                             <button type="submit" class="btn">Save</button>
-                            
+
                         </div>
 
                     </form>
+
+                    <button type="button" class="btn">Default Settings</button>
                     
                 </div>
                 

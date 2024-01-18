@@ -6,19 +6,22 @@ function AltyStorage(){
     
         if(!JSON.parse(localStorage.getItem('TWBD'))){
 
+            const now = Date.now().toString();
+
             localStorage.setItem('TWBD', JSON.stringify(
                 [
                     { 
         
                         profile: { 
-                            name: 'Guest',
-                
+                            name: 'Today',
+                            createdTimestamp: now,
+                            modifiedTimestamp: now
                         },
                         settings: {
                             theme: null,
                             textType: null,
-                            textColor: null,
-                            backgroundColor:  null
+                            createdTimestamp: now,
+                            modifiedTimestamp: now
                         }
                     }
                 ]
@@ -52,8 +55,6 @@ function AltyStorage(){
 
         });
 
-        console.log(category)
-
         localStorage.setItem('TWBD', JSON.stringify(store));
     }
 
@@ -64,11 +65,17 @@ function AltyStorage(){
         return store[0][categoryName][property]
     }
 
+    function getCategory(categoryName){
+
+        return JSON.parse(localStorage.getItem('TWBD'))[0][categoryName];
+    }
+
     return {
         initialize,
         updateItem,
         updateItems,
-        getItem
+        getItem,
+        getCategory
     }
 
 };

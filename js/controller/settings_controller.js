@@ -1,87 +1,67 @@
-import { AltyLocalStorage } from "../databases/local_storage_database.js";
+
+import { listenToSettingsForm } from "../forms/settings_form.js";
+import { isLightColor } from "../utilities.js";
 
 export function settingsController(){
 
+    listenToSettingsForm();
+
+};
+
+export function applySettingsDataToSite(theme,textType){
+
+
     const settingsForm = document.querySelector('.settings-form');
 
+    if(theme){
 
-    settingsForm.addEventListener('submit', handleSettingsSave);
+        switch(theme){
 
-    settingsForm.querySelector('input[name=theme]').addEventListener('input', handleSettingsThemeChange);
+            case 'light':
 
-    settingsForm.querySelector('select[name=texttype]').addEventListener('input', handleSettingsTextTypeChange);
+                document.documentElement.style.setProperty('--fc-primary', 'hsl(0 0% 0%)');
 
-    settingsForm.querySelector('input[name=textcolor]').addEventListener('input', handleSettingsTextColorChange);
+                document.documentElement.style.setProperty('--bc-primary', 'hsl(0 0% 100%)');
 
-    settingsForm.querySelector('input[name=backgroundcolor]').addEventListener('input', handleSettingsBackgroundColorChange);
+                document.documentElement.style.setProperty('--bc-accent1', 'hsl(0 0% 90%)');
 
-};
+                settingsForm.querySelector('input[name=theme]').checked = false;
 
-function handleSettingsSave(event){
+            break;
 
-    event.preventDefault();
+            case 'dark':
 
-    const form = event.target;
+                document.documentElement.style.setProperty('--fc-primary', 'hsl(0 0% 100%)');
 
-    const formData = new FormData(form);
+                document.documentElement.style.setProperty('--bc-primary', 'hsl(0 0% 0%)');
 
-    const theme = formData.get('theme');
+                document.documentElement.style.setProperty('--bc-accent1', 'hsl(0 0% 10%)');
 
-    const textType = formData.get('texttype');
+                settingsForm.querySelector('input[name=theme]').checked = true;
 
-    const textColor = formData.get('textcolor');
-
-    const backgroundColor = formData.get('backgroundcolor');
-
-    const updates = {
-
-        theme: theme,
-        textType: textType,
-        textColor: textColor,
-        backgroundColor: backgroundColor
-
-    };
-
-    console.log(updates)
-
-    AltyLocalStorage.updateItems('settings', updates);
-
-};
-
-function handleSettingsThemeChange(event){
-
-    if(event.target.checked){
-
-        document.documentElement.style.setProperty('--fc-primary', 'hsl(0 0% 100%)');
-
-        document.documentElement.style.setProperty('--bc-primary', 'hsl(0 0% 0%)');
-
-        document.documentElement.style.setProperty('--bc-accent1', 'hsl(0 0% 10%)');
+            break;
+        }
 
     }else{
 
-        document.documentElement.style.setProperty('--fc-primary', 'hsl(0 0% 0%)');
-
-        document.documentElement.style.setProperty('--bc-primary', 'hsl(0 0% 100%)');
-
-        document.documentElement.style.setProperty('--bc-accent1', 'hsl(0 0% 90%)');
-
+        if(getComputedStyle(document.documentElement).getPropertyValue('--bc-primary') === 'hsl(0 0% 0%)'){
+            
+            settingsForm.querySelector('input[name=theme]').checked = true;
+        }
     }
-};
+      
+    if(textType){
 
-function handleSettingsTextTypeChange(event){
+        document.documentElement.style.setProperty('--ff-primary', textType);
 
-    document.documentElement.style.setProperty('--ff-primary', event.target.value);
+        const textTypeSelect = settingsForm.querySelector(`select option[value="${textType}"]`).selected = true;
 
-};
+        console.log(textTypeSelect)
+    }
 
-function handleSettingsTextColorChange(event){
+    console.log('Settings data added to site');
+    
+}
 
-    document.documentElement.style.setProperty('--fc-primary', event.target.value);
 
-};
 
-function handleSettingsBackgroundColorChange(event){
-
-    document.documentElement.style.setProperty('--bc-primary', event.target.value);
-};

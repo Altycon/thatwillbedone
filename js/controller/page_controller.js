@@ -91,4 +91,6 @@ export function pageRouter(hash){
 
     }
 
+    document.title = `${hash.toUpperCase()} | TWBD`;
+
 }

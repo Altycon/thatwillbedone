@@ -1,5 +1,5 @@
 
-import { checkAndLoadAppData, listenToAppControls } from "./controller/app_controller.js";
+import { appController, checkAndLoadAppData } from "./controller/app_controller.js";
 import { listenToNavigationLinks, navigateToPage } from "./controller/navigation_controller.js";
 import { windowController } from "./controller/window_controller.js";
 
@@ -10,7 +10,7 @@ function initializeSite(){
 
     listenToNavigationLinks();
 
-    listenToAppControls();
+    appController();
 
     navigateToPage(window.location.hash || '#main');
 

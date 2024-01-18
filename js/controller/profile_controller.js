@@ -1,47 +1,32 @@
-import { AltyLocalStorage } from "../databases/local_storage_database.js";
+
+import { listenToProfileForm } from "../forms/profile_form.js";
+import { parseTimestamp } from "../utilities.js";
 
 
 
 export function profileController(){
 
-    const profileForm = document.querySelector('.profile-form');
-
-    profileForm.addEventListener('submit', handleProfileInformationSave);
-
-    profileForm.querySelector('input[name=name]').addEventListener('input', handleAddingNameToPage);
+    listenToProfileForm();
 
 };
 
-function handleProfileInformationSave(event){
+export function addProfileDataToSite(name,createdTimestamp){
 
-    event.preventDefault();
+    [...document.querySelectorAll('.profile-name')].forEach( element =>{
 
-    const form = event.target;
+        if(element.nodeName === 'H2'){
 
-    const formData = new FormData(form);
+            element.textContent = name + ',';
 
-    const profileName = formData.get('name');
+        }else{
 
-    if(!profileName || profileName === '' || profileName === ' ') return;
+            element.textContent = name;
 
-    AltyLocalStorage.updateItem('profile','name', profileName);
-    
-};
+        }
+    });
 
-function handleAddingNameToPage(event){
+    document.querySelector('.profile-created').textContent = parseTimestamp(createdTimestamp,'datetime');
 
-    event.preventDefault();
-
-    const { target } = event;
-
-    addDataToProfilePage(target.value)
-
-};
-
-export function addDataToProfilePage(name){
-
-    const profileName = [...document.querySelectorAll('.profile-name')];
-
-    profileName.forEach( element => element.textContent = name);
+    console.log('Profile data added to site');
 
 };
