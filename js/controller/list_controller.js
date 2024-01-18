@@ -17,6 +17,8 @@ export function listsController(){
 
         if(target.dataset.button){
 
+            event.preventDefault();
+
             handleListButtons(target,currentTarget);
         }
 
@@ -95,7 +97,7 @@ function startEditingList(li){
 
     });
     
-    addToSiteState('listtitle', li.querySelector('.list-item-title').innerText.trim());
+    //addToSiteState('listtitle', li.querySelector('.list-item-title').innerText.trim());
 };
 
 function cancelEditingList(li){
@@ -116,7 +118,7 @@ function cancelEditingList(li){
 
     });
 
-    deleteFromSiteState('listtitle');
+    //deleteFromSiteState('listtitle');
 };
 
 function updateList(li){
@@ -172,13 +174,37 @@ function updateList(li){
 
 function addNewItemToList(li){
 
-    const listItemsElemensts = li.querySelector('.list-items')
+    const listItemsElemensts = li.querySelector('.list-items');
 
-    listItemsElemensts.appendChild(buildListItem());
+    const newListItem = buildListItem();
 
-    listItemsElemensts.lastElementChild.firstElementChild.contentEditable = true;
 
-    listItemsElemensts.lastElementChild.firstElementChild.focus();
+    function handleNewListItemKeydown(event){
+
+        const { target, key, shiftkey } = event;
+
+        if(key === 'Enter' && !shiftkey){
+
+            event.preventDefault();
+
+            target.blur();
+
+            target.removeEventListener('keydown',handleNewListItemKeydown);
+
+            addNewItemToList(li);
+        }
+
+    }
+
+    listItemsElemensts.lastChild.firstChild.removeEventListener('keydown', handleNewListItemKeydown);
+
+    newListItem.firstChild.addEventListener('keydown', handleNewListItemKeydown);
+
+    listItemsElemensts.appendChild(newListItem);
+
+    newListItem.firstChild.contentEditable = true;
+
+    newListItem.firstChild.focus();
 }
 
 function deleteList(li,listGroups){
