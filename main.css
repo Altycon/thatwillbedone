@@ -83,6 +83,8 @@ body{
 .page-wrapper{
     height: 100vh; height: 100dvh;
     max-height: 100dvh; max-height: 100vh;
+    overflow: hidden;
+
     display: grid;
     grid-template-columns: 1fr;
     grid-template-rows: auto 1fr auto;
