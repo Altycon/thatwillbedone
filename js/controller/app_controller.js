@@ -31,8 +31,6 @@ export function checkAndLoadAppData(){
 
         const profileData = AltyLocalStorage.getCategory('profile');
 
-        console.log(profileData)
-
         addProfileDataToSite(
             profileData.name,
             profileData.createdTimestamp

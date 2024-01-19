@@ -17,8 +17,6 @@ export function profileController(){
 
 export function addProfileDataToSite(name,createdTimestamp){
 
-    console.log(createdTimestamp);
-
     [...document.querySelectorAll('.profile-name')].forEach( element =>{
 
         if(element.nodeName === 'H2'){
@@ -46,7 +44,10 @@ function deleteProfileInformation(event){
 
         AltyLocalStorage.deleteLocalStorage();
 
+        addProfileDataToSite('Today', Date.now().toString());
 
-        notify('Information deleted. Please reload page or leave.')
+        notify('Information deleted. Please reload page or leave.');
+
     })
-}
+};
+
