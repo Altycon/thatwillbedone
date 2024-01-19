@@ -2488,6 +2488,13 @@ main{
         padding-left: 0rem;
         padding-right: 0rem;
     }
+
+    /* List */
+
+    .list-groups{
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
      /* Stopwatch */
 
      .stopwatch-time > span{
