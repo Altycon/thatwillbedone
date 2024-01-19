@@ -70,12 +70,18 @@ function AltyStorage(){
         return JSON.parse(localStorage.getItem('TWBD'))[0][categoryName];
     }
 
+    function deleteLocalStorage(){
+
+        localStorage.removeItem('TWBD');
+    }
+
     return {
         initialize,
         updateItem,
         updateItems,
         getItem,
-        getCategory
+        getCategory,
+        deleteLocalStorage
     }
 
 };

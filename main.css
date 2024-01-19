@@ -807,8 +807,6 @@ main{
 .list > header{
     margin-bottom: 1em;
     border-bottom: 1px solid grey;
-    padding-left: 2rem;
-    padding-right: 2rem;
 
     display: grid;
     grid-template-columns: 1fr;
@@ -879,7 +877,6 @@ main{
 
     border: none;
     background-color: transparent;
-    box-shadow: 1px 1px 5px var(--fc-primary);
     border-radius: 10px;
     color: var(--fc-primary);
     font-size: 1.5rem;

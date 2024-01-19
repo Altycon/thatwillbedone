@@ -1,12 +1,17 @@
 
+import { AltyLocalStorage } from "../databases/local_storage_database.js";
 import { listenToProfileForm } from "../forms/profile_form.js";
 import { parseTimestamp } from "../utilities.js";
+import { confirmSelection } from "./confirm_selection_controller.js";
+import { notify } from "./notification_controller.js";
 
 
 
 export function profileController(){
 
     listenToProfileForm();
+
+    document.querySelector('.profile-delete-information-btn').addEventListener('click', deleteProfileInformation)
 
 };
 
@@ -32,3 +37,16 @@ export function addProfileDataToSite(name,createdTimestamp){
     console.log('Profile data added to site');
 
 };
+
+function deleteProfileInformation(event){
+
+    event.preventDefault();
+
+    confirmSelection('This cannot be undone. Are you sure?', ()=> {
+
+        AltyLocalStorage.deleteLocalStorage();
+
+
+        notify('Information deleted. Please reload page or leave.')
+    })
+}

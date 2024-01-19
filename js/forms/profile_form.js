@@ -1,5 +1,6 @@
 import { notify } from "../controller/notification_controller.js";
 import { AltyLocalStorage } from "../databases/local_storage_database.js";
+import { parseTimestamp } from "../utilities.js";
 
 
 export function listenToProfileForm(){
@@ -24,18 +25,23 @@ function handleProfileInformationSave(event){
 
     if(!profileName || profileName === '' || profileName === ' ') return;
 
+    const now = Date.now().toString()
+
     AltyLocalStorage.updateItems('profile',{ 
 
-        name: profileName, 
-        modifiedTimestamp: Date.now().toString()
+        name: profileName,
+        createdTimestamp:  now,
+        modifiedTimestamp: now
         
     });
+
+    document.querySelector('.profile-created').textContent = parseTimestamp(now,'datetime');
 
     document.querySelector('#main .profile-name').textContent = profileName + ',';
 
     document.querySelector('#main .page-header>p:nth-child(3)').textContent = 'Oh nice. You added a name. :-)';
 
-    document.querySelector('#main .page-header>p:nth-child(3)').textContent = 'Thank you.'
+    document.querySelector('#main .page-header>p:nth-child(4)').textContent = 'Thank you.'
 
     notify('Profile updated');
     
