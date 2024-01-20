@@ -67,7 +67,7 @@ function buildTodoControls(){
     )
 
     div.append( 
-        buildTodoButton('edit','button',`&#9998;`),
+        buildTodoButton('edit','button',`&#8230;`),
         editControls
       
     );
