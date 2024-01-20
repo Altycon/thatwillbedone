@@ -489,12 +489,13 @@ main{
     padding-top: 3rem;
 }
 .todo-item{
-    padding-top: 1rem;
+    padding-top: .5rem;
     padding-right: 1rem;
     padding-left: 1rem;
+    border: 1px solid black;
 
 
-    margin-bottom: 1rem;
+    margin-bottom: .5rem;
     opacity: 1;
     transform-origin: center;
     transform: translateY(0px);

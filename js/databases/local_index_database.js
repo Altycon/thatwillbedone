@@ -128,7 +128,7 @@ function INDEXDB(){
 
                 if(callback) callback(event.target.result);
 
-                notify(`Successfully added data to ${storeName}s`);
+                //notify(`Successfully added data to ${storeName}s`);
 
                 //console.log('Successfully added data to store.');
 
@@ -169,7 +169,7 @@ function INDEXDB(){
 
                     if(callback) callback(result);
 
-                    notify(`Successfully updated ${storeName}s`);
+                    //notify(`Successfully updated ${storeName}s`);
 
                     //console.log('Successfully added data to store.');
 
@@ -199,7 +199,7 @@ function INDEXDB(){
 
                 if(callback) callback(event.target.result);
 
-                notify(`Successfully retrieved ${storeName}`);
+                //notify(`Successfully retrieved ${storeName}`);
 
                 //console.log('Successfully added data to store.');
 
@@ -259,7 +259,7 @@ function INDEXDB(){
 
                 if(callback) callback(event.target.result);
 
-                notify(`Successfully deleted ${storeName}`);
+                //notify(`Successfully deleted ${storeName}`);
 
                 console.log(`Successfully deleted ${storeName}`);
 
