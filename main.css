@@ -83,7 +83,7 @@ body{
 .page-wrapper{
     height: 100vh; height: 100dvh;
     max-height: 100dvh; max-height: 100vh;
-    overflow: hidden;
+    /* overflow: hidden; */
 
     display: grid;
     grid-template-columns: 1fr;
@@ -91,14 +91,13 @@ body{
     
 }
 .header-primary{
-    --header-primary-spacing: 1rem;
+    --header-primary-spacing: .5rem;
     position: relative;
     padding: var(--header-primary-spacing);
-    box-shadow: 0px 5px 10px hsl(0 0% 33% / 0.5);
     margin-bottom: 1rem;
 
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 2fr 1fr 1fr;
     grid-template-rows: auto;
     gap: var(--header-primary-spacing);
 }
@@ -114,7 +113,7 @@ body{
     color: var(--fc-primary);
 }
 .header-primary-controls{
-    grid-column: 2;
+    grid-column: 3;
     grid-row: 1;
     text-align: right;
 }
@@ -173,8 +172,8 @@ body{
 }
 
 .navigation-primary{
-    grid-column: 1/3;
-    grid-row: 2;
+    grid-column: 2;
+    grid-row: 1;
 }
 .navigation-primary-list{
     --nav-list-spacing: 1em;
@@ -189,7 +188,9 @@ body{
 .navigation-primary-item{
     outline: 1px solid grey;
     text-align: center;
-    line-height: 2.5em;
+    line-height: 2em;
+    padding-left: 1rem;
+    padding-right: 1rem;
 }
 .navigation-primary-item:active{
     scale: .98;
@@ -199,17 +200,19 @@ body{
 }
 .navigation-primary-link{
     display: inline-block;
+    text-transform: uppercase;
     width: 100%;
     height: 100%;
     text-decoration: none;
-    font-size: 1.2rem;
+    font-size: 1rem;
     font-weight: 700;
     color: var(--fc-primary);
+    white-space: nowrap;
 }
 
 main{
     position: relative;
-    overflow-y: scroll;
+    /* overflow-y: scroll; */
 }
 
 .footer-primary{
@@ -329,9 +332,6 @@ main{
 */
 .main .page-header{
     height: 50vh;
-
-    display: grid;
-    place-content: center;
 }
 .main .page-header > p{
     color: var(--fc-primary);
@@ -471,10 +471,12 @@ main{
     display: grid;
     place-content: center;
 }
+
+
+
 /* || New Todo List ==== */
 
 .todo-list{
-    padding-top: 2rem;
     
     width: 100vw;
     max-width: 800px;
@@ -484,8 +486,13 @@ main{
     padding-top: 3rem;
 }
 .todo-item{
-    padding: 2rem;
-    margin-bottom: 4rem;
+    padding-top: 2rem;
+    padding-right: 1rem;
+    padding-left: 1rem;
+    padding-bottom: 1rem;
+
+
+    margin-bottom: 2rem;
     opacity: 1;
     transform-origin: center;
     transform: translateY(0px);
@@ -494,38 +501,59 @@ main{
                 transform 200ms ease-in;
    
     display: grid;
-    grid-template-columns: 3fr 1fr;
-    grid-template-rows: auto auto;
-    column-gap: 2rem;
-    row-gap: 2rem;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto auto;
 }
 .todo-item.hiding{
     opacity: 0;
     transform: translateY(-50px);
 }
-.todo-item-description{
+.todo-item-header{
     grid-column: 1;
     grid-row: 1;
 
-    font-size: 2rem;
-    line-height: 1.5em;
-    color: var(--fc-primary);
-    padding: .5rem;
+    display: grid;
+    grid-template-columns: auto auto auto;
+    grid-template-rows: auto;
+    justify-content: space-evenly;
 }
-.todo-item.completed .todo-item-description{
-    text-decoration: line-through;
-    opacity: .5;
-}
+
+
+
+
+
 .todo-item-controls{
-    grid-column: 2;
-    grid-row: 1;
+    position: relative;
 
     display: grid;
-    grid-template-columns: repeat(3,1fr);
-    grid-template-rows: auto auto;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: auto;
     place-content: flex-start;
     gap: 1em;
 }
+
+.todo-item-edit-controls{
+    outline: 2px solid hsl(0 0% 50%);
+    background-color: var(--bc-primary);
+    box-shadow: 3px 3px 5px hsl(0 0% 0% / 0.5);
+    position: absolute;
+    top: 0; left: 0;
+    opacity: 0;
+    pointer-events: none;
+    transform-origin: top center;
+    transform: scaleY(0);
+    transition: transform 200ms ease-in-out;
+
+    display: grid;
+    grid-template-columns: repeat(4,auto);
+    grid-template-rows: auto;
+}
+.todo-item.edit .todo-item-edit-controls{
+    pointer-events: all;
+    opacity: 1;
+    transform: scaleY(1);
+}
+
 .todo-item-delete-btn,
 .todo-item-edit-btn,
 .todo-item-completed-btn,
@@ -534,7 +562,7 @@ main{
 .todo-item-cancel-btn{
     border: none;
     background-color: transparent;
-    font-size: 2rem;
+    font-size: 1.5rem;
     padding: 3px 10px;   
 }
 
@@ -542,32 +570,53 @@ main{
 .todo-item-save-btn,
 .todo-item-datetime-btn,
 .todo-item-cancel-btn{
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 300ms ease-in-out;
+    outline: 1px solid hsl(0 0% 50%);
+    font-size: 1rem;
 }
 .todo-item-completed-btn{
-    transform: scale(2);
+    grid-column: 3;
+    grid-row: 1;
 
+    transform: scale(1.5);
     transition: transform 100ms ease-in-out;
 }
 .todo-item.completed .todo-item-completed-btn{
     transform: scale(1);
 }
-.todo-item.edit .todo-item-delete-btn,
-.todo-item.edit .todo-item-save-btn,
-.todo-item.edit .todo-item-datetime-btn,
-.todo-item.edit .todo-item-cancel-btn{
-    opacity: 1;
-    pointer-events: all;
-}
+
+
+.todo-item.edit .todo-item-completed-btn,
 .todo-item.edit .todo-item-edit-btn{
     opacity: 0;
     pointer-events: none;
 }
-.todo-item-datetime{
-    grid-column: 1/3;
+
+
+
+.todo-item-description{
+    grid-column: 1;
     grid-row: 2;
+    margin-bottom: 1rem;
+
+    font-size: 1.5rem;
+    line-height: 1.5em;
+    color: var(--fc-primary);
+    padding: .5rem;
+    border-radius: 10px;
+}
+.todo-item.completed .todo-item-description{
+    text-decoration: line-through;
+    opacity: .5;
+}
+.todo-item.edit .todo-item-description{
+    background-color: var(--bc-accent1);
+}
+
+
+
+.todo-item-datetime{
+    grid-column: 1;
+    grid-row: 3;
 
     display: grid;
     grid-template-columns: auto auto auto;
@@ -578,7 +627,7 @@ main{
 .todo-created-datetime,
 .todo-goal-datetime,
 .todo-completed-datetime{
-    font-size: 1rem;
+    font-size: .8rem;
     line-height: 1.5em;
     font-weight: 700;
     text-transform: uppercase;
@@ -593,8 +642,8 @@ main{
 .todo-goal-datetime > span,
 .todo-completed-datetime > span{
     font-weight: normal;
-    font-size: .9rem;
-    margin-left: .5em;
+    /* font-size: .9rem; */
+    margin-left: .4em;
 }
 /*
 =============================
@@ -2081,78 +2130,11 @@ main{
 
 @media only screen and (max-width: 900px){
 
-    /* Todo */
 
-    .new-todo-form.appear{
-        padding: 1rem 4rem;
-        opacity: 1;
-        height: 120px;
-    }
 
         /* Todo */
 
-    .todo-item{
-        padding: 2rem;
-        margin-bottom: 2rem;
- 
-        grid-template-columns: 1fr;
-        grid-template-rows: auto auto auto;
-        column-gap: 2rem;
-        row-gap: 2rem;
-    }
-    .todo-item-description{
-        grid-column: 1;
-        grid-row: 1;
-
-        /* font-size: 1.5rem; */
-    }
-    .todo-item-controls{
-        grid-column: 1;
-        grid-row: 2;
     
-        grid-template-columns: repeat(6,1fr);
-        grid-template-rows: auto;
-        place-content: flex-start;
-        gap: 1em;
-    }
-    .todo-item-delete-btn,
-    .todo-item-edit-btn,
-    .todo-item-completed-btn,
-    .todo-item-save-btn,
-    .todo-item-datetime-btn,
-    .todo-item-cancel-btn{
-        border: none;
-        background-color: transparent;
-        font-size: 2rem;
-        padding: 3px 10px;
-    }
-    .todo-item-delete-btn{
-        grid-column: 4;
-        grid-row: 1;
-    }
-    .todo-item-edit-btn{
-        grid-column: 5;
-        grid-row: 1;
-    }
-    .todo-item-completed-btn{
-        grid-column: 6;
-        grid-row: 1;
-    }
-    .todo-item-save-btn{
-        grid-column: 2;
-        grid-row: 1;
-    }
-    .todo-item-datetime-btn{
-        grid-column: 3;
-        grid-row: 1;
-    }
-    .todo-item-cancel-btn{
-        grid-column: 1;
-        grid-row: 1;
-    }
-
-
-
     .todo-item-datetime{
         grid-column: 1;
         grid-row: 3;
@@ -2162,7 +2144,7 @@ main{
         grid-template-rows: auto auto;
         align-items: center;
         justify-content: flex-start;
-        row-gap: .5em;
+        row-gap: .3em;
         column-gap: 2em;
     }
     .todo-created-datetime,
@@ -2232,9 +2214,6 @@ main{
     .note-item-description{
         grid-column: 1/3;
         grid-row: 1;
-    
-        /* font-size: 1.2rem;
-        line-height: 1.5em; */
     }
     .note-item-controls{
         grid-column: 2;
@@ -2291,39 +2270,9 @@ main{
 
     /* Todo Item */
 
-    .todo-item{
-        padding: 2rem;
-        margin-bottom: 4rem;
-       
-        display: grid;
-        grid-template-columns: 1fr;
-        grid-template-rows: auto auto auto;
-        column-gap: 2rem;
-        row-gap: 2rem;
-    }
-    .todo-item-description{
-        grid-column: 1;
-        grid-row: 1;
-    
-        /* font-size: var(--todo-item-fs);
-        line-height: 1.5em; */
-    }
-    .todo-item-controls{
-        grid-column: 1;
-        grid-row: 2;
-    }
     .todo-item-datetime{
-        grid-column: 1;
-        grid-row: 3;
-    
-
         grid-template-columns: 1fr;
         grid-template-rows: repeat(3,auto);
-    }
-    .todo-created-datetime,
-    .todo-goal-datetime,
-    .todo-completed-datetime{
-        line-height: 1.5em;
     }
 
 
@@ -2411,6 +2360,28 @@ main{
 }
 
 @media only screen and (max-width: 600px){
+
+    .header-primary{
+
+        grid-template-columns: 2fr 1fr;
+        grid-template-rows: auto auto;
+
+    }
+    .page-title{
+
+    }
+    .header-primary-controls{
+        grid-column: 2;
+        grid-row: 1;
+    }
+    .navigation-primary{
+        grid-column: 1/3;
+        grid-row: 2;
+    }
+
+
+
+    /* Note form */
     .new-note-form{
         grid-template-columns: 1fr;
         grid-template-rows: auto auto;
@@ -2478,16 +2449,7 @@ main{
 
     /* Todo */
 
-    .new-todo-form.appear{
-        padding: 1rem 1rem;
-        opacity: 1;
-        height: 120px;
-    }
-    .todo-list{
-        padding-top: 2rem;
-        padding-left: 0rem;
-        padding-right: 0rem;
-    }
+
 
     /* List */
 
@@ -2533,37 +2495,7 @@ main{
 
 @media only screen and (max-width: 450px){
 
-    .todo-item-controls{
-
-        grid-template-columns: auto auto auto;
-        grid-template-rows: auto auto;
-        justify-content: space-evenly;
-        row-gap: 2rem;
-    }
-    .todo-item-delete-btn{
-        grid-column: 3;
-        grid-row: 2;
-    }
-    .todo-item-edit-btn{
-        grid-column: 2;
-        grid-row: 1;
-    }
-    .todo-item-completed-btn{
-        grid-column: 3;
-        grid-row: 1;
-    }
-    .todo-item-save-btn{
-        grid-column: 1;
-        grid-row: 2;
-    }
-    .todo-item-datetime-btn{
-        grid-column: 2;
-        grid-row: 2;
-    }
-    .todo-item-cancel-btn{
-        grid-column: 1;
-        grid-row: 1;
-    }
+   
 }
 
 @media only screen and (max-width: 400px){

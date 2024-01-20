@@ -20,34 +20,59 @@ export function createTodoComponent(id,description,createdTimestamp,completedTim
 
     todoDescription.textContent = description;
 
-
-    const noteControls = buldTodoControls();
-
-    const dateTime = buildTodoDatetimeDisplay(createdTimestamp,completedTimestamp,goalTimestamp);
-
-    component.append(todoDescription,noteControls,dateTime);
+    component.append(
+        
+        buildTodoHeader(),
+        todoDescription,
+        buildTodoDatetimeDisplay(createdTimestamp,completedTimestamp,goalTimestamp)
+    );
 
     return component;
 
 };
 
+function buildTodoHeader(){
 
-function buldTodoControls(){
+    const header = document.createElement('header');
+
+    header.classList.add('todo-item-header');
+
+    header.append(
+
+        buildTodoControls(),
+        buildTodoButton('completed','button',`&#10003;`),
+    )
+
+    return header;
+}
+
+
+function buildTodoControls(){
 
     const div = document.createElement('div');
 
     div.classList.add('todo-item-controls');
 
-    div.append(
+    const editControls = document.createElement('div');
 
-        buildTodoButton('delete','button',`&#128465`),
+    editControls.classList.add('todo-item-edit-controls');
+
+    editControls.append(
+
+        buildTodoButton('cancel','button',`cancel`),
+        buildTodoButton('datetime','button',`goal`),
+        buildTodoButton('delete','button',`delete`),
+        buildTodoButton('save','button',`save`),
+        
+    )
+
+    div.append( 
         buildTodoButton('edit','button',`&#9998;`),
-        buildTodoButton('completed','button',`&#10003;`),
-        buildTodoButton('save','button',`&#128190;`),
-        buildTodoButton('datetime','button',`&#128197;`),
-        buildTodoButton('cancel','button',`&#10007;`),
-
+        editControls
+      
     );
+
+    
 
     return div;
 };
@@ -74,7 +99,7 @@ function buildTodoButton(name,type,innerhtml){
 
     button.setAttribute('type', type);
 
-    button.classList.add('btn',`todo-item-${name}-btn`,'entity');
+    button.classList.add('btn',`todo-item-${name}-btn`);
 
     button.setAttribute('data-button', name);
 

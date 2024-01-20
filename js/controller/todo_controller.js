@@ -124,8 +124,6 @@ function startEditingTodo(li){
     const descriptionElement = li.querySelector('.todo-item-description');
 
     descriptionElement.contentEditable = true;
-
-    descriptionElement.style.outline = '1px solid black';
     
     descriptionElement.addEventListener('keydown', handleTodoDescriptionKeydown);
 
