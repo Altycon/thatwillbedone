@@ -1,11 +1,11 @@
 
 import { calculatorController } from "./calculator_controller.js";
 import { listenToConnectionControls, stopListenToConnectionControls } from "./connection_controller.js";
-import { listsController } from "./list_controller.js";
-import { notesController } from "./notes_controller.js";
+import { listsController, stopListeningToLists } from "./list_controller.js";
+import { notesController, stopListeningToNotes } from "./notes_controller.js";
 import { profileController } from "./profile_controller.js";
 import { settingsController } from "./settings_controller.js";
-import { todosController } from "./todo_controller.js";
+import { stopListeningToTodos, todosController } from "./todo_controller.js";
 
 
 export function resetPages(){
@@ -21,6 +21,15 @@ export function resetPages(){
             stopListenToConnectionControls(page);
 
         };
+
+        switch(page.dataset.page){
+
+            case 'todos': stopListeningToTodos(); break;
+
+            case 'lists': stopListeningToLists(); break;
+
+            case 'notes': stopListeningToNotes(); break;
+        }
     });
 
 };

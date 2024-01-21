@@ -18,11 +18,16 @@ export function listenToTodoForm(){
 
     form.addEventListener('submit', handleTodoFormSubmit);
 
+    form.addEventListener('transitionend', (ev)=>{
+
+        textarea.focus();
+    })
+
     textarea.addEventListener('keydown', handleTodoKeydown);
 
     textarea.innerText = '';
     
-    textarea.focus();
+    //textarea.focus();
 };
 
 function stopListeningToTodoForm(ev){

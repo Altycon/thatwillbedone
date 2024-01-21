@@ -9,20 +9,38 @@ export function todosController(){
 
     const todoList = document.querySelector('.todo-list');
 
-    todoList.addEventListener('click', (event)=>{
-
-        if(!event) return;
-
-        const { currentTarget, target } = event;
-
-        if(target.dataset.button){
-
-            handleTodoButtons(target,currentTarget);
-        }
-
-    });
+    todoList.addEventListener('click', listenToTodos);
 
 };
+
+function listenToTodos(event){
+
+    if(!event) return;
+
+    const { currentTarget, target } = event;
+
+    if(target.dataset.button){
+
+        handleTodoButtons(target,currentTarget);
+    }
+
+}
+
+export function stopListeningToTodos(){
+
+    const todoList = document.querySelector('.todo-list');
+
+    todoList.removeEventListener('click', listenToTodos);
+
+    [...todoList.querySelectorAll('.todo-item')].forEach( todo => {
+
+        if(todo.classList.contains('edit')) todo.classList.remove('edit');
+
+        todo.querySelector('.todo-item-description').removeEventListener('keydown', handleTodoDescriptionKeydown);
+
+    });
+  
+}
 
 function handleTodoButtons(target,todoList){
 
@@ -142,8 +160,6 @@ function cancelEditingTodo(li){
     const descriptionElement = li.querySelector('.todo-item-description');
 
     descriptionElement.contentEditable = false;
-
-    descriptionElement.style.outline = 'none';
 
     descriptionElement.removeEventListener('click', handleTodoDescriptionKeydown);
     

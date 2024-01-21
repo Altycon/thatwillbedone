@@ -158,13 +158,9 @@ function handleNoteButtons(target,notesList){
     }
 };
 
-export function notesController(){
+function listenToNotes(event){
 
-    const noteList = document.querySelector('.note-list');
-
-    noteList.addEventListener('click', (event)=>{
-
-        if(!event) return;
+    if(!event) return;
 
         const { currentTarget, target } = event;
 
@@ -173,9 +169,31 @@ export function notesController(){
             handleNoteButtons(target,currentTarget);
         }
 
-    })
+};
+
+export function notesController(){
+
+    const noteList = document.querySelector('.note-list');
+
+    noteList.addEventListener('click', listenToNotes)
 
 };
+
+export function stopListeningToNotes(){
+
+    const noteList = document.querySelector('.note-list');
+
+    noteList.addEventListener('click', listenToNotes);
+
+    [...noteList.querySelectorAll('.note-item')].forEach( noteItem => {
+
+        if(noteItem.classList.contains('edit')) noteItem.classList.remove('edit');
+
+        noteItem.querySelector('.note-item-description').removeEventListener('keydown', handleNoteDescriptionKeydown);
+
+    });
+
+}
 
 export function buildNoteList(data){
 

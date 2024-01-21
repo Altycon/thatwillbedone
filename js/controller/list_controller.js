@@ -9,22 +9,26 @@ export function listsController(){
 
     const listGroups = document.querySelector('.list-groups');
 
-    listGroups.addEventListener('click', (event)=>{
-
-        if(!event) return;
-
-        const { currentTarget, target } = event;
-
-        if(target.dataset.button){
-
-            event.preventDefault();
-
-            handleListButtons(target,currentTarget);
-        }
-
-    });
+    listGroups.addEventListener('click', listenToLists);
 
 };
+
+function listenToLists(event){
+
+    if(!event) return;
+
+    const { currentTarget, target } = event;
+
+    if(target.dataset.button){
+
+        event.preventDefault();
+
+        handleListButtons(target,currentTarget);
+    }
+
+};
+
+
 
 
 function handleListButtons(target,listGroups){
@@ -172,6 +176,23 @@ function updateList(li){
 
 };
 
+function handleNewListItemKeydown(event){
+
+    const { target, key, shiftkey } = event;
+
+    if(key === 'Enter' && !shiftkey){
+
+        event.preventDefault();
+
+        target.blur();
+
+        target.removeEventListener('keydown',handleNewListItemKeydown);
+
+        addNewItemToList(target.closest('.list'));
+    }
+
+};
+
 function addNewItemToList(li){
 
     const listItemsElemensts = li.querySelector('.list-items');
@@ -179,22 +200,7 @@ function addNewItemToList(li){
     const newListItem = buildListItem();
 
 
-    function handleNewListItemKeydown(event){
-
-        const { target, key, shiftkey } = event;
-
-        if(key === 'Enter' && !shiftkey){
-
-            event.preventDefault();
-
-            target.blur();
-
-            target.removeEventListener('keydown',handleNewListItemKeydown);
-
-            addNewItemToList(li);
-        }
-
-    }
+    
 
     listItemsElemensts.lastChild.firstChild.removeEventListener('keydown', handleNewListItemKeydown);
 
@@ -258,4 +264,40 @@ export function buildListGroups(data){
 
     listGroups.appendChild(df);
 
+};
+
+export function stopListeningToLists(){
+
+    const listGroups = document.querySelector('.list-groups');
+
+    listGroups.removeEventListener('click', listenToLists);
+
+
+    [...listGroups.querySelectorAll('.list')].forEach( listGroup =>{
+
+        if(listGroup.classList.contains('edit')) listGroup.classList.remove('edit');
+
+        [...listGroup.querySelectorAll('.list-items')].forEach( (list)=> {
+            
+            [...list.querySelectorAll('.list-item')].forEach( (item,index)=> {
+
+                item.contentEditable = false;
+
+                if(item.firstChild.textContent === '' || item.firstChild.textContent === ' '){
+
+                    list.removeChild(item);
+
+                }
+
+                if(item && index === list.children.length - 1){
+
+                    item.firstChild.removeEventListener('keydown', handleNewListItemKeydown);
+                }
+
+            });
+
+        });
+
+    });
+    
 };
