@@ -18,25 +18,32 @@ export function listenToTodoForm(){
 
     form.addEventListener('submit', handleTodoFormSubmit);
 
-    form.addEventListener('transitionend', (ev)=>{
+    form.addEventListener('transitionend', _=>{
 
         textarea.focus();
-    })
+    });
 
     textarea.addEventListener('keydown', handleTodoKeydown);
 
     textarea.innerText = '';
     
-    //textarea.focus();
 };
 
 function stopListeningToTodoForm(ev){
 
     const form = document.querySelector(`.new-todo-form`);
 
+    const textarea = form.querySelector('textarea');
+
     form.removeEventListener('submit', handleTodoFormSubmit);
 
-    form.querySelector('textarea').removeEventListener('keydown', handleTodoKeydown)
+    textarea.removeEventListener('keydown', handleTodoKeydown);
+
+    form.addEventListener('transitionend', _=>{
+
+        if(document.activeElement === textarea) textarea.blur();
+
+    })
 
     ev.target.removeEventListener('click', stopListeningToTodoForm);
 

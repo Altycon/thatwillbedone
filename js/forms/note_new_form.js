@@ -20,13 +20,19 @@ export function listenToNoteForm(){
 
     textarea.addEventListener('keydown', handleKeydown);
 
+    form.addEventListener('transitionend', _=>{
+
+        textarea.focus();
+        
+    });
 
     textarea.innerText = '';
     
-    textarea.focus();
 };
 
 function stopListeningToNoteForm(event){
+
+    const textarea = form.querySelector('textarea');
 
     const form = document.querySelector(`.new-note-form`);
 
