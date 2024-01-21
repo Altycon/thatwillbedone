@@ -111,8 +111,6 @@ function handleTodoFormSubmit(event){
 
         resetNoteForm(event.target);
 
-        notify('Successfully added to-do');
-
     });
 
 };

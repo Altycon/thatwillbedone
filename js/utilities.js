@@ -108,3 +108,21 @@ export function isLightColor(hexColor) {
     return luminance > 0.5;
     
 };
+
+export function debounce(callback,delay){
+
+    let timer;
+
+    return (...args)=>{
+        
+        if(timer) clearTimeout(timer);
+
+        timer = setTimeout(()=>{
+
+            callback(...args);
+
+        },delay);
+    }
+};
+
+// button.addEventListener('click', debounce( (event)=> handleConnectionControls(event),300));

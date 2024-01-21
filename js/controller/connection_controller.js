@@ -1,6 +1,7 @@
 import { listenToListForm } from "../forms/list_new_form.js";
 import { listenToNoteForm } from "../forms/note_new_form.js";
 import { listenToTodoForm } from "../forms/todo_new_form.js";
+import { debounce } from "../utilities.js";
 import { clearSiteState, setSiteState } from "./state_controller.js";
 
 
@@ -56,7 +57,7 @@ export function closeControlConnection(connection){
 
 function handleConnectionControls(event){
 
-    if(event) event.preventDefault();
+    event.preventDefault();
 
     const button = event.target;
 
