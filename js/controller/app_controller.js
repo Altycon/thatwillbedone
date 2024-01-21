@@ -19,7 +19,7 @@ function listenToAppControls(){
 
     listenToConnectionControls(document.querySelector('.header-primary'));
 
-    listenToConnectionControls(document.querySelector('.footer-primary'));
+    //listenToConnectionControls(document.querySelector('.footer-primary'));
 
 };
 
