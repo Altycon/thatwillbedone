@@ -16,7 +16,7 @@ export function handleNavigationRouting(){
 
     pageRouter(hash);
 
-    handleUrlState(hash, url);
+    //handleUrlState(hash, url);
 
 
 };

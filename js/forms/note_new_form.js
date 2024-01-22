@@ -93,7 +93,7 @@ function handleNoteFormSubmit(event){
             clearChildElements(noteList);
         }
 
-        noteList.insertBefore(component,noteList.firstChild);
+        noteList.insertBefore(new DocumentFragment().appendChild(component),noteList.firstChild);
 
         const noteFormControl = document.querySelector(`[data-control="note-form"]`);
 
@@ -110,8 +110,6 @@ function handleNoteFormSubmit(event){
         noteFormControl.click();
 
         resetNoteForm(event.target);
-
-        notify('Successfully added note.')
 
     });
 

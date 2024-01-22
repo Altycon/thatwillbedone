@@ -1,5 +1,5 @@
 import { createTodoComponent } from "../components/todo_component.js";
-import { notify } from "../controller/notification_controller.js";
+import { openDatetimePicker } from "../controller/datetime_picker_controller.js";
 import { AltyIDB } from "../databases/local_index_database.js";
 import { clearChildElements, createTWBDId } from "../utilities.js";
 
@@ -12,6 +12,10 @@ export function listenToTodoForm(){
     const textarea = form.querySelector('textarea');
 
     const formControl = document.querySelector(`[data-control="${form.dataset.connect}"]`);
+
+    const goalButton = form.querySelector('.new-todo-form-datetime-open-btn');
+
+    goalButton.addEventListener('click', setNewGoal);
 
 
     formControl.addEventListener('click', stopListeningToTodoForm);
@@ -28,6 +32,14 @@ export function listenToTodoForm(){
     textarea.innerText = '';
     
 };
+
+function setNewGoal(event){
+
+    event.preventDefault();
+
+    openDatetimePicker();
+    
+}
 
 function stopListeningToTodoForm(ev){
 
@@ -93,7 +105,9 @@ function handleTodoFormSubmit(event){
             clearChildElements(todoList);
         }
 
-        todoList.insertBefore(component,todoList.firstChild);
+
+
+        todoList.insertBefore(new DocumentFragment().appendChild(component),todoList.firstChild);
 
         const todoFormControl = document.querySelector(`[data-control="todo-form"]`);
 

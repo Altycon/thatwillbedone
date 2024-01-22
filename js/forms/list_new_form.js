@@ -64,7 +64,7 @@ function handleItemKeydown(event){
 
             newFormList.insertBefore(
         
-                createNewListItemComponent(event.target.value.trim()),
+                new DocumentFragment().appendChild(createNewListItemComponent(event.target.value.trim())),
                 newFormList.firstChild
         
             );
@@ -145,7 +145,7 @@ function handleListFormSubmit(event){
             clearChildElements(listGroups);
         }
 
-        listGroups.insertBefore(component,listGroups.firstChild);
+        listGroups.insertBefore(new DocumentFragment().appendChild(component),listGroups.firstChild);
 
         const listFormControl = document.querySelector(`[data-control="list-form"]`);
 
@@ -240,7 +240,7 @@ function addItemToFormList(event){
 
     newFormList.insertBefore(
     
-        createNewListItemComponent(item),
+        new DocumentFragment().appendChild(createNewListItemComponent(item)),
         newFormList.firstChild
 
     );

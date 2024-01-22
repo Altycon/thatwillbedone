@@ -166,11 +166,7 @@ function updateList(li){
 
         updatedList.items = listItems;
 
-        AltyIDB.update('list', updatedList, ()=>{
-
-            notify('List has been updated.');
-
-        });
+        AltyIDB.update('list', updatedList);
 
     }
 
@@ -206,7 +202,7 @@ function addNewItemToList(li){
 
     newListItem.firstChild.addEventListener('keydown', handleNewListItemKeydown);
 
-    listItemsElemensts.appendChild(newListItem);
+    listItemsElemensts.appendChild(new DocumentFragment().appendChild(newListItem));
 
     newListItem.firstChild.contentEditable = true;
 
@@ -221,7 +217,7 @@ function deleteList(li,listGroups){
 
         if(listGroups.children.length < 1){
 
-            listGroups.appendChild(createNoContentComponent());
+            listGroups.appendChild(new DocumentFragment().appendChild(createNoContentComponent()));
         }
 
     })
