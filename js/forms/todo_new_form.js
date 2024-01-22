@@ -1,5 +1,4 @@
 import { createTodoComponent } from "../components/todo_component.js";
-import { openDatetimePicker } from "../controller/datetime_picker_controller.js";
 import { AltyIDB } from "../databases/local_index_database.js";
 import { clearChildElements, createTWBDId } from "../utilities.js";
 
@@ -12,10 +11,6 @@ export function listenToTodoForm(){
     const textarea = form.querySelector('textarea');
 
     const formControl = document.querySelector(`[data-control="${form.dataset.connect}"]`);
-
-    const goalButton = form.querySelector('.new-todo-form-datetime-open-btn');
-
-    goalButton.addEventListener('click', setNewGoal);
 
 
     formControl.addEventListener('click', stopListeningToTodoForm);
@@ -33,13 +28,7 @@ export function listenToTodoForm(){
     
 };
 
-function setNewGoal(event){
 
-    event.preventDefault();
-
-    openDatetimePicker();
-    
-}
 
 function stopListeningToTodoForm(ev){
 
@@ -71,6 +60,8 @@ function handleTodoFormSubmit(event){
 
     if(!description) return;
 
+    const gaol = data.get('goal') || null;
+
     // I need to get the "goal" time from the calendar....
 
     const now = Date.now().toString();
@@ -82,7 +73,7 @@ function handleTodoFormSubmit(event){
         createdTimestamp: now,
         modifiedTimestamp: now,
         completedTimestamp: null,
-        goalTimestamp: null
+        goalTimestamp: gaol
 
     };
 

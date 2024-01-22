@@ -411,7 +411,7 @@ main{
 
     display: none;
     grid-template-columns: 3fr 1fr;
-    grid-template-rows: auto;
+    grid-template-rows: auto auto;
     gap: var(--todo-form-spacing);
     transition: all 300ms ease-in-out;
 }
@@ -479,7 +479,14 @@ main{
     place-items: center;
 }
 
+.new-todo-form-goal-display{
+    grid-column: 1;
+    grid-row: 2;
 
+    color: var(--fc-primary);
+    text-transform: uppercase;
+    font-weight: 700;
+}
 
 /* || New Todo List ==== */
 
@@ -2406,7 +2413,7 @@ main{
     
         display: none;
         grid-template-columns: 1fr;
-        grid-template-rows: auto auto;
+        grid-template-rows: auto auto auto;
         gap: var(--todo-form-spacing);
     }
     .new-todo-form.appear{
@@ -2423,6 +2430,10 @@ main{
     .new-todo-form-controls{
         grid-column: 1;
         grid-row: 2;
+    }
+    .new-todo-form-goal-display{
+        grid-column: 1;
+        grid-row: 3;
     }
 
     /* Todo Item */

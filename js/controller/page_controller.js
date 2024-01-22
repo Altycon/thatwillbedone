@@ -1,6 +1,7 @@
 
 import { calculatorController } from "./calculator_controller.js";
 import { listenToConnectionControls, stopListenToConnectionControls } from "./connection_controller.js";
+import { listenToGoalControls } from "./datetime_picker_controller.js";
 import { listsController, stopListeningToLists } from "./list_controller.js";
 import { notesController, stopListeningToNotes } from "./notes_controller.js";
 import { profileController } from "./profile_controller.js";
@@ -44,11 +45,15 @@ function activatePage(page){
 
     link.parentElement.classList.add('active');
 
+    listenToConnectionControls(page);
+
+    listenToGoalControls(page);
+
     setTimeout( ()=> {
 
         page.classList.add('appear');
 
-        listenToConnectionControls(page);
+        
 
     },100);
 

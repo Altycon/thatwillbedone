@@ -1,20 +1,19 @@
 import { handleDatetimePickerFormSubmit } from "../forms/datetime_picker_form.js";
 
 
-export function openDatetimePicker(){
+export function pickDatetime(event){
+
+    if(!event && !(event instanceof Event)) return;
+
+
+    let timestamp = Date.now();
 
     const datetimeModal = document.querySelector('.datetime-modal');
 
     datetimeModal.querySelector('.datetime-modal-close-btn').addEventListener('click', closeDatetimePicker);
 
 
-    const datetimeForm = datetimeModal.querySelector('.datetime-modal-form');
-
-    initializeDatetimePicker(datetimeForm);
-
-    datetimeForm.addEventListener('submit', handleDatetimePickerFormSubmit);
-
-
+    initializeDatetimePicker(timestamp,event.target.dataset.goalControl);
 
     datetimeModal.classList.add('open');
 
@@ -24,6 +23,16 @@ export function openDatetimePicker(){
 
     },100);
 };
+
+export function listenToGoalControls(parent){
+
+    [...parent.querySelectorAll(`[data-goal-control]`)].forEach( control => {
+
+        control.addEventListener('click', pickDatetime);
+
+    });
+
+}
 
 function closeDatetimePicker(event){
 
@@ -44,23 +53,32 @@ function closeDatetimePicker(event){
     event.target.removeEventListener('click', closeDatetimePicker);
 };
 
-function initializeDatetimePicker(datetimeForm){
+function initializeDatetimePicker(timestamp = Date.now(),controlId){
 
-    const period = new Date();
+    const datetimeForm = document.querySelector('.datetime-modal form');
+
+
+    const period = new Date(timestamp);
 
     const hour = period.getHours();
 
+    const minute = period.getMinutes();
+
+    datetimeForm.querySelector('input[name=controlid]').value = controlId;
+    
     datetimeForm.querySelector('select[name=month]').value = period.getMonth().toString();
 
     datetimeForm.querySelector('select[name=year]').value = period.getFullYear().toString();
 
-    datetimeForm.querySelector('select[name=hour]').value = hour.toString();
+    datetimeForm.querySelector('select[name=hour]').value = `${+hour < 10 ? '0'+(hour%12):hour%12}`;
 
-    datetimeForm.querySelector('select[name=minute]').value = period.getMinutes().toString();
+    datetimeForm.querySelector('select[name=minute]').value = `${+minute < 10 ? '0'+(minute):minute}`;
 
-    datetimeForm.querySelector('select[name=meridiem]').value = hour === 0 ? 'am': hour < 12 ? 'am':'pm';
+    datetimeForm.querySelector('select[name=meridiem]').value = +hour === 0 ? 'am': +hour < 12 ? 'am':'pm';
 
     setSelectedDay(datetimeForm,period.getDate().toString());
+
+    datetimeForm.addEventListener('submit', handleDatetimePickerFormSubmit);
 
 };
 
@@ -129,4 +147,4 @@ function removeDatetimeSelectDayListeners(datetimeForm){
 
         dayInput.removeEventListener('click', handleDatetimeSelectDay);
     });
-}
+};
