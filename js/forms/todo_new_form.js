@@ -44,7 +44,9 @@ function stopListeningToTodoForm(ev){
 
         if(document.activeElement === textarea) textarea.blur();
 
-    })
+    });
+
+    resetTodoForm(form);
 
     ev.target.removeEventListener('click', stopListeningToTodoForm);
 
@@ -114,7 +116,7 @@ function handleTodoFormSubmit(event){
         });
         todoFormControl.click();
 
-        resetNoteForm(event.target);
+        resetTodoForm(event.target);
 
     });
 
@@ -133,13 +135,25 @@ function handleTodoKeydown(event){
 };
 
 
-function resetNoteForm(form){
+function resetTodoForm(form){
 
     form.reset();
 
     const textarea = form.querySelector('textarea');
 
     textarea.innerText = '';
+
+    [...form.querySelectorAll('[data-goal-connect')].forEach( connection => {
+
+        if(connection.nodeName !== 'INPUT'){
+
+            connection.textContent = "";
+
+        }else{
+
+            connection.value = "";
+        }
+    })
 
     if(document.activeElement === textarea) return;
     
