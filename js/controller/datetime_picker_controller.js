@@ -1,25 +1,34 @@
 import { handleDatetimePickerFormSubmit } from "../forms/datetime_picker_form.js";
+import { parseDatetimeStringToTimestamp } from "../utilities.js";
 
 
-export function pickDatetime(event){
-
-    if(!event && !(event instanceof Event)) return;
+export function pickDatetime({ target }){
 
 
     let timestamp = Date.now();
+
+    const connection = document.querySelector(`[data-goal-connect="${target.dataset.goalControl}"]`);
+
+    if(connection && connection.textContent !== "" && connection.textContent !== "no goal"){
+
+        timestamp = +parseDatetimeStringToTimestamp(connection.textContent);
+
+    }
 
     const datetimeModal = document.querySelector('.datetime-modal');
 
     datetimeModal.querySelector('.datetime-modal-close-btn').addEventListener('click', closeDatetimePicker);
 
 
-    initializeDatetimePicker(timestamp,event.target.dataset.goalControl);
+    initializeDatetimePicker(timestamp,target.dataset.goalControl);
 
     datetimeModal.classList.add('open');
 
     setTimeout( ()=> {
 
         datetimeModal.classList.add('appear');
+
+        datetimeModal.querySelector('form input[type=radio]:checked').focus();
 
     },100);
 };
@@ -64,19 +73,22 @@ function initializeDatetimePicker(timestamp = Date.now(),controlId){
 
     const minute = period.getMinutes();
 
+
     datetimeForm.querySelector('input[name=controlid]').value = controlId;
     
     datetimeForm.querySelector('select[name=month]').value = period.getMonth().toString();
 
     datetimeForm.querySelector('select[name=year]').value = period.getFullYear().toString();
 
-    datetimeForm.querySelector('select[name=hour]').value = `${+hour < 10 ? '0'+(hour%12):hour%12}`;
+    datetimeForm.querySelector('select[name=hour]').value = `${+hour%12 < 10 ? '0'+hour%12:+hour%12}`;
 
     datetimeForm.querySelector('select[name=minute]').value = `${+minute < 10 ? '0'+(minute):minute}`;
 
     datetimeForm.querySelector('select[name=meridiem]').value = +hour === 0 ? 'am': +hour < 12 ? 'am':'pm';
 
+
     setSelectedDay(datetimeForm,period.getDate().toString());
+
 
     datetimeForm.addEventListener('submit', handleDatetimePickerFormSubmit);
 
@@ -85,6 +97,7 @@ function initializeDatetimePicker(timestamp = Date.now(),controlId){
 function resetDatetimePicker(datetimeModal){
 
     const datetimeForm = datetimeModal.querySelector('.datetime-modal-form');
+
 
     datetimeForm.querySelector('select[name=month]').value = `0`;
 
@@ -95,6 +108,7 @@ function resetDatetimePicker(datetimeModal){
     datetimeForm.querySelector('select[name=minute]').value = `0`;
 
     datetimeForm.querySelector('select[name=meridiem]').value = `0`;
+
 
     removeDatetimeSelectDayListeners(datetimeForm);
 

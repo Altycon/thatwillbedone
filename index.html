@@ -15,6 +15,11 @@
     <script type="module" src="js/index.js"></script>
 </head>
 <body>
+    <div class="loader" hidden>
+
+        <p class="loading">Loading...</p>
+
+    </div>
 
     <div class="page-wrapper">
 
@@ -115,12 +120,17 @@
 
                         <p>Do Something</p>
 
-                        <p style="font-size: 16px; padding: 16px;">"The eye in silence</p>
+                        <p style="font-size: 16px; padding: 16px; margin-top: 2rem;">There are 10 kinds of people.</p>
 
-                        <p style="font-size: 16px;">Grips the knowledge to begin."</p>
+                        <p style="font-size: 16px; padding: 16px;">Those who understand binary,</p>
+
+                        <p style="font-size: 16px; padding: 16px;">Those who don't,</p>
+
+                        <p style="font-size: 16px; padding: 16px;">And those that didn't expect this joke to be ternary.</p>
 
                         <ul style="padding-top: 2rem; font-weight: 500;">Updates:
-                            <li style="padding: .5rem; margin-top: 1rem; font-weight: normal;">can add goal to to-do's only. cannot edit goal</li>
+                            <li style="padding: .5rem; margin-top: 1rem; font-weight: normal;">Adding goal to To-do's are complete.</li>
+                            <li style="padding: .5rem; font-weight: normal;"><strong style="font-size: 1.5rem;">DO NOT use notes section.</strong> Adding new notes is broken.</li>
                             <li style="padding: .5rem; font-weight: normal;">adding "goal" functionality. Not finished.</li>
                             <li style="padding: .5rem; font-weight: normal;">design updates in progress...</li>
                         </ul>
@@ -825,7 +835,7 @@
                 <input type="text" name="controlid" hidden>
 
                 <header>
-                    <button type="button" class="btn datetime-modal-close-btn">X</button>
+                    <button type="button" class="btn datetime-modal-close-btn">Cancel</button>
                     <button type="submit" class="btn">Add</button>
                 </header>
 
@@ -939,7 +949,6 @@
 
                     <select name="hour" autocomplete="off">
 
-                        <option value="00">hour</option>
                         <option value="01">01</option>
                         <option value="02">02</option>
                         <option value="03">03</option>
@@ -957,7 +966,7 @@
 
                     <select name="minute" autocomplete="off">
 
-                        <option value="00" selected>min</option>
+                        <option value="00" selected>00</option>
                         <option value="01">01</option>
                         <option value="02">02</option>
                         <option value="03">03</option>

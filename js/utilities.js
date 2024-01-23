@@ -1,11 +1,11 @@
 
-function parseTimeStringNumber(number){
+export function parseTimeStringNumber(number){
 
     if(+number < 10) return `0${number}`;
 
     return number;
 }
-function timeToString(hour,minute){
+export function timeToString(hour,minute){
 
     if(+hour >= 12) return `${parseTimeStringNumber(hour % 12 === 0 ? 12:hour % 12)}:${parseTimeStringNumber(minute)}pm`;
 
@@ -91,6 +91,68 @@ export function parseTimestamp(timestamp,type){
 
     }
 };
+
+export function parseDatetimeStringToTimestamp(datetime){
+
+    if(!datetime || datetime === "" || datetime.toLowerCase() === 'no goal'){
+
+        return null;
+    }
+
+    const datetimeParts = datetime.split('-');
+
+    let date = datetimeParts[0].trim();
+
+    let time = datetimeParts[1].trim();
+
+    if(!date.includes(',')){
+
+        date = datetimeParts[1].trim();
+
+        time = datetimeParts[0].trim();
+    }
+
+    const dateParts = date.split(' ').filter( part => part !== "");
+
+    const monthAbbreviation = dateParts[0];
+
+
+
+    const dayWithComma = dateParts[1];
+
+    const year = dateParts[2];
+
+
+
+    const fullMonthName = getMonthFullNameFromAbbreviation(monthAbbreviation)
+
+
+    const newDatetime = `${fullMonthName} ${dayWithComma} ${year} ${time.slice(0,-2)}:00`
+
+    const period = new Date(newDatetime);
+
+    const timestamp = period.getTime();
+
+    return timestamp;
+}
+
+function getMonthFullNameFromAbbreviation(abbrev){
+
+    const monthNames = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+
+    for(let i = 0; i < monthNames.length; i++){
+
+        const abbrevatedMonth = monthNames[i].slice(0,3).toLowerCase();
+
+        if(abbrevatedMonth === abbrev.toLowerCase()){
+
+            return monthNames[i]
+        }
+    }
+
+    return null;
+
+}
 
 export function isLightColor(hexColor) {
 

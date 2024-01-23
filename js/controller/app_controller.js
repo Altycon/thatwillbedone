@@ -25,6 +25,7 @@ function listenToAppControls(){
 
 export function checkAndLoadAppData(){
 
+
     if(window.localStorage){
 
         AltyLocalStorage.initialize()

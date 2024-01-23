@@ -2,6 +2,8 @@ import { parseTimestamp } from "../utilities.js";
 
 export function createTodoComponent(id,description,createdTimestamp,completedTimestamp,goalTimestamp){
 
+    const goalControlId = 'G' + (Math.floor(Math.random()*100000).toString());
+
     const component = document.createElement('li');
 
     component.classList.add('todo-item');
@@ -22,16 +24,16 @@ export function createTodoComponent(id,description,createdTimestamp,completedTim
 
     component.append(
         
-        buildTodoHeader(),
+        buildTodoHeader(goalControlId),
         todoDescription,
-        buildTodoDatetimeDisplay(createdTimestamp,completedTimestamp,goalTimestamp)
+        buildTodoDatetimeDisplay(createdTimestamp,completedTimestamp,goalTimestamp,goalControlId)
     );
 
     return component;
 
 };
 
-function buildTodoHeader(){
+function buildTodoHeader(goalControlId){
 
     const header = document.createElement('header');
 
@@ -39,7 +41,7 @@ function buildTodoHeader(){
 
     header.append(
 
-        buildTodoControls(),
+        buildTodoControls(goalControlId),
         buildTodoButton('completed','button',`&#10003;`),
     )
 
@@ -47,7 +49,7 @@ function buildTodoHeader(){
 }
 
 
-function buildTodoControls(){
+function buildTodoControls(goalControlId){
 
     const div = document.createElement('div');
 
@@ -60,7 +62,7 @@ function buildTodoControls(){
     editControls.append(
 
         buildTodoButton('cancel','button',`cancel`),
-        buildTodoButton('datetime','button',`goal`),
+        buildTodoButton('datetime','button',`goal`,goalControlId),
         buildTodoButton('delete','button',`delete`),
         buildTodoButton('save','button',`save`),
         
@@ -77,7 +79,7 @@ function buildTodoControls(){
     return div;
 };
 
-function buildTodoDatetimeDisplay(createdTimestamp,completedTimestamp,goalTimestamp){
+function buildTodoDatetimeDisplay(createdTimestamp,completedTimestamp,goalTimestamp,goalControlId){
      
     const div = document.createElement('div');
 
@@ -87,13 +89,13 @@ function buildTodoDatetimeDisplay(createdTimestamp,completedTimestamp,goalTimest
 
         buildTodoDatetime('created',createdTimestamp,'NA'),
         buildTodoDatetime('completed',completedTimestamp,'Not completed'),
-        buildTodoDatetime('goal',goalTimestamp,'No goal')
+        buildTodoDatetime('goal',goalTimestamp,'No goal',goalControlId)
     )
 
     return div;
 };
 
-function buildTodoButton(name,type,innerhtml){
+function buildTodoButton(name,type,innerhtml,goalControlId){
 
     const button = document.createElement('button');
 
@@ -103,12 +105,14 @@ function buildTodoButton(name,type,innerhtml){
 
     button.setAttribute('data-button', name);
 
+    if(goalControlId) button.setAttribute('data-goal-control', goalControlId);
+
     button.innerHTML = innerhtml;
 
     return button;
 };
 
-function buildTodoDatetime(name,timestamp,fallback){
+function buildTodoDatetime(name,timestamp,fallback,goalControlId){
 
     let label = name;
 
@@ -120,7 +124,15 @@ function buildTodoDatetime(name,timestamp,fallback){
 
     if(name === 'modified') label = 'Changed';
 
-    p.innerHTML = `${label}:&nbsp;<span>${timestamp ? parseTimestamp(timestamp,'timedate'):fallback}</span>`;
+    if(goalControlId){
+
+        p.innerHTML = `${label}:&nbsp;<span data-goal-connect="${goalControlId}">${timestamp ? parseTimestamp(timestamp,'timedate'):fallback}</span>`;
+
+    }else{
+
+        p.innerHTML = `${label}:&nbsp;<span>${timestamp ? parseTimestamp(timestamp,'timedate'):fallback}</span>`;
+
+    }
 
     return p;
 

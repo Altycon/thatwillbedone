@@ -70,6 +70,25 @@
 
 ----------------------------------------------------
 */
+
+/* .loader{
+    position: absolute;
+    top: 0; left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: white;
+
+    display: grid;
+    place-content: center;
+    z-index: 1;
+}
+.loading{
+    color: black;
+    font-weight: 700;
+    font-size: 4rem;
+    text-align: center;
+} */
+
 html{
     font-family: var(--ff-primary);
     color: var(--fc-primary);
@@ -2134,18 +2153,19 @@ main{
 }
 .datetime-modal-form{
     background-color: var(--bc-primary);
+    border-radius: 10px;
 }
 .datetime-modal-form > header{
-    padding-top: 10px;
+    padding: 10px 10px 0px 10px;
     
     display: grid;
     grid-template-columns: auto auto;
     grid-template-rows: auto auto;
-    justify-content: space-evenly;
+    justify-content: space-between;
 }
 .datetime-modal-form > header > button{
     border: none;
-    width: 66px;
+    min-width: 66px;
     font-size: 1rem;
     font-weight: 700;
     color: var(--fc-primary);
@@ -2154,6 +2174,7 @@ main{
     padding: 5px;
     box-shadow: 1px 1px 3px var(--fc-primary);
 }
+
 .datetime-modal-form > header > p{
     grid-column: 1/3;
     grid-row: 2;
@@ -2206,11 +2227,12 @@ main{
 }
 .datetime-calendar-days > label.active{
 
-    background-color: cornflowerblue;
+    background-color: black;
+    color: var(--bc-primary);
 }
 
 .datetime-time{
-    padding: 5px;
+    padding: 10px;
     width: 300px;
     max-width: 100vw;
 

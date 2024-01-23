@@ -3,7 +3,8 @@ import { appController, checkAndLoadAppData } from "./controller/app_controller.
 import { listenToNavigationLinks, navigateToPage } from "./controller/navigation_controller.js";
 import { windowController } from "./controller/window_controller.js";
 
-let s = false;
+
+
 
 function initializeSite(){
 

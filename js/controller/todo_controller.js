@@ -1,8 +1,9 @@
 import { createNoContentComponent } from "../components/no_content_component.js";
 import { createTodoComponent } from "../components/todo_component.js";
 import { AltyIDB } from "../databases/local_index_database.js";
-import { clearChildElements, parseTimestamp } from "../utilities.js";
+import { clearChildElements, parseDatetimeStringToTimestamp, parseTimestamp } from "../utilities.js";
 import { confirmSelection } from "./confirm_selection_controller.js";
+import { pickDatetime } from "./datetime_picker_controller.js";
 
 
 export function todosController(){
@@ -78,6 +79,13 @@ function handleTodoButtons(target,todoList){
             cancelEditingTodo(li);
 
         });
+
+        break;
+
+        case 'datetime':
+
+            console.log('hit')
+            pickDatetime({ target });
 
         break;
 
@@ -180,9 +188,13 @@ function updateTodo(li){
     // I think I should compare old to new descriptions if its changed...
     const descriptionElement = li.querySelector('.todo-item-description');
 
+    const goalDatetimeElement = li.querySelector('[data-goal-connect]')
+
     if(descriptionElement){
 
         const text = descriptionElement.innerText.trim();
+
+        const goal = goalDatetimeElement.textContent.toLowerCase();
 
         if(text !== '' && text !== ' '){
 
@@ -190,8 +202,8 @@ function updateTodo(li){
 
                 id: key,
                 description: text,
-                modifiedTimestamp: Date.now().toString()
-
+                modifiedTimestamp: Date.now().toString(),
+                goalTimestamp: parseDatetimeStringToTimestamp(goal)
             };
 
             AltyIDB.update('todo', newTodo);

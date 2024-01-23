@@ -1,4 +1,4 @@
-import { parseTimestamp } from "../utilities.js";
+import { parseTimeStringNumber, parseTimestamp, timeToString } from "../utilities.js";
 
 
 export function handleDatetimePickerFormSubmit(event){
@@ -19,17 +19,17 @@ export function handleDatetimePickerFormSubmit(event){
 
     const day = formData.get('day');
 
-    const hour = formData.get('hour');
+    const hour = Number(formData.get('hour'));
 
     const minute = formData.get('minute');
 
     const meridiem = formData.get('meridiem');
 
-    console.log(`month: ${month}\nyear: ${year}\nday: ${day}\nhour: ${hour}\nminute: ${minute}\nmeridiem: ${meridiem}\n`);
+    const worldHour = meridiem === 'pm' ? hour + 12:hour;
 
     const incrementMonth = ('0' + (parseInt(month, 10) + 1)).slice(-2);
 
-    const timestring = `${year}-${incrementMonth}-${day}T${hour}:${minute}:00`;
+    const timestring = `${year}-${incrementMonth}-${day}T${worldHour < 10 ? '0' + worldHour:worldHour}:${minute}:00`;
 
     const timestamp = new Date(timestring).getTime();
 
@@ -37,7 +37,7 @@ export function handleDatetimePickerFormSubmit(event){
 
         if(connection.nodeName !== 'INPUT'){
 
-            connection.textContent = parseTimestamp(timestamp,'datetime');
+            connection.textContent = parseTimestamp(timestamp,'timedate');
 
         }else{
 
