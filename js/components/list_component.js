@@ -1,7 +1,9 @@
-import { parseTimestamp } from "../utilities.js";
+import { createTWBDId, parseTimestamp } from "../utilities.js";
 
 
 export function createListComponent(id,title,list,createdTimestamp,modifiedTimestamp,goalTimestamp){
+
+    const goalControlId = createTWBDId('G');
 
     const component = document.createElement('li');
 
@@ -11,9 +13,9 @@ export function createListComponent(id,title,list,createdTimestamp,modifiedTimes
 
     component.append(
 
-        buildListHeader(title),
+        buildListHeader(title,goalControlId),
         buildListList(list),
-        buildListFooter(createdTimestamp,modifiedTimestamp,goalTimestamp)
+        buildListFooter(createdTimestamp,modifiedTimestamp,goalTimestamp,goalControlId)
 
     );
 
@@ -22,7 +24,7 @@ export function createListComponent(id,title,list,createdTimestamp,modifiedTimes
 };
 
 
-function buildListHeader(title){
+function buildListHeader(title,goalControlId){
 
     const header = document.createElement('header');
 
@@ -36,23 +38,26 @@ function buildListHeader(title){
 
     div.classList.add('list-item-controls');
 
+    const editControls = document.createElement('div');
+
+    editControls.classList.add('list-item-edit-controls');
+
+    editControls.append(
+
+        buildListButton('cancel','button','cancel'),
+        buildListButton('additem','button','add item'),
+        buildListButton('datetime','button','goal',goalControlId),
+        buildListButton('delete','button','delete'),
+        buildListButton('save','button','save'),
+    )
 
     div.append(
 
-        buildListButton('delete','button','&#128465;'),
-        buildListButton('save','button','&#128190;'),
-        buildListButton('cancel','button','&#10007;'),
-        buildListButton('additem','button','+'),
-        buildListButton('edit','button','&#9998;')
-
+        buildListButton('edit','button','&#8230;'),
+        editControls
     )
 
-    header.append(
-
-        h2,
-        div
-
-    );
+    header.append(div,h2);
 
     return header;
 };
@@ -83,13 +88,13 @@ export function buildListItem(listItem){
 
     if(listItem) p.textContent = listItem;
 
-    li.append(p,buildListButton('remove','button','&#128465;'));
+    li.append(p,buildListButton('remove','button','&#10007;'));
 
     return li;
 
 }
 
-function buildListFooter(createdTimestamp,modifiedTimestamp,goalTimestamp){
+function buildListFooter(createdTimestamp,modifiedTimestamp,goalTimestamp,goalControlId){
 
     const footer = document.createElement('footer');
 
@@ -99,13 +104,13 @@ function buildListFooter(createdTimestamp,modifiedTimestamp,goalTimestamp){
 
         buildListDatetime('created',createdTimestamp,'Not created'),
         buildListDatetime('modified',modifiedTimestamp,'Not modified'),
-        buildListDatetime('goal',goalTimestamp,'No goal')
+        buildListDatetime('goal',goalTimestamp,'No goal',goalControlId)
     );
 
     return footer;
 };
 
-function buildListButton(name,type,innerhtml){
+function buildListButton(name,type,innerhtml,goalControlId){
 
     const button = document.createElement('button');
 
@@ -113,16 +118,18 @@ function buildListButton(name,type,innerhtml){
 
     button.setAttribute('title', name)
 
-    button.classList.add('btn',`list-item-${name}-btn`,'entity');
+    button.classList.add('btn',`list-item-${name}-btn`);
 
     button.setAttribute('data-button', name);
+
+    if(goalControlId) button.setAttribute('data-goal-control', goalControlId);
 
     button.innerHTML = innerhtml;
 
     return button;
 };
 
-function buildListDatetime(name,timestamp,fallback){
+function buildListDatetime(name,timestamp,fallback,goalControlId){
 
     let label = name;
 
@@ -134,7 +141,15 @@ function buildListDatetime(name,timestamp,fallback){
 
     p.classList.add(`list-${name}-datetime`);
 
-    p.innerHTML = `${label}:&nbsp;<span>${timestamp ? parseTimestamp(timestamp,'timedate'):fallback}</span>`;
+    if(goalControlId){
+
+        p.innerHTML = `${label}:&nbsp;<span data-goal-connect="${goalControlId}">${timestamp ? parseTimestamp(timestamp,'timedate'):fallback}</span>`;
+
+    }else{
+
+        p.innerHTML = `${label}:&nbsp;<span>${timestamp ? parseTimestamp(timestamp,'timedate'):fallback}</span>`;
+
+    }
 
     return p;
 

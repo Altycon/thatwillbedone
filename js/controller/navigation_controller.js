@@ -25,7 +25,7 @@ export function navigateToPage(hash){
 
     const hostURl = `https://altycon.github.io`;
 
-    //const hostURl = `http://127.0.0.1:5500`;
+   // const hostURl = `http://127.0.0.1:5500`;
 
     const newUrl =  new URL(hostURl);
 

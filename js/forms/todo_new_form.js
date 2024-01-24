@@ -64,8 +64,6 @@ function handleTodoFormSubmit(event){
 
     const gaol = data.get('goal') || null;
 
-    // I need to get the "goal" time from the calendar....
-
     const now = Date.now().toString();
 
     const todo = {
@@ -93,12 +91,12 @@ function handleTodoFormSubmit(event){
 
         const todoList = document.querySelector('.todo-list');
 
+
         if(todoList.querySelector('.no-content')){
 
             clearChildElements(todoList);
         }
-
-
+        
 
         todoList.insertBefore(new DocumentFragment().appendChild(component),todoList.firstChild);
 

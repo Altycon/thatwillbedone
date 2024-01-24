@@ -1,7 +1,9 @@
 import { buildListItem, createListComponent } from "../components/list_component.js";
 import { createNoContentComponent } from "../components/no_content_component.js";
 import { AltyIDB } from "../databases/local_index_database.js";
+import { parseDatetimeStringToTimestamp } from "../utilities.js";
 import { confirmSelection } from "./confirm_selection_controller.js";
+import { pickDatetime } from "./datetime_picker_controller.js";
 import { notify } from "./notification_controller.js";
 import { addToSiteState, deleteFromSiteState, getSiteState } from "./state_controller.js";
 
@@ -60,6 +62,12 @@ function handleListButtons(target,listGroups){
         case 'additem':
 
             addNewItemToList(li,listGroups);
+
+        break;
+
+        case 'datetime':
+
+            pickDatetime({ target });
 
         break;
 
@@ -136,25 +144,21 @@ function updateList(li){
 
     if(titleElement){
 
+        const goalDatetimeElement = li.querySelector('[data-goal-connect]');
+
+        const goal = goalDatetimeElement.textContent.toLowerCase();
+
         const updatedList = {
 
             id: key,
-            modifiedTimestamp: Date.now().toString()
-
+            title: titleElement.innerText.trim(),
+            modifiedTimestamp: Date.now().toString(),
+            goalTimestamp: parseDatetimeStringToTimestamp(goal)
+            
         };
 
         let listItems = '';
 
-        let title = titleElement.innerText.trim();
-    
-        const state = getSiteState(['listtitle']);
-
-
-        if(state.listtitle && state.listtitle !== title){
-
-            updatedList.title = state.listtitle;
-
-        }
 
         const listItemElements = [...li.querySelectorAll('.list-item')];
 

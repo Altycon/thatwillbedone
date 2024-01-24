@@ -120,16 +120,13 @@
 
                         <p>Do Something</p>
 
-                        <p style="font-size: 16px; padding: 16px; margin-top: 2rem;">There are 10 kinds of people.</p>
-
-                        <p style="font-size: 16px; padding: 16px;">Those who understand binary,</p>
-
-                        <p style="font-size: 16px; padding: 16px;">Those who don't,</p>
-
-                        <p style="font-size: 16px; padding: 16px;">And those that didn't expect this joke to be ternary.</p>
+                        <p style="font-size: 20px; padding: 16px; margin-top: 2rem;">1/137</p>
 
                         <ul style="padding-top: 2rem; font-weight: 500;">Updates:
-                            <li style="padding: .5rem; margin-top: 1rem; font-weight: normal;">Adding goal to To-do's are complete.</li>
+                            <li style="padding: .5rem; margin-top: 1rem; font-weight: normal;">To-do "goal" functionality working.</li>
+                            <li style="padding: .5rem; font-weight: normal;">List "goal" functionality working.</li>
+                            <li style="padding: .5rem; font-weight: normal;">Goal calendar days picker NOT set correctly</li>
+                            <li style="padding: .5rem; font-weight: normal;">Goal calendar and time may fail if date and time are not set correctly. Bug fix in works.</li>
                             <li style="padding: .5rem; font-weight: normal;"><strong style="font-size: 1.5rem;">DO NOT use notes section.</strong> Adding new notes is broken.</li>
                             <li style="padding: .5rem; font-weight: normal;">adding "goal" functionality. Not finished.</li>
                             <li style="padding: .5rem; font-weight: normal;">design updates in progress...</li>
@@ -224,11 +221,15 @@
     
                         <div class="new-list-form-controls">
     
-                            <button type="button" class="btn new-list-form-datetime-open-btn calendar-entity">&#128197;</button>
+                            <button type="button" class="btn new-list-form-datetime-open-btn calendar-entity" data-goal-control="list-form">&#128197;</button>
     
                             <button type="submit" class="btn">&plus;</button>
     
                         </div>
+
+                        <p class="new-list-form-goal-display" data-goal-connect="list-form"></p>
+
+                        <input type="text" name="goal" data-goal-connect="list-form" hidden>
 
                         <ul class="new-list-form-list">
 

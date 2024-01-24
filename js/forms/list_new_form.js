@@ -97,15 +97,21 @@ function handleListFormSubmit(event){
 
     let title = data.get('title').trim();
 
+    
     if(!title || title === '' || title === ' ') title = 'unknown';
 
     const newFormItemElements = [...formElement.querySelectorAll('.new-list-form-item')];
 
-    for(let i = newFormItemElements.length - 1; i >= 0; i--){
+    // for(let i = newFormItemElements.length - 1; i >= 0; i--){
 
-        formItemList += newFormItemElements[i].querySelector('span').innerText + ','
-    }
+    //     formItemList += newFormItemElements[i].querySelector('span').innerText + ','
+    // }
 
+    newFormItemElements.forEach( element => {
+
+        formItemList += element.querySelector('span').innerText + ',';
+
+    });
 
     if(formItemList === ''){
 
@@ -113,6 +119,8 @@ function handleListFormSubmit(event){
 
         return;
     }
+
+    const gaol = data.get('goal') || null;
 
     const now = Date.now().toString();
 
@@ -122,7 +130,7 @@ function handleListFormSubmit(event){
         items: formItemList,
         createdTimestamp: now,
         modifiedTimestamp: now,
-        goalTimestamp: null
+        goalTimestamp: gaol
     };
 
     AltyIDB.add('list', list, (event)=>{
@@ -164,8 +172,6 @@ function handleListFormSubmit(event){
 
         resetListForm(formElement);
 
-        notify('Successfully added new list');
-
     });
 
 };
@@ -194,6 +200,18 @@ function resetListForm(form){
     const formList = form.querySelector('.new-list-form-list');
 
     clearChildElements(formList);
+
+    [...form.querySelectorAll('[data-goal-connect')].forEach( connection => {
+
+        if(connection.nodeName !== 'INPUT'){
+
+            connection.textContent = "";
+
+        }else{
+
+            connection.value = "";
+        }
+    })
 
     if(document.activeElement === titleInput) return;
     
