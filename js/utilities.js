@@ -1,15 +1,15 @@
 
-export function parseTimeStringNumber(number){
+export function leftZeroPadIfSingleDigit(number){
 
     if(+number < 10) return `0${number}`;
 
-    return number;
-}
+    return `${number}`;
+};
 export function timeToString(hour,minute){
 
-    if(+hour >= 12) return `${parseTimeStringNumber(hour % 12 === 0 ? 12:hour % 12)}:${parseTimeStringNumber(minute)}pm`;
+    return `${leftZeroPadIfSingleDigit(+hour % 12 === 0 ? 12:+hour % 12)}:${leftZeroPadIfSingleDigit(minute)}${+hour < 12 ? 'am':'pm'}`;
 
-    return `${parseTimeStringNumber(hour)}:${parseTimeStringNumber(minute)}am`;
+    //return `${leftZeroPadIfSingleDigit(hour)}:${leftZeroPadIfSingleDigit(minute)}am`;
 };
 
 export function createTWBDId(stringlette){
@@ -117,17 +117,29 @@ export function parseDatetimeStringToTimestamp(datetime){
     const monthAbbreviation = dateParts[0];
 
 
-
     const dayWithComma = dateParts[1];
 
     const year = dateParts[2];
 
 
+    const fullMonthName = getMonthFullNameFromAbbreviation(monthAbbreviation);
 
-    const fullMonthName = getMonthFullNameFromAbbreviation(monthAbbreviation)
+    // break time apart, add 12 to hour if meridiem is pm
+    const timeParts = time.split(':');
 
+    const timeHour = Number(timeParts[0]);
 
-    const newDatetime = `${fullMonthName} ${dayWithComma} ${year} ${time.slice(0,-2)}:00`
+    const minuteTimeString = timeParts[1].slice(0,-2);
+
+    const meridiemString = timeParts[1].substring(2);
+
+    const newHour = meridiemString.toLowerCase() === 'pm' ? timeHour+12:timeHour;
+
+    console.log(`hour: ${newHour}, minute: ${minuteTimeString}, merid: ${meridiemString}`)
+
+    const newDatetime = `${fullMonthName} ${dayWithComma} ${year} ${newHour}:${minuteTimeString}:00`
+
+    console.log(newDatetime)
 
     const period = new Date(newDatetime);
 
@@ -136,7 +148,7 @@ export function parseDatetimeStringToTimestamp(datetime){
     return timestamp;
 }
 
-function getMonthFullNameFromAbbreviation(abbrev){
+export function getMonthFullNameFromAbbreviation(abbrev){
 
     const monthNames = ['January','February','March','April','May','June','July','August','September','October','November','December'];
 

@@ -2242,14 +2242,17 @@ main{
 
     display: grid;
     grid-template-columns: repeat(7,1fr);
-    grid-template-rows: repeat(6,auto);
+    grid-template-rows: repeat(6,1fr);
 }
 .datetime-calendar-days > label{
+ 
     width: 30px;
     height: 30px;
     border-radius: 50%;
     line-height: 1.9em;
 }
+
+
 .datetime-calendar-days > label > input{
     display: none;
 }

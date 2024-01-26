@@ -1,4 +1,4 @@
-import { parseTimeStringNumber, parseTimestamp, timeToString } from "../utilities.js";
+import { leftZeroPadIfSingleDigit, parseTimestamp, timeToString } from "../utilities.js";
 
 
 export function handleDatetimePickerFormSubmit(event){
@@ -29,7 +29,9 @@ export function handleDatetimePickerFormSubmit(event){
 
     const incrementMonth = ('0' + (parseInt(month, 10) + 1)).slice(-2);
 
-    const timestring = `${year}-${incrementMonth}-${day}T${worldHour < 10 ? '0' + worldHour:worldHour}:${minute}:00`;
+    const timestring = `${year}-${incrementMonth}-${leftZeroPadIfSingleDigit(day)}T${leftZeroPadIfSingleDigit(worldHour % 24)}:${minute}:00`;
+
+    console.log(timestring)
 
     const timestamp = new Date(timestring).getTime();
 
