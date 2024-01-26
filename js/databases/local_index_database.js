@@ -225,15 +225,6 @@ function INDEXDB(){
 
             request.onsuccess = function(event){
 
-                if(!event.target.result || event.target.result.length < 1){
-
-                    console.log(`Nothing in "${storeName}"s to retrieve. Thank you for trying.`);
-
-                    database.close();
-
-                    return;
-                }
-
                 if(callback) callback(event.target.result);
 
                 console.log(`Successfully got "${storeName}s"`);
