@@ -53,18 +53,19 @@ export function checkAndLoadAppData(){
         AltyIDB.getAll('todo', (todoData)=> {
 
             buildTodoList(todoData);
+            
+        });
 
-            AltyIDB.getAll('note', (noteData)=> {
+        AltyIDB.getAll('note', (noteData)=> {
                 
-                buildNoteList(noteData);
+            buildNoteList(noteData);
 
-                AltyIDB.getAll('list', (listData)=> {
-                
-                    buildListGroups(listData);
+        });
 
-                });
-    
-            });
+        AltyIDB.getAll('list', (listData)=> {
+            
+            buildListGroups(listData);
+
         });
 
     }
