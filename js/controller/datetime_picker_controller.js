@@ -19,8 +19,6 @@ export function pickDatetime({ target }){
 
         timestamp = connection.dataset.timestamp;
 
-        console.log(timestamp)
-
     }
 
     const datetimeModal = document.querySelector('.datetime-modal');
