@@ -126,7 +126,8 @@ function buildTodoDatetime(name,timestamp,fallback,goalControlId){
 
     if(goalControlId){
 
-        p.innerHTML = `${label}:&nbsp;<span data-goal-connect="${goalControlId}">${timestamp ? parseTimestamp(timestamp,'timedate'):fallback}</span>`;
+        p.innerHTML = `${label}:&nbsp;<span data-timestamp="${timestamp}" data-goal-connect="${goalControlId}">${timestamp ? parseTimestamp(timestamp,'timedate'):fallback}</span>`;
+
 
     }else{
 

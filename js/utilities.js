@@ -1,4 +1,15 @@
 
+
+export function lockBody(){
+
+    document.body.style.overflow = 'hidden';
+
+};
+export function unlockBody(){
+
+    document.body.style.overflow = 'auto';
+
+};
 export function leftZeroPadIfSingleDigit(number){
 
     if(+number < 10) return `0${number}`;

@@ -194,8 +194,6 @@ function updateTodo(li){
 
         const text = descriptionElement.innerText.trim();
 
-        const goal = goalDatetimeElement.textContent.toLowerCase();
-
         if(text !== '' && text !== ' '){
 
             const newTodo = {
@@ -203,7 +201,7 @@ function updateTodo(li){
                 id: key,
                 description: text,
                 modifiedTimestamp: Date.now().toString(),
-                goalTimestamp: parseDatetimeStringToTimestamp(goal)
+                goalTimestamp: goalDatetimeElement.dataset.timestamp
             };
 
             AltyIDB.update('todo', newTodo);

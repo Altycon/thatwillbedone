@@ -1,5 +1,5 @@
-import { handleDatetimePickerFormSubmit } from "../forms/datetime_picker_form.js";
-import { leftZeroPadIfSingleDigit, parseDatetimeStringToTimestamp } from "../utilities.js";
+
+import { clearChildElements, leftZeroPadIfSingleDigit, lockBody, parseDatetimeStringToTimestamp, parseTimestamp, unlockBody } from "../utilities.js";
 
 
 export function pickDatetime({ target }){
@@ -11,7 +11,9 @@ export function pickDatetime({ target }){
 
     if(connection && connection.textContent !== "" && connection.textContent.toLowerCase() !== "no goal"){
 
-        timestamp = +parseDatetimeStringToTimestamp(connection.textContent);
+        timestamp = connection.dataset.timestamp;
+
+        console.log(timestamp)
 
     }
 
@@ -29,6 +31,8 @@ export function pickDatetime({ target }){
         datetimeModal.classList.add('appear');
 
         datetimeModal.querySelector('form input[type=radio]:checked').focus();
+
+        lockBody();
 
     },100);
 };
@@ -51,6 +55,8 @@ function closeDatetimePicker(event){
 
     datetimeModal.classList.remove('appear');
 
+    unlockBody();
+
     setTimeout( ()=> {
 
         datetimeModal.classList.remove('open');
@@ -67,7 +73,7 @@ function initializeDatetimePicker(timestamp = Date.now(),controlId){
     const datetimeForm = document.querySelector('.datetime-modal form');
 
 
-    const period = new Date(timestamp);
+    const period = new Date(+timestamp);
 
     const hour = Number(period.getHours());
 
@@ -89,7 +95,7 @@ function initializeDatetimePicker(timestamp = Date.now(),controlId){
 
     datetimeForm.querySelector('select[name=minute]').value = leftZeroPadIfSingleDigit(minute);
 
-    datetimeForm.querySelector('select[name=meridiem]').value = hour <= 12 ? 'am':'pm';
+    datetimeForm.querySelector('select[name=meridiem]').value = hour < 12 ? 'am':'pm';
 
 
     setSelectedDay(datetimeForm,period.getDate().toString());
@@ -123,22 +129,36 @@ function resetDatetimePicker(datetimeModal){
 
 function setSelectedDay(datetimeForm,day){
 
-    const days = [...datetimeForm.querySelectorAll('input[name=day]')];
+    // console.log('day', day)
 
-    const dayInput = datetimeForm.querySelector(`input[value="${day}"]`);
+    // const days = [...datetimeForm.querySelectorAll('input[name=day]')];
 
-    resetSelectedDays(datetimeForm);
+    // const dayInput = datetimeForm.querySelector(`input[value="${day}"]`);
 
-    days.forEach( day => {
+    // resetSelectedDays(datetimeForm);
 
-        day.addEventListener('click', handleDatetimeSelectDay);
+    // days.forEach( day => {
 
-    })
+    //     day.addEventListener('click', handleDatetimeSelectDay);
+
+    // })
 
 
-    dayInput.checked = true;
+    // dayInput.checked = true;
 
-    dayInput.parentElement.classList.add('active');
+    // dayInput.parentElement.classList.add('active');
+
+    const month = datetimeForm.querySelector('.datetime-calendar select[name=month]');
+
+    const daysInSelectedMonth = +month[month.value].dataset.days
+
+    const year = datetimeForm.querySelector('.datetime-calendar select[name=year]').value;
+
+
+    const weekdayStart = getPreviousMonthLastWeekday(month.value,year);
+    
+    buildDatetimePickerCalendarDays(weekdayStart,daysInSelectedMonth,day)
+
     
 };
 
@@ -174,49 +194,155 @@ function handleDatetimeMonthSelectInput(event){
 
     const selectedMonth = event.target.value;
 
-    const month = +selectedMonth < 10 ? "0" + selectedMonth:selectedMonth;
-
-    const days = [...document.querySelectorAll('.datetime-calendar-days label')];
-
     const year = document.querySelector('.datetime-calendar select[name=year]').value;
 
-    const selectedDay = days.find( day => day.classList.contains('active')).firstElementChild.value;
 
-    const day = +selectedDay < 10 ? "0" + selectedDay:selectedDay;
-
-    const timeString = `${year}-${month}-01`;
-
-    const period = new Date(timeString);
-
-    const weekdayStart = period.getDay(); // 0-6
+    const daysInSelectedMonth = +event.srcElement[selectedMonth].dataset.days
 
 
-    days.forEach( (day,index) => {
+    const weekdayStart = getPreviousMonthLastWeekday(selectedMonth,year);
+    
+    buildDatetimePickerCalendarDays(weekdayStart,daysInSelectedMonth)
 
+};
 
-        const hidden = day.getAttribute('hidden');
-        
-        if(hidden && hidden === 'true') day.removeAttribute('hidden');
+function getPreviousMonthLastWeekday(selectedMonth,year){
 
-       
-    })
+    const month = (parseInt(selectedMonth, 10));
 
-    switch(selectedMonth){
+    const period = new Date(+year,month);
 
-        case "1":
-            days[days.length - 1].setAttribute('hidden',true);
-            days[days.length - 2].setAttribute('hidden',true);
-            days[days.length - 3].setAttribute('hidden',true);
-        break;
+    return +period.getDay(); // 0-6
+};
 
-        case "3":
-        case "5":
-        case "8":
-        case "10":
-            days[days.length - 1].setAttribute('hidden',true);
+function buildDatetimePickerCalendarDays(weekdayStart, daysInSelectedMonth, selectedDay){
+    
 
-        break;
+    const calendarDaysListElement = document.querySelector('.datetime-calendar-days');
+
+    if(!selectedDay || selectedDay === undefined){
+
+        selectedDay = calendarDaysListElement.querySelector('label input[name=day]:checked').value;
 
     }
 
+    if(+selectedDay > +daysInSelectedMonth){
+
+        selectedDay = daysInSelectedMonth;
+
+    }
+
+    const daysDocumentFragment = new DocumentFragment();
+
+    clearChildElements(calendarDaysListElement);
+
+    
+    if(weekdayStart > 0){
+
+        for(let i = 0; i < weekdayStart; i++){
+
+            daysDocumentFragment.appendChild(
+    
+                createDatetimePickerCalendarDayComponent()
+            )
+        }
+
+    }
+
+    for(let i = 0; i < daysInSelectedMonth; i++){
+
+        daysDocumentFragment.appendChild(
+
+            createDatetimePickerCalendarDayComponent(i + 1)
+        )
+    }
+
+    calendarDaysListElement.append(daysDocumentFragment);
+
+    const dayInput = calendarDaysListElement.querySelector(`input[value="${selectedDay}"]`);
+
+    dayInput.parentElement.classList.add('active');
+
+    dayInput.checked = true;
+
+}
+
+export function handleDatetimePickerFormSubmit(event){
+
+    if(!event) return;
+
+    event.preventDefault();
+
+    const datetimeForm = event.target;
+
+    const formData = new FormData(datetimeForm);
+
+    const controlId = formData.get('controlid');
+
+    const month = formData.get('month');
+
+    const year = formData.get('year');
+
+    const day = formData.get('day');
+
+    const hour = Number(formData.get('hour'));
+
+    const minute = formData.get('minute');
+
+    const meridiem = formData.get('meridiem');
+
+    const worldHour = meridiem === 'pm' ? hour + 12:hour;
+
+    const incrementMonth = ('0' + (parseInt(month, 10) + 1)).slice(-2);
+
+    const timestring = `${year}-${incrementMonth}-${leftZeroPadIfSingleDigit(day)}T${leftZeroPadIfSingleDigit(worldHour % 24)}:${minute}:00`;
+
+    console.log(timestring)
+
+    const timestamp = new Date(timestring).getTime();
+
+    [...document.querySelectorAll(`[data-goal-connect=${controlId}]`)].forEach( connection => {
+
+        if(connection.nodeName !== 'INPUT'){
+
+            connection.textContent = parseTimestamp(timestamp,'timedate');
+
+            connection.dataset.timestamp = timestamp.toString();
+
+        }else{
+
+            connection.value = timestamp;
+        }
+
+                
+    });
+
+    document.querySelector('.datetime-modal-close-btn').click();
+
+};
+
+function createDatetimePickerCalendarDayComponent(day,active = false){
+
+    const label = document.createElement('label');
+
+    if(active) label.classList.add('active');
+
+    if(day){
+
+        label.textContent = day;
+
+        label.addEventListener('click', handleDatetimeSelectDay);
+    }
+
+    const input = document.createElement('input');
+
+    input.setAttribute('type', 'radio');
+
+    input.setAttribute('name', 'day');
+
+    input.setAttribute('value', day);
+
+    label.append(input);
+
+    return label;
 }
