@@ -596,6 +596,7 @@ main{
 }
 .todo-item-edit-btn{
     font-weight: 900;
+    background: linear-gradient(transparent,var(--bc-accent1));
 }
 .todo-item-delete-btn,
 .todo-item-save-btn,
@@ -937,6 +938,10 @@ main{
     font-size: 1.5rem;
     padding: 3px 10px;  
 
+}
+.list-item-edit-btn{
+    font-weight: 900;
+    background: linear-gradient(transparent,var(--bc-accent1));
 }
 .list-item-delete-btn,
 .list-item-save-btn,

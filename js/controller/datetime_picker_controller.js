@@ -1,5 +1,11 @@
 
-import { clearChildElements, leftZeroPadIfSingleDigit, lockBody, parseDatetimeStringToTimestamp, parseTimestamp, unlockBody } from "../utilities.js";
+import { 
+    clearChildElements, 
+    leftZeroPadIfSingleDigit, 
+    lockBody,
+    parseTimestamp, 
+    unlockBody 
+} from "../utilities.js";
 
 
 export function pickDatetime({ target }){
@@ -81,6 +87,8 @@ function initializeDatetimePicker(timestamp = Date.now(),controlId){
 
     const month = period.getMonth();
 
+    const day = period.getDate().toString();
+
 
     const monthSelectElement = datetimeForm.querySelector('select[name=month]');
 
@@ -98,10 +106,10 @@ function initializeDatetimePicker(timestamp = Date.now(),controlId){
     datetimeForm.querySelector('select[name=meridiem]').value = hour < 12 ? 'am':'pm';
 
 
-    setSelectedDay(datetimeForm,period.getDate().toString());
+    setSelectedDay(datetimeForm,day);
+
 
     monthSelectElement.addEventListener('input', handleDatetimeMonthSelectInput);
-
 
     datetimeForm.addEventListener('submit', handleDatetimePickerFormSubmit);
 
@@ -128,25 +136,6 @@ function resetDatetimePicker(datetimeModal){
 };
 
 function setSelectedDay(datetimeForm,day){
-
-    // console.log('day', day)
-
-    // const days = [...datetimeForm.querySelectorAll('input[name=day]')];
-
-    // const dayInput = datetimeForm.querySelector(`input[value="${day}"]`);
-
-    // resetSelectedDays(datetimeForm);
-
-    // days.forEach( day => {
-
-    //     day.addEventListener('click', handleDatetimeSelectDay);
-
-    // })
-
-
-    // dayInput.checked = true;
-
-    // dayInput.parentElement.classList.add('active');
 
     const month = datetimeForm.querySelector('.datetime-calendar select[name=month]');
 
@@ -279,27 +268,18 @@ export function handleDatetimePickerFormSubmit(event){
 
     const controlId = formData.get('controlid');
 
-    const month = formData.get('month');
-
-    const year = formData.get('year');
-
-    const day = formData.get('day');
-
     const hour = Number(formData.get('hour'));
-
-    const minute = formData.get('minute');
 
     const meridiem = formData.get('meridiem');
 
     const worldHour = meridiem === 'pm' ? hour + 12:hour;
 
-    const incrementMonth = ('0' + (parseInt(month, 10) + 1)).slice(-2);
-
-    const timestring = `${year}-${incrementMonth}-${leftZeroPadIfSingleDigit(day)}T${leftZeroPadIfSingleDigit(worldHour % 24)}:${minute}:00`;
-
-    console.log(timestring)
-
-    const timestamp = new Date(timestring).getTime();
+    const timestamp = new Date(
+        Number(formData.get('year')),
+        Number(formData.get('month')),
+        Number(formData.get('day')),
+        Number(worldHour % 24),
+        Number(formData.get('minute'))).getTime();
 
     [...document.querySelectorAll(`[data-goal-connect=${controlId}]`)].forEach( connection => {
 
@@ -321,11 +301,9 @@ export function handleDatetimePickerFormSubmit(event){
 
 };
 
-function createDatetimePickerCalendarDayComponent(day,active = false){
+function createDatetimePickerCalendarDayComponent(day){
 
     const label = document.createElement('label');
-
-    if(active) label.classList.add('active');
 
     if(day){
 
