@@ -52,23 +52,11 @@ function handleTodoButtons(target,todoList){
 
     switch(button){
 
-        case 'completed': 
+        case 'completed': completeTodo(li); break;
 
-            completeTodo(li);
+        case 'edit': startEditingTodo(li); break;
 
-        break;
-
-        case 'edit': 
-    
-           startEditingTodo(li);
-
-        break;
-
-        case 'cancel':
-
-            cancelEditingTodo(li);
-
-        break;
+        case 'cancel': cancelEditingTodo(li); break;
 
         case 'save':
 
@@ -82,22 +70,9 @@ function handleTodoButtons(target,todoList){
 
         break;
 
-        case 'datetime':
+        case 'datetime': pickDatetime({ target }); break;
 
-            console.log('hit')
-            pickDatetime({ target });
-
-        break;
-
-        case 'delete':
-
-        confirmSelection('Delete todo?', ()=>{
-
-            deleteTodo(li,todoList);
-
-        });            
-        
-        break;
+        case 'delete': confirmSelection('Delete todo?', ()=> deleteTodo(li,todoList) ); break;
     }
 };
 
