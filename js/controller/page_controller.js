@@ -1,5 +1,6 @@
 
 import { calculatorController } from "./calculator_controller.js";
+import { calendarController, stopListeningToCalendar } from "./calendar_controller.js";
 import { listenToConnectionControls, stopListenToConnectionControls } from "./connection_controller.js";
 import { listenToGoalControls } from "./datetime_picker_controller.js";
 import { listsController, stopListeningToLists } from "./list_controller.js";
@@ -31,6 +32,8 @@ export function resetPages(){
             case 'lists': stopListeningToLists(); break;
 
             case 'notes': stopListeningToNotes(); break;
+
+            case 'calendar': stopListeningToCalendar(); break;
         }
     });
 
@@ -77,6 +80,8 @@ export function pageRouter(hash){
         case 'profile': profileController(); break;
 
         case 'settings': settingsController(); break;
+
+        case 'calendar': calendarController(); break;
 
         case 'stopwatch': Stopwatch.initialize(stopwatchElements); break;
 

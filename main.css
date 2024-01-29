@@ -1573,8 +1573,8 @@ main{
 
 /* ==> TODO CALENDAR */
 
-.td-calendar{
-    --calendar-height: 70vh;
+.calendar{
+    --calendar-height: 90vh;
     --calendar-header-height: 4rem;
     --calendar-weekday-list-height: 2rem;
 
@@ -1584,13 +1584,13 @@ main{
     overflow-y: scroll;
     opacity: 1;
 }
-.td-calendar .page-content{
-    padding: 0rem 8rem;
+.calendar .page-content{
+    padding: 0rem 10rem;
 }
-/* .td-calendar.appear{
+/* .calendar.appear{
     animation: fadeIn 500ms linear forwards;
 } */
-.td-calendar-header{
+.calendar-header{
     height: var(--calendar-header-height);
 
     display: grid;
@@ -1598,7 +1598,7 @@ main{
     grid-template-rows: auto;
 }
 
-.td-calendar-monthyear-display{
+.calendar-monthyear-display{
     text-align: center;
 
     display: grid;
@@ -1608,26 +1608,26 @@ main{
     justify-content: center;
     gap: 2rem;
 }
-.td-calendar-month-display,
-.td-calendar-year-display{
+.calendar-month-display,
+.calendar-year-display{
     font-size: 1rem;
     font-weight: 900;
 }
-.td-calendar-month-display{
+.calendar-month-display{
    
     
 }
-.td-calendar-year-display{
+.calendar-year-display{
     
     
 }
-.td-calendar-navigation{
+.calendar-navigation{
 
     display: grid;
     place-content: center;
 }
-.td-calendar-past-month-btn,
-.td-calendar-future-month-btn{
+.calendar-past-month-btn,
+.calendar-future-month-btn{
     border: 1px solid var(--fc-primary);
     background-color: transparent;
     color: var(--fc-primary);
@@ -1635,18 +1635,18 @@ main{
     padding: 3px 10px;
     border-radius: 10px;
 }
-.td-calendar-past-month-btn{
+.calendar-past-month-btn{
     margin-right: 1rem;
 }
-.td-calendar-future-month-btn{
+.calendar-future-month-btn{
 
 }
 
 
-.td-calendar-days{
+.calendar-days{
     
 }
-.td-calendar-weekday-list{
+.calendar-weekday-list{
     height: var(--calendar-weekday-list-height);
     list-style: none;
     text-align: center;
@@ -1656,7 +1656,7 @@ main{
     grid-template-rows: auto;
     align-items: center;
 }
-.td-calendar-weekday-item{
+.calendar-weekday-item{
     font-size: .7em;
     text-transform: uppercase;
     font-weight: 500;
@@ -1664,7 +1664,7 @@ main{
 
 
 
-.td-calendar-day-list{
+.calendar-day-list{
     height: calc(
         var(--calendar-height) - ( var(--calendar-header-height) + var(--calendar-weekday-list-height) ));
     list-style: none;
@@ -1680,21 +1680,26 @@ main{
     column-gap: 1px;
     row-gap: 1px;
 }
-/* .td-calendar.appear .td-calendar-day-list{
+/* .calendar.appear .calendar-day-list{
     animation: fadeIn 600ms linear forwards,
     slideUp 400ms linear forwards;
 } */
 
-.td-calendar-day-item{
+.calendar-day-item{
     font-size: .8em;
     padding: .5rem;
     font-weight: 500;
     background-color: var(--bc-primary);
+    color: var(--fc-primary);
 }
-.td-calendar-day-item.today{
-    box-shadow: inset 0px 0px 5px var(--created-color);
+.calendar-day-item.today{
+    background-color: var(--bc-accent1);
 }
-.td-calendar-day-number{
+.previous-month > *,
+.next-month > *{
+    opacity: .5;
+}
+.calendar-day-number{
     
 }
 
@@ -2391,6 +2396,10 @@ main{
     .list-item > p{
         font-size: 1.2rem;
     }
+
+    .calendar .page-content{
+        padding: 0rem 4rem;
+    }
 }
 
 
@@ -2440,6 +2449,13 @@ main{
     .new-list-form-list{
         grid-column: 1;
         grid-row: 2;
+    }
+
+
+    /* Calendar */
+
+    .calendar .page-content{
+        padding: 0rem 2rem;
     }
    
 }
@@ -2629,7 +2645,7 @@ main{
 
     /* Calendar */
 
-    .td-calendar .page-content{
+    .calendar .page-content{
         padding: 0rem 1rem;
     }
 
