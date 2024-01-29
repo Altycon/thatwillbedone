@@ -6,6 +6,7 @@ import { listsController, stopListeningToLists } from "./list_controller.js";
 import { notesController, stopListeningToNotes } from "./notes_controller.js";
 import { profileController } from "./profile_controller.js";
 import { settingsController } from "./settings_controller.js";
+import { Stopwatch, stopwatchElements } from "./stopwatch_controller.js";
 import { stopListeningToTodos, todosController } from "./todo_controller.js";
 
 
@@ -51,9 +52,7 @@ function activatePage(page){
 
     setTimeout( ()=> {
 
-        page.classList.add('appear');
-
-        
+        page.classList.add('appear');  
 
     },100);
 
@@ -67,41 +66,19 @@ export function pageRouter(hash){
 
     switch(hash){
 
-        case 'todos':
+        case 'todos': todosController(); break;
 
-            todosController();
+        case 'lists': listsController(); break;
 
-        break;
+        case 'notes': notesController(); break;
 
-        case 'lists':
+        case 'calculator': calculatorController(); break;
 
-            listsController();
+        case 'profile': profileController(); break;
 
-        break;
+        case 'settings': settingsController(); break;
 
-        case 'notes':
-
-            notesController();
-
-        break;
-
-        case 'calculator':
-
-            calculatorController();
-
-        break;
-
-        case 'profile':
-
-            profileController();
-
-        break;
-
-        case 'settings':
-
-            settingsController();
-
-        break;
+        case 'stopwatch': Stopwatch.initialize(stopwatchElements); break;
 
     }
 

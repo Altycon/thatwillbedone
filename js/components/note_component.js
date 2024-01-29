@@ -17,8 +17,8 @@ export function createNoteComponent(id,description,createdTimestamp,modifiedTime
 
     component.append(
         
+        buildNoteHeader(),
         noteDescription,
-        buldNoteControls(),
         buildNoteDatetimeDisplay(createdTimestamp,modifiedTimestamp)
 
     );
@@ -27,19 +27,42 @@ export function createNoteComponent(id,description,createdTimestamp,modifiedTime
 
 };
 
-function buldNoteControls(){
+function buildNoteHeader(){
+
+    const header = document.createElement('header');
+
+    header.classList.add('note-item-header');
+
+    header.append(
+
+        buildNoteControls()
+    );
+
+    return header;
+
+};
+
+function buildNoteControls(){
 
     const div = document.createElement('div');
 
     div.classList.add('note-item-controls');
 
+    const editControls = document.createElement('div');
+
+    editControls.classList.add('note-item-edit-controls');
+
+    editControls.append(
+
+        buildNoteButton('cancel','button',`cancel`),  
+        buildNoteButton('save','button',`save`),
+        buildNoteButton('delete','button',`delete`)
+
+    );
+
     div.append(
-
-        buildNoteButton('edit','button',`&#9998;`),
-        buildNoteButton('delete','button',`&#128465;`),
-        buildNoteButton('cancel','button',`&#10007;`),
-        buildNoteButton('save','button',`&#128190;`),
-
+        buildNoteButton('edit','button',`&#8230;`),
+        editControls
     );
 
     return div;
@@ -68,7 +91,7 @@ function buildNoteButton(name,type,innerhtml){
 
     button.setAttribute('type', type);
 
-    button.classList.add('btn',`note-item-${name}-btn`,'entity');
+    button.classList.add('btn',`note-item-${name}-btn`);
 
     button.setAttribute('data-button', name);
 

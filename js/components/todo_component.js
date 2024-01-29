@@ -71,7 +71,6 @@ function buildTodoControls(goalControlId){
     div.append( 
         buildTodoButton('edit','button',`&#8230;`),
         editControls
-      
     );
 
     

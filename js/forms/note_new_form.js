@@ -18,13 +18,13 @@ export function listenToNoteForm(){
 
     form.addEventListener('submit', handleNoteFormSubmit);
 
-    textarea.addEventListener('keydown', handleKeydown);
-
     form.addEventListener('transitionend', _=>{
 
         textarea.focus();
         
     });
+
+    textarea.addEventListener('keydown', handleKeydown);
 
     textarea.innerText = '';
     
@@ -32,13 +32,21 @@ export function listenToNoteForm(){
 
 function stopListeningToNoteForm(event){
 
-    const textarea = form.querySelector('textarea');
-
     const form = document.querySelector(`.new-note-form`);
+
+    const textarea = form.querySelector('textarea');
 
     form.removeEventListener('submit', handleNoteFormSubmit);
 
     form.querySelector('textarea').removeEventListener('keydown', handleKeydown);
+
+    form.addEventListener('transitionend', _=>{
+
+        if(document.activeElement === textarea) textarea.blur();
+
+    });
+
+    resetNoteForm(form);
 
     event.target.removeEventListener('click', stopListeningToNoteForm);
 
