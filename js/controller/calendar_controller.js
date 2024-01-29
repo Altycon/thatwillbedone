@@ -1,4 +1,5 @@
 import { clearChildElements } from "../utilities.js";
+import { openCalendarDayviewer } from "./calendar_dayview_controller.js";
 
 
 export function calendarController(){
@@ -53,11 +54,15 @@ function setCalendar(year,month,day){
 
         df.appendChild(
 
-            createCalendarDayComponent(lastMonthDays-i,month-1,'previous-month')
+            createCalendarDayComponent(lastMonthDays-i,month-1 === -1 ? 11:month-1,'previous-month')
         )
     }
 
     for(let i = 0; i <= daysInMonth; i++){
+
+        if(month === -1) month = 11;
+
+        if(month === 11) month = 0;
 
         df.appendChild(
 
@@ -69,17 +74,19 @@ function setCalendar(year,month,day){
 
         df.appendChild(
 
-            createCalendarDayComponent(i+1,month+1,'next-month')
+            createCalendarDayComponent(i+1,month+1 === 12 ? 0:month+1,'next-month')
         )
     }
 
     calendarDayList.append(df);
 
-    if(day) setCalendarDay(day);
+    if(day) setCalendarDay(day,month);
 };
     
 
-function setCalendarDay(dayNumber){
+function setCalendarDay(dayNumber,monthNumber){
+
+    console.log(dayNumber,monthNumber)
 
     const calendar = document.querySelector('.calendar');
     
@@ -89,18 +96,30 @@ function setCalendarDay(dayNumber){
 
         if(day.classList.contains('today')) day.classList.remove('today');
 
-    })
+    });
 
-    days.forEach( day => {
+    for(let i = 0; i < days.length; i++){
 
-        if(day.classList.contains('current-month')){
+        if(+days[i].dataset.month === monthNumber){
 
-            if(+day.firstElementChild.textContent === dayNumber){
+            if(+days[i].firstElementChild.textContent === dayNumber){
 
-                day.classList.add('today');
+                days[i].classList.add('today');
+    
+                break;
+    
             }
         }
-    })
+    }
+
+    // days.forEach( (day,index) => {
+
+    //     if(+day.firstElementChild.textContent === dayNumber){
+
+    //         day.classList.add('today');
+
+    //     }
+    // })
 };
 
 function getCalendarData(){
@@ -148,6 +167,14 @@ function handleCalendarControls(event){
 
         switch(target.dataset.calendarControl){
 
+            case 'day':
+
+                setCalendarDay(+target.dataset.day,+target.dataset.month);
+
+                openCalendarDayviewer();
+
+            break;
+
             case 'previous-month':{
 
                 const data = getCalendarData();
@@ -155,6 +182,8 @@ function handleCalendarControls(event){
                 if(data[1] === 0){
 
                     data[0]--;
+
+                    if(data[0] === 0) data[0] = 11;
 
                     data[1] = 12;
                 }
@@ -190,7 +219,7 @@ function createCalendarDayComponent(day,month,monthClass){
 
     li.dataset.calendarControl = 'day';
 
-    if(month) li.dataset.month = `${month}`;
+    if(month !== undefined || month !== null) li.dataset.month = `${month}`;
 
     if(monthClass) li.classList.add(monthClass);
 
@@ -198,7 +227,12 @@ function createCalendarDayComponent(day,month,monthClass){
 
     p.classList.add('calendar-day-number');
 
-    if(day) p.textContent = `${day}`;
+    if(day){
+
+        li.dataset.day = `${day}`;
+
+        p.textContent = `${day}`;
+    }
 
     li.append(p);
 

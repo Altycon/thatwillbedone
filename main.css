@@ -1574,7 +1574,7 @@ main{
 /* ==> TODO CALENDAR */
 
 .calendar{
-    --calendar-height: 90vh;
+    --calendar-height: 80vh;
     --calendar-header-height: 4rem;
     --calendar-weekday-list-height: 2rem;
 
@@ -1703,7 +1703,100 @@ main{
     
 }
 
+/* ==> CALENDAR DAYVIEWER */
 
+.calendar-dayview-window{
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw;
+    height: 100vh;
+    isolation: isolate;
+    
+    display: none;
+}
+.calendar-dayview-window.open{
+    display: block;
+}
+.calendar-dayview-overlay{
+    position: absolute;
+    inset: 0;
+    background-color: var(--fc-primary);
+    opacity: 0;
+    z-index: -1;
+
+    transition: opacity 200ms ease-in-out;
+}
+.calendar-dayview-window.appear .calendar-dayview-overlay{
+    opacity: .9;
+}
+.calendar-dayview-content{
+    width: 90vw;
+    max-width: 1000px;
+    background-color: var(--bc-primary);
+    margin: 0 auto;
+    opacity: 0;
+    transition-delay: 100ms;
+    transition: opacity 200ms ease-in-out;
+}
+.calendar-dayview-window.appear .calendar-dayview-content{
+    opacity: 1;
+    transition-delay: 0ms;
+}
+.calendar-dayview-header{
+    text-align: center;
+    padding: 1rem;
+
+    display: grid;
+    grid-template-columns: auto;
+    grid-template-rows: auto auto;
+    gap: 1rem;
+}
+.calendar-dayview-header > div{
+    grid-column: 1;
+    grid-row: 2;
+
+    display: grid;
+    grid-template-columns: auto auto auto auto;
+    grid-template-rows: auto;
+    justify-content: center;
+    gap: 1em;
+}
+.calendar-dayview-header > div > span{
+    color: var(--fc-primary);
+    font-size: 2rem;
+    font-weight: 700;
+}
+.calendar-dayview-close-btn{
+    grid-column: 1;
+    grid-row: 1;
+
+    width: 50px;
+    height: 50px;
+    border: none;
+    background-color: var(--bc-accent1);
+    border-radius: 50%;
+    outline: 1px solid var(--fc-primary);
+    color: var(--fc-primary);
+    margin-right: 1rem;
+    margin-left: auto;
+    font-size: 2rem;
+}
+.calendar-dayview{
+
+}
+.calendar-dayview > h2{
+    padding-left: 3rem;
+       margin-bottom: 1em;
+}
+.calendar-dayview-list{
+    list-style: disc;
+}
+.calendar-dayview-item{
+    list-style-position: inside;
+    padding: 1rem;
+    font-size: 1rem;
+    line-height: 1.5em;
+}
 /*
 =============================
 
@@ -2656,6 +2749,15 @@ main{
         font-size: 5rem;
         margin-left: 3px;
         margin-right: 3px;
+    }
+
+    /* Calendar Dayviewer */
+
+    .calendar-dayview-header > div > span{
+        font-size: 1.3rem;
+    }
+    .calendar-dayview > h2{
+        font-size: 1rem;
     }
 }
 
