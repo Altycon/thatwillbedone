@@ -1,3 +1,4 @@
+import { AltyIDB } from "../databases/local_index_database.js";
 import { clearChildElements } from "../utilities.js";
 import { openCalendarDayviewer } from "./calendar_dayview_controller.js";
 
@@ -54,7 +55,7 @@ function setCalendar(year,month,day){
 
         df.appendChild(
 
-            createCalendarDayComponent(lastMonthDays-i,month-1 === -1 ? 11:month-1,'previous-month')
+            createCalendarDayComponent(lastMonthDays-i,month-1 === -1 ? 11:month-1,year - 1,'previous-month')
         )
     }
 
@@ -66,7 +67,7 @@ function setCalendar(year,month,day){
 
         df.appendChild(
 
-            createCalendarDayComponent(i + 1,month,'current-month')
+            createCalendarDayComponent(i + 1,month,year,'current-month')
         )
     }
 
@@ -74,13 +75,65 @@ function setCalendar(year,month,day){
 
         df.appendChild(
 
-            createCalendarDayComponent(i+1,month+1 === 12 ? 0:month+1,'next-month')
+            createCalendarDayComponent(i+1,month+1 === 12 ? 0:month+1,year + 1,'next-month')
         )
     }
 
     calendarDayList.append(df);
 
     if(day) setCalendarDay(day,month);
+
+    AltyIDB.getAll('todo', (todoData)=>{
+
+        todoData.forEach( todo => {
+
+            if(todo.goalTimestamp){
+
+                const period = new Date(+todo.goalTimestamp);
+
+                const todoYear = period.getFullYear();
+                const todoMonth = period.getMonth();
+                const todoDay = period.getDate();
+
+                if(todoYear === year && todoMonth === month){
+
+                    console.log('yeas',todoYear,todoMonth,todoDay)
+
+                    addDayItemToCalendar(todo.id,todoYear,todoMonth,todoDay,`(T) ` + todo.description);
+
+                }
+                                
+            }
+        })
+
+    })
+
+    AltyIDB.getAll('list', (listData)=>{
+
+        listData.forEach( list => {
+
+            console.log('list',list)
+
+            if(list.goalTimestamp){
+
+                const period = new Date(+list.goalTimestamp);
+
+                const listYear = period.getFullYear();
+                const listMonth = period.getMonth();
+                const listDay = period.getDate();
+
+                if(listYear === year && listMonth === month){
+
+                    console.log('ylist yeas',listYear,listMonth,listDay)
+
+                    addDayItemToCalendar(list.id,listYear,listMonth,listDay,`(L) ` + list.title);
+
+                }
+                                
+            }
+        })
+
+    })
 };
     
 
@@ -112,14 +165,6 @@ function setCalendarDay(dayNumber,monthNumber){
         }
     }
 
-    // days.forEach( (day,index) => {
-
-    //     if(+day.firstElementChild.textContent === dayNumber){
-
-    //         day.classList.add('today');
-
-    //     }
-    // })
 };
 
 function getCalendarData(){
@@ -171,7 +216,11 @@ function handleCalendarControls(event){
 
                 setCalendarDay(+target.dataset.day,+target.dataset.month);
 
-                openCalendarDayviewer();
+                if(target.querySelector('.calendar-day-list-item')){
+                    
+                    openCalendarDayviewer(target);
+
+                }
 
             break;
 
@@ -192,7 +241,7 @@ function handleCalendarControls(event){
             }
             break;
 
-            case 'next-month':
+            case 'next-month':{
 
                 const data = getCalendarData();
 
@@ -204,14 +253,14 @@ function handleCalendarControls(event){
                 }
 
                 setCalendar(data[0],data[1] + 1,data[2])
-
+            }
             break;
         }
     }
 
 };
 
-function createCalendarDayComponent(day,month,monthClass){
+function createCalendarDayComponent(day,month,year,monthClass){
 
     const li = document.createElement('li');
 
@@ -219,22 +268,66 @@ function createCalendarDayComponent(day,month,monthClass){
 
     li.dataset.calendarControl = 'day';
 
-    if(month !== undefined || month !== null) li.dataset.month = `${month}`;
+    li.dataset.month = `${month}`;
+
+    li.dataset.year = `${year}`;
+
+    li.dataset.day = `${day}`;
 
     if(monthClass) li.classList.add(monthClass);
+
 
     const p = document.createElement('p');
 
     p.classList.add('calendar-day-number');
 
-    if(day){
+    p.textContent = `${day}`;
 
-        li.dataset.day = `${day}`;
 
-        p.textContent = `${day}`;
+    const ul = document.createElement('ul');
+
+    ul.classList.add('calendar-day-item-list');
+
+    li.append(p,ul);
+
+    return li;
+};
+
+export function addDayItemToCalendar(id,year,month,day,item){
+
+    const calendar = document.querySelector('.calendar');
+
+    const days = [...calendar.querySelectorAll('.calendar-day-item')];
+
+    for(let i = 0; i < days.length; i ++){
+
+        const calendarDay = days[i];
+
+        if(+calendarDay.dataset.year === year && +calendarDay.dataset.month === month &&
+           +calendarDay.dataset.day === day){
+
+                const dayList = calendarDay.querySelector('.calendar-day-item-list');
+
+                dayList.insertBefore(
+
+                    createCalendarDayItemComponenet(id,item),
+                    dayList.firstElementChild
+
+                );
+
+        }
     }
+};
 
-    li.append(p);
+function createCalendarDayItemComponenet(id,item){
+
+    const li = document.createElement('li');
+
+    li.dataset.key = id;
+
+    li.classList.add('calendar-day-list-item');
+
+    li.textContent = item;
 
     return li;
 };
