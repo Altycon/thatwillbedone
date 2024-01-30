@@ -1628,12 +1628,16 @@ main{
 }
 .calendar-past-month-btn,
 .calendar-future-month-btn{
-    border: 1px solid var(--fc-primary);
-    background-color: transparent;
+    border: none;
+    background-color: var(--bc-accent1);
     color: var(--fc-primary);
     font-size: 1.5rem;
+    font-weight: 700;
     padding: 3px 10px;
     border-radius: 10px;
+    outline: 1px solid var(--c-btn-outline);
+    box-shadow:  2px 2px 5px hsl(0 0% 0% / 0.7),
+    inset -1px -1px 3px hsl(0 0% 0% / 0.5);
 }
 .calendar-past-month-btn{
     margin-right: 1rem;

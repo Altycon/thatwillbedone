@@ -44,8 +44,6 @@ export function openCalendarDayviewer(target){
 
                 const thing = ' - ' + (data.items.split(',').map( item => ` ` + item).join(','));
 
-                console.log('thin', thing)
-
                 dayviewerList.insertBefore(
 
                     createCalendarDayViewerDayItemComponent(data.title+':', thing),

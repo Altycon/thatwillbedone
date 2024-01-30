@@ -146,11 +146,7 @@ export function parseDatetimeStringToTimestamp(datetime){
 
     const newHour = meridiemString.toLowerCase() === 'pm' ? timeHour+12:timeHour;
 
-    console.log(`hour: ${newHour}, minute: ${minuteTimeString}, merid: ${meridiemString}`)
-
     const newDatetime = `${fullMonthName} ${dayWithComma} ${year} ${newHour}:${minuteTimeString}:00`
-
-    console.log(newDatetime)
 
     const period = new Date(newDatetime);
 

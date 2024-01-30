@@ -41,10 +41,6 @@ function setCalendar(year,month,day){
 
     const lastMonthDays = new Date(year,month,-1).getDate();
 
-    console.log('firstdayweekday', firstDayweekday);
-
-    console.log('daysInMonth', daysInMonth);
-
     const calendarDayList = calendar.querySelector('.calendar-day-list');
 
     clearChildElements(calendarDayList);
@@ -97,8 +93,6 @@ function setCalendar(year,month,day){
 
                 if(todoYear === year && todoMonth === month){
 
-                    console.log('yeas',todoYear,todoMonth,todoDay)
-
                     addDayItemToCalendar(todo.id,todoYear,todoMonth,todoDay,`(T) ` + todo.description);
 
                 }
@@ -112,8 +106,6 @@ function setCalendar(year,month,day){
 
         listData.forEach( list => {
 
-            console.log('list',list)
-
             if(list.goalTimestamp){
 
                 const period = new Date(+list.goalTimestamp);
@@ -123,8 +115,6 @@ function setCalendar(year,month,day){
                 const listDay = period.getDate();
 
                 if(listYear === year && listMonth === month){
-
-                    console.log('ylist yeas',listYear,listMonth,listDay)
 
                     addDayItemToCalendar(list.id,listYear,listMonth,listDay,`(L) ` + list.title);
 
@@ -138,8 +128,6 @@ function setCalendar(year,month,day){
     
 
 function setCalendarDay(dayNumber,monthNumber){
-
-    console.log(dayNumber,monthNumber)
 
     const calendar = document.querySelector('.calendar');
     
