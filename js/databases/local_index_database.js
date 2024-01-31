@@ -260,6 +260,20 @@ function INDEXDB(){
 
         })
 
+    }
+
+    function deleteDatabaseAndStores(storeName){
+
+        const DBDeleteRequest = window.indexedDB.deleteDatabase(storeName);
+
+        DBDeleteRequest.onerror = handleRequestError;
+
+        DBDeleteRequest.onsuccess = () => {
+            
+            console.log('Databases deleted');
+
+            notify('Data has been deleted. Please reload page or leave.')
+        };
 
     }
 
@@ -270,7 +284,8 @@ function INDEXDB(){
         update,
         get,
         getAll,
-        deleteData
+        deleteData,
+        deleteDatabaseAndStores
     }
 
 };

@@ -73,24 +73,6 @@
 ----------------------------------------------------
 */
 
-/* .loader{
-    position: absolute;
-    top: 0; left: 0;
-    width: 100vw;
-    height: 100vh;
-    background-color: white;
-
-    display: grid;
-    place-content: center;
-    z-index: 1;
-}
-.loading{
-    color: black;
-    font-weight: 700;
-    font-size: 4rem;
-    text-align: center;
-} */
-
 html{
     font-family: var(--ff-primary);
     color: var(--fc-primary);
@@ -233,73 +215,8 @@ body{
 
 main{
     position: relative;
-    /* overflow-y: scroll; */
 }
 
-.footer-primary{
-    position: relative;
-}
-.footer-primary.hide{
-    opacity: 0;
-    pointer-events: none;
-}
-
-
-.navigation-tertiary{
-    --navigation-tertiary-spacing: 1rem;
-    position: absolute;
-    bottom: 100%; left: 0;
-    width: 100%;
-
-    display: none;
-}
-.navigation-tertiary.open{
-    display: block;
-}
-.navigation-tertiary-list{
-    list-style: none;
-    padding: var(--navigation-tertiary-spacing);
-
-    display: grid;
-    grid-template-columns: repeat(4,auto);
-    grid-template-rows: auto;
-    gap: var(--navigation-tertiary-spacing);
-    justify-content: flex-end;
-    opacity: 0;
-    transition: opacity 200ms ease-in-out;
-}
-.navigation-tertiary.appear .navigation-tertiary-list{
-    opacity: 1;
-}
-.navigation-tertiary-link{
-    text-decoration: none;
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    border: none;
-    outline: 2px solid var(--fc-primary);
-    color: var(--fc-primary);
-    font-weight: 700;
-    background-color: var(--bc-primary);
-
-    display: grid;
-    place-content: center;
-}
-.navigation-tertiary-link:active{
-    scale: .98;
-}
-.navigation-tertiary-btn{
-    border: none;
-    outline: 1px solid var(--fc-primary);
-    background-color: var(--bc-primary);
-    color: var(--fc-primary);
-    width: 100%;
-    font-size: 2rem;
-    font-weight: 700;
-    border-top-left-radius: 15px;
-    border-top-right-radius: 15px;
-    box-shadow: 0px -5px 10px hsl(0 0% 33%);
-}
 /*
 ----------------------------------------------------
 
@@ -318,9 +235,7 @@ main{
     position: absolute;
     top: 0; left: 0;
     width: 100%;
-    /* min-height: 100%; */
     height: 100%;
-    /* overflow-y: scroll; */
 
     display: none;
 }
@@ -352,7 +267,7 @@ main{
 =============================
 */
 .main .page-header{
-    height: 50vh;
+    /* height: 50vh; */
 }
 .main .page-header > p{
     color: var(--fc-primary);
@@ -360,6 +275,52 @@ main{
     font-size: 2rem;
     text-transform: uppercase;
     font-weight: 900;
+    margin-bottom: 1.5rem;
+}
+.main .page-header > ul{
+    max-width: 600px;
+    
+    margin: 0 auto;
+}
+.main .page-header > ul > li{
+    list-style-position: inside;
+    padding-top: .5rem;
+    padding-left: 1rem;
+}
+.main .welcome{
+    padding-top: 2.5rem;
+    padding-right: 1rem;
+    padding-left: 1rem;
+    text-align: center;
+}
+.main .welcome > p{
+    font-size: 1rem;
+    margin-bottom: .5em;
+    line-height: 1.5em;
+}
+.main .welcome > p:first-of-type{
+    font-size: 1.2rem;
+}
+.main .welcome > p:last-of-type{
+    padding: 1rem;
+}
+.main .welcome > p > strong{
+    font-size: 1.5rem;
+    margin-right: 2rem;
+}
+.initialize-database-btn{
+    max-width: 300px;
+    font-size: 1.1rem;
+    line-height: 1.5em;
+    padding: 5px 10px;
+    border: none;
+    background-color: var(--bc-accent1);
+    color: var(--fc-primary);
+    outline: 1px solid var(--c-btn-outline);
+    box-shadow:  5px 5px 5px hsl(0 0% 0% / 0.7),
+    inset -1px -1px 3px hsl(0 0% 0% / 0.5);
+    text-transform: uppercase;
+    font-weight: 700;
 }
 /*
 =============================
@@ -1751,6 +1712,7 @@ main{
     top: 0; left: 0;
     width: 100vw;
     height: 100vh;
+    z-index: 1;
     isolation: isolate;
     
     display: none;
@@ -1761,19 +1723,20 @@ main{
 .calendar-dayview-overlay{
     position: absolute;
     inset: 0;
-    background-color: var(--fc-primary);
+    background-color: hsl(0 0% 0% / 0.8);
     opacity: 0;
     z-index: -1;
 
     transition: opacity 200ms ease-in-out;
 }
 .calendar-dayview-window.appear .calendar-dayview-overlay{
-    opacity: .9;
+    opacity: 1;
 }
 .calendar-dayview-content{
     width: 90vw;
     max-width: 1000px;
     background-color: var(--bc-primary);
+    box-shadow: 0px 0px 5px var(--fc-primary);
     padding-bottom: 2rem;
     margin: 0 auto;
     opacity: 0;

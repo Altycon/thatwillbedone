@@ -20,11 +20,11 @@ function listenToTodos(event){
 
     const { currentTarget, target } = event;
 
-    [...currentTarget.querySelectorAll('li')].forEach( listElement => {
+    // [...currentTarget.querySelectorAll('li')].forEach( listElement => {
 
-        cancelEditingTodo(listElement);
+    //     cancelEditingTodo(listElement);
         
-    })
+    // })
 
     if(target.dataset.button){
 

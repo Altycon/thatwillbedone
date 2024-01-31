@@ -1,5 +1,5 @@
 
-import { appController, checkAndLoadAppData } from "./controller/app_controller.js";
+import { appController, handleBeginningUser } from "./controller/app_controller.js";
 import { listenToNavigationLinks, navigateToPage } from "./controller/navigation_controller.js";
 import { windowController } from "./controller/window_controller.js";
 
@@ -9,11 +9,18 @@ import { windowController } from "./controller/window_controller.js";
 function initializeSite(){
 
 
-    checkAndLoadAppData();
+    if(!window.localStorage.getItem('TWBD')){
+
+        handleBeginningUser();
+        
+    }else{
+
+        appController();
+
+    }
+  
 
     listenToNavigationLinks();
-
-    appController();
 
     navigateToPage(window.location.hash || '#main');
 

@@ -39,10 +39,6 @@ function handleProfileInformationSave(event){
 
     document.querySelector('#main .profile-name').textContent = profileName + ',';
 
-    document.querySelector('#main .page-header>p:nth-child(3)').textContent = 'Oh nice. You added a name. :-)';
-
-    document.querySelector('#main .page-header>p:nth-child(4)').textContent = 'Thank you.'
-
     notify('Profile updated');
     
 };

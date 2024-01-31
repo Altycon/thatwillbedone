@@ -12,14 +12,14 @@ import { applySettingsDataToSite } from "./settings_controller.js";
 
 export function appController(){
 
+    checkAndLoadAppData();
+
     listenToAppControls();
 }
 
 function listenToAppControls(){
 
     listenToConnectionControls(document.querySelector('.header-primary'));
-
-    //listenToConnectionControls(document.querySelector('.footer-primary'));
 
 };
 
@@ -69,4 +69,38 @@ export function checkAndLoadAppData(){
         });
 
     }
+};
+
+export function handleBeginningUser(){
+
+
+    function handleDatabaseIntialize(event){
+
+        checkAndLoadAppData();
+
+        listenToAppControls();
+
+        event.target.removeEventListener('click', handleDatabaseIntialize);
+
+        document.querySelector('.main .page-content').removeChild(
+            document.querySelector('.welcome')
+        )
+    };
+
+    const welcome = document.createElement('div');
+    welcome.classList.add('welcome');
+
+    welcome.innerHTML = 
+        `<p><strong>thatwillbedone</strong>a simple web application for your lists, basic notes, and to-do's.</p>
+        <p>No data is sent online.</p>
+        <p>Everything is saved in your browser.</p>
+        <p>* Deleting your cache will delete all data for this website.</p>
+
+        <button type="button" class="initialize-database-btn">By Pressing this button, your information can be saved.</button>`;
+
+    document.querySelector('.main .page-content').appendChild(welcome);
+
+    document.querySelector('.initialize-database-btn').addEventListener('click', handleDatabaseIntialize);
+
 }
+
