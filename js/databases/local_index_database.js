@@ -262,17 +262,16 @@ function INDEXDB(){
 
     }
 
-    function deleteDatabaseAndStores(storeName){
+    function deleteDatabaseAndStores(){
 
-        const DBDeleteRequest = window.indexedDB.deleteDatabase(storeName);
+        const DBDeleteRequest = window.indexedDB.deleteDatabase('TWBD');
 
         DBDeleteRequest.onerror = handleRequestError;
 
         DBDeleteRequest.onsuccess = () => {
             
-            console.log('Databases deleted');
+            console.log('IndexedDB deleted');
 
-            notify('Data has been deleted. Please reload page or leave.')
         };
 
     }

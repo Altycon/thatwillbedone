@@ -1,4 +1,5 @@
 
+import { AltyIDB } from "../databases/local_index_database.js";
 import { AltyLocalStorage } from "../databases/local_storage_database.js";
 import { listenToProfileForm } from "../forms/profile_form.js";
 import { parseTimestamp } from "../utilities.js";
@@ -41,6 +42,8 @@ function deleteProfileInformation(event){
     event.preventDefault();
 
     confirmSelection('This cannot be undone. Are you sure?', ()=> {
+
+        AltyIDB.deleteDatabaseAndStores();
 
         AltyLocalStorage.deleteLocalStorage();
 

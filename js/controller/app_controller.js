@@ -94,7 +94,7 @@ export function handleBeginningUser(){
         `<p><strong>thatwillbedone</strong>a simple web application for your lists, basic notes, and to-do's.</p>
         <p>No data is sent online.</p>
         <p>Everything is saved in your browser.</p>
-        <p>* Deleting your cache will delete all data for this website.</p>
+        <p>* You can remove all data stored by this site, in you browser, by going to Profile --> and press the "Delete All Data And Information" button.</p>
 
         <button type="button" class="initialize-database-btn">By Pressing this button, your information can be saved.</button>`;
 
